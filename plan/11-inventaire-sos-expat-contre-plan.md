@@ -240,7 +240,7 @@ Verdicts : **REPRIS** (avec référence) · **PARTIEL** (prévu en partie ou tro
 | 147 | Connexion, inscription, rôles `ops` / `admin` | BE `routes/auth.ts`, `middleware/auth.ts`, enum `UserRole` | Accès | REPRIS (4 rôles, 16 permissions, rôles fins V1, 2FA e-mail) | P02 I1-I8 ; P04 |
 | 148 | JWT, multi-locataire | CEE `app/services/auth.py`, migrations 002-005 | Accès | REPRIS (Laravel, RLS prouvée) | P02 I5 ; G10 |
 | 149 | Rôle « chercheur », équipe et objectifs | MC `Layout.tsx` l. 310-326 | Travail en équipe | PARTIEL (rôles prévus ; objectifs d'équipe non prévus, inutiles en solo) | P02 I8 |
-| 150 | Secrets en clair dans les dépôts publics | CEE, SEP, MC, VS_CODE (audits A, C, F) | Fuite | ÉCARTÉ et corrigé (gardes CI G8, Gitleaks) ; jetons à révoquer côté SOS-Expat | G8 ; P02 I6 ; synthèse 00 |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | 151 | Analyse Bandit/Safety qui ne bloquait jamais | CEE `.github/workflows/ci.yml` | CI | REPRIS en mieux (Gitleaks + Semgrep exigés) | P02 I6 |
 
 ## 16. Intégrations et webhooks

@@ -4,7 +4,7 @@
 
 Rédigé par le chef de chantier, en lecture seule. **RIEN N'EST CODÉ.** Aucun e-mail envoyé, aucun serveur touché, aucun secret lu ni recopié.
 
-**Dépôt public.** Ce fichier ne contient aucune valeur de secret, aucune adresse IP, aucun numéro de ligne. Les failles encore ouvertes sont décrites **par catégorie seulement**.
+_[Passage retiré du dépôt public : voir les notes privées.]_
 
 **Sources** : `plan/00` à `11`, puis les 6 vérifications `12` (interface), `13` (envoi et infrastructure), `14` (sécurité et isolation), `15` (conformité), `16` (campagnes et CRM), `17` (exécution cloud et calendrier).
 
@@ -73,7 +73,7 @@ Le total retenu est **la somme exacte des lots du § 3**. Rien n'est compté deu
 | **V2 Chez le client** | Clients en vente directe, jusqu'à 5 000/j | **115** | **132** | 80 à 150 |
 | **TOUT** | | **≈ 650** | **≈ 747** | 455 à 845 |
 
-Pourquoi plus que 17 (524) : les 6 vérifications ont trouvé de vrais trous (isolation non armée, configuration du serveur faite à la main, base sectorielle absente, téléphone absent, écrans d'exploitation absents). Pourquoi moins que la somme brute (524 + 82 + 34 + 19 + 32 + 59 ≈ 750) : ≈ 100 j étaient comptés deux fois.
+Pourquoi plus que 17 (524) : les 6 vérifications ont trouvé de vrais trous (durcissement de l'isolation, configuration du serveur faite à la main, base sectorielle absente, téléphone absent, écrans d'exploitation absents). Pourquoi moins que la somme brute (524 + 82 + 34 + 19 + 32 + 59 ≈ 750) : ≈ 100 j étaient comptés deux fois.
 
 ---
 
@@ -89,11 +89,11 @@ Références des corrections : **12** C-xx et UI-xx ; **13** C1 à C27 (notées 
 
 | ID | Contenu (corrections intégrées) | Dépend de | j | Quand | Modèle | Preuve de réussite |
 |---|---|---|---|---|---|---|
-| **S1** | Fermer le contournement de la 2FA (catégorie : authentification) ; anti-rejeu ; limiteur par compte (14 PR-0) | — | 1 | a | S + audit O | tests rouges puis verts ; rejeu refusé |
+| **S1** | Durcir l'authentification ; anti-rejeu ; limiteur par compte (14 PR-0) | — | 1 | a | S + audit O | tests rouges puis verts ; rejeu refusé |
 | **S2** | Mailer d'authentification isolé, jamais journalisé ; démarrage refusé en production s'il est mal réglé (04 PR-C, 14 PR-1) | — | 1,5 | a | S | test « aucun envoi commercial par ce canal » ; démarrage refusé si mal réglé |
 | **S3** | 2FA par code e-mail complète : codes de secours et liens à usage unique consommés de façon atomique ; changement d'adresse validé par l'ancienne ; réinitialisation qui prévient l'utilisateur ; session 12 h + appareil de confiance 30 jours révocable ; code redemandé pour les gestes sensibles (04 PR-D, 14 PR-4, 16 X-2) | S2 | 6 | a | S + audit O | 16 tests de 04 + tests d'atomicité verts |
 | **S4** | Écrans « Connexion et code » et « Sécurité du compte » (07 § 3.13 ; 12 C-04, UI-12) | S3, U0 | 3 | a | S | parcours complet en e2e ; 0 violation d'accessibilité |
-| **S5** | Dépôt et CI : Gitleaks et Semgrep exigés et **bloquants** ; actions épinglées ; gardes « clé privée », « IP publique », « nom de client » ; déploiement conditionné à la sécurité ; clé de déploiement isolée (catégorie : secrets de déploiement) ; IP déjà commitée retirée ; alerte Telegram retirée du déploiement ; PR « économie de CI » (14 PR-9 ; E-C14, E-C15 ; 17 § 3.4) | — | 4,5 | a | S + audit O | 6 contrôles exigés sur `main` ; un faux secret et une fausse IP font échouer la CI |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | **S6** | Droits : permission sur l'action de masse ; un admin ne nomme jamais un owner ; segments sensibles **fermés par défaut**, réglés **par espace** (presse ouverte seulement pour Axion) (14 PR-2, PR-3, PR-10 ; 16 CC-20, X-3) | — | 3 | a | S + audit O | tests d'autorisation verts ; nouvel espace = tout fermé |
 | **S7** | Isolation entre clients : barrière Postgres (RLS) armée par défaut, refus de démarrer sans elle ; commandes sous contexte d'espace ; appartenance à l'espace vérifiée ; droits RGPD (export, effacement) **par espace** ; tables sans `workspace_id` migrées ; suite « deux clients factices » bloquante (14 PR-5 à PR-8 ; 17 S7, P6) | — | 14,5 | a | S + audit O sécurité | suite à deux clients verte sous le rôle de production ; démarrage refusé sans RLS |
 | **S8** | Corriger le décalage de 2 h des horodatages (02 L9) | — | 1 | a | S | test heure de Paris |
@@ -163,7 +163,7 @@ Références des corrections : **12** C-xx et UI-xx ; **13** C1 à C27 (notées 
 | ID | Contenu | Dépend de | j | Quand | Modèle | Preuve de réussite |
 |---|---|---|---|---|---|---|
 | **J1** | Base légale par flux, bloc art. 14 par espace, registre art. 14 par adresse, alerte J+21 et refus J+30 (03 E13 ; 15 C-G15) | P2 | 6 | a | S + relecture O | premier message sans bloc art. 14 refusé |
-| **J2** | Documents V0 : D1 art. 14 (2 niveaux + variante « information pure » pour le lot de septembre), D2 page de désinscription, D3 mentions d'Axion, D9 procédure de violation (appliquée d'abord au 19/08), D10 registre art. 30, D11 analyse d'intérêt légitime, D12 AIPD courte (15 C-02, C-03, C-04, C-09) | H5 | 6 | a | **O** juriste, Will valide | textes relus et validés par Will |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | **J3** | Règles écrites : exception art. 17 et empreinte d'opposition gardée, tableau des tiers et DPA, repli hébergeur (06 M2, M3, M4 ; 15 C-10, C-11) | — | 2 | a | **O** | 3 fiches au registre des décisions |
 | **D0** | Mise à jour des plans 00 à 11 selon ce fichier (volume 20/j, boîtes, DMARC, ports entrants, Telegram et marque blanche retirés, grille V0/V1/V2, renvois orphelins) (13 C1, C2, C5, C12, C19, C20, C25, C26 ; 16 CC-01, CC-05, CC-30, CC-31) | — | 1 | a | **O** | aucun chiffre contraire à ce fichier dans 00-11 |
 
@@ -234,8 +234,8 @@ Hors total, sur décision de Will : relais tiers (08 F20) et clics agrégés (08
 
 | # | Contradiction | Ce que disent les fichiers | Arbitrage proposé |
 |---|---|---|---|
-| R1 | **Secrets dans le dépôt public** | 14 : « aucun secret actif trouvé », mais sur un **clone partiel**. Un audit local antérieur avait **confirmé des clés en clair dans un script d'infrastructure** du dépôt public. | **Les deux peuvent être vrais** : la clé a pu être retirée du fichier mais rester dans l'**historique**. Will doit : (1) faire rejouer Gitleaks sur l'**historique complet**, toutes branches ; (2) **faire tourner toutes les clés concernées par précaution**, même si rien n'est retrouvé. Une clé publiée une fois est perdue : la rotation est la seule vraie parade. |
-| R2 | **IP publique du serveur de production commitée** | 14 : présente dans plusieurs scripts et un README ; règle « aucune IP dans le dépôt » | Pas un secret, mais elle facilite le ciblage. La retirer des fichiers (S5), ajouter la garde CI. Elle reste dans l'historique : s'assurer que le pare-feu ne compte pas sur sa discrétion. |
+_[Passage retiré du dépôt public : voir les notes privées.]_
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | R3 | **Volume de départ** | 01 et 02 : 150/jour ; 00 et 10 : 20-50 puis 300 ; 03 : 20/jour | **La courbe de 03 fait foi** : 20/jour au premier jour effectif, ≈ 250 en fin de V0, 2 000 au plus vers 66 jours effectifs. Plafond utile avec Will seul : **600 à 800/jour**. |
 | R4 | **Boîtes d'envoi avec Will seul** | 03 et 06 : 14 à 16 boîtes avec des personnes réelles ; 13 : une boîte par domaine au nom de Will, 300/boîte ; 16 : une boîte par domaine au nom de Will, 150/boîte, 600/jour au plus | Accord sur le principe : **une boîte par domaine, toutes au nom de Will**. Écart sur le plafond par boîte : **150 en V0** (prudent, suffit pour 300/jour sur 2 boîtes), 300 seulement en V1 si les mesures sont vertes. **À valider par Will.** |
 | R5 | **DMARC** | maquette de 03 : « none→ » sans date ; 17 : `p=none` à la création | **`p=none` avec rapports dès la création** ; **`quarantine`** après 4 semaines à 100 % d'alignement et au moins 500 messages ; **`reject`** en V1. |
@@ -304,7 +304,7 @@ Une réponse courte suffit. **Recommandation en gras.** Les décisions déjà pr
 |---|---|---|---|---|
 | 1 | Feu vert pour lancer le chantier le 2 novembre ? | **Oui** | sans feu vert, chaque semaine de retard décale toutes les dates | **BLOQUE LE PREMIER ENVOI** |
 | 2 | Entité expéditrice : A = SAS française, B = OÜ estonienne ? | **A** | même droit que les destinataires, CNIL seule autorité ; sans choix, aucun texte légal possible | **BLOQUE LE PREMIER ENVOI** |
-| 3 | Fuite du 19/08 : A = notifier la CNIL maintenant en expliquant le retard, B = écrire un motif de non-notification ? | **A si un tiers a pu lire des données, sinon B** ; dans les deux cas, inscrire au registre | réduit le risque en cas de contrôle | **BLOQUE LE PREMIER ENVOI** (prudence) |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | 4 | Organisateurs collectés les 26-27/09 : leur envoyer d'abord une information sans offre, puis attendre 10 jours ouvrés ? | **Oui** | sinon ce lot (le premier ciblé) reste gelé | **BLOQUE LE PREMIER ENVOI** |
 | 5 | Re-vérifier l'historique complet du dépôt et faire tourner les clés par précaution ? | **Oui, maintenant** | une clé publiée est perdue, même effacée ensuite | **BLOQUE LE PREMIER ENVOI** |
 | 6 | Prospecter seulement en France pour l'instant ? | **Oui** | Suisse et Canada exigent un consentement même en B2B | **BLOQUE LE PREMIER ENVOI** |
@@ -322,7 +322,7 @@ Une réponse courte suffit. **Recommandation en gras.** Les décisions déjà pr
 | # | Question | Recommandation | Conséquence |
 |---|---|---|---|
 | 15 | 2FA : session 12 h **et** appareil de confiance 30 jours révocable, code redemandé pour les gestes sensibles ? | **Oui** | un seul code par mois sur votre poste ; gestes risqués toujours protégés |
-| 16 | Lien magique éteint quand la 2FA e-mail est active ? | **Oui** | ferme un contournement de la 2FA |
+| 16 | Lien magique éteint quand la 2FA e-mail est active ? | **Oui** | durcit la 2FA |
 | 17 | Expéditeur des codes : A = `crm@axion-ia.com` (transactionnel dédié), B = adresse du domaine du produit ? | **A** si le domaine est vérifié | n'utilise jamais un domaine d'envoi commercial |
 | 18 | Garder 10 codes de secours et les paramètres (10 min, 5 essais, verrou 1 h) ? | **Oui** | — |
 | 19 | Segments sensibles fermés pour tout nouvel espace, presse ouverte pour Axion seulement ? | **Oui** | respecte votre décision du 01/10 et protège les clients |
@@ -373,7 +373,7 @@ Ce sont des **horloges** : on ne peut pas les accélérer. Lancées le 2 novembr
 | H3 | Choisir l'hébergeur des boîtes (fourre-tout sur sous-domaine, IMAP instantané) ; 2 boîtes à votre nom + 1 boîte technique avec alias | 1 à 2 jours | |
 | H4 | Compte du vérificateur d'adresses et son contrat de sous-traitance | 1 à 2 semaines | |
 | H5 | Choisir l'entité expéditrice (décision 2) | décision | conditionne tous les textes |
-| H6 | **CNIL** : trancher la fuite du 19/08 (décision 3) ; **information** du lot des 26-27/09 (décision 4) | **déjà en retard** | indépendant du code |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | H7 | **Sécurité** : rejouer Gitleaks sur l'historique complet, faire tourner les clés concernées, mesurer l'état réel du serveur (décisions 5 et 13) | 1 h | avant tout autre push sensible |
 | H8 | Créer 4 boîtes témoins : Gmail, Outlook.com, Yahoo, Microsoft 365 pro (une 5e chez Orange ou OVH conseillée) | 1 h | servent au test du matin et à T1 |
 | H9 | Mesurer la taille du vivier vérifiable (organisateurs, fédérations) | 1 h | à 300 nouveaux/jour, il faut > 6 000 adresses par mois |
@@ -413,7 +413,7 @@ Ce sont des **horloges** : on ne peut pas les accélérer. Lancées le 2 novembr
 13. Boîtes : une par domaine, toutes au nom de Will ; 150/jour par boîte en V0.
 14. DMARC : `none` dès la création, `quarantine` après 4 semaines alignées, `reject` en V1.
 15. Presse ouverte pour Axion seulement ; tout nouvel espace démarre tout fermé.
-16. **Secrets** : 14 n'a rien trouvé sur un clone partiel, alors qu'un audit antérieur avait vu des clés en clair : **rejouer sur l'historique complet et faire tourner les clés par précaution**.
+_[Passage retiré du dépôt public : voir les notes privées.]_
 17. L'IP de production commitée est à retirer des fichiers, avec une garde CI.
 18. 42 décisions simples, dont **10 BLOQUENT LE PREMIER ENVOI** (feu vert, entité, CNIL, lot de septembre, clés, France, boîtes, serveurs, hébergeur des boîtes, garde Sirene).
 19. Semaine du 2 novembre : domaines, Hetzner + OVH, boîtes, vérificateur, entité, CNIL, rotation des clés, boîtes témoins, taille du vivier.

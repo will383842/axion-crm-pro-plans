@@ -150,7 +150,7 @@ Critique de niveau 2, en lecture seule. Une seule question : **qu'est-ce qui man
 8. CRITIQUES : personne ne surveille le système qui envoie les alertes ; aucun frein quand les réponses s'accumulent ; REQ-INF-006 (V0) disparue ; pas de CGV, de politique d'usage rédigée, de niveau de service ni d'assurance ; RPO de 24 h contre 1 h pour la console.
 9. Contradictions : « aucune suppression » est déjà tranché (24 mois puis clic) ; « plus de push » visait Claude, pas les alertes ; « presse fermée » attribué à tort à Will ; 2FA 12 h ou 30 jours ; volume de départ 150 ou 20.
 10. Contradictions : plafonds de coût bloquants contre « le prix informe » ; lettre d'information présentée comme acquise ; coût par client incohérent ; trois plans de charge concurrents.
-12. Clés en clair CONFIRMÉES, mais aux lignes 69-71 et 74, pas 63-68 ; s'y ajoute une adresse personnelle (l. 77). Hunter « pas branché » EN PARTIE INFIRMÉ.
+_[Passage retiré du dépôt public : voir les notes privées.]_
 13. Planification : chaîne critique d'environ 92 jours-agent en série, donc « 8 à 10 semaines » non démontré ; doublons entre 02 et 03 ; 04 et 05 non chiffrés.
 14. Goulots non comptés : Will seul, quotas Opus, CI saturée, session déployeuse, routines cloud, autres chantiers sur le même dépôt.
 15. 15 questions simples à poser à Will (§ 5), sans redemander ce qu'il a déjà tranché.

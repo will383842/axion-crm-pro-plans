@@ -17,8 +17,8 @@ RIEN N'EST CODÉ. Ce sont des plans écrits par des agents en lecture seule ; le
 - Coût mensuel : environ 35 à 90 € en V0, 120 à 280 € en V1, 400 à 650 € en V2 ; par client 25 à 60 €. Aucune licence.
 
 ## URGENT (décisions de Will, rien n'a été fait)
-4. Notification CNIL de la fuite du 19/08 restée un brouillon.
-5. Information art. 14 en retard pour les organisateurs collectés les 26-27/09.
+_[Passage retiré du dépôt public : voir les notes privées.]_
+5. Information calendrier légal pour les organisateurs collectés les 26-27/09.
 
 ## Hors code, avec délais incompressibles
 Acheter 2 domaines d'envoi (21 jours d'âge), ouvrir le compte Hetzner « envoi » (un mois et une première facture avant la demande de port 25) et un VPS OVH en plan B, compte Cloudflare « envoi », hébergeur des boîtes de réponse, vérificateur d'adresses tiers.

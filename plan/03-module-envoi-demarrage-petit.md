@@ -718,5 +718,5 @@ Les estimations incluent les tests. Ajouter environ 15 % pour les relectures Opu
 16. Coûts : environ 35 à 90 €/mois en V0, 120 à 280 € en V1, 400 à 650 € en V2, sans licence.
 17. REQ : 268 retenues en V0 (dont 3 remontées de V2), 129 reportées en V1/V2, avec la liste par domaine au § 12.
 18. Estimation : V0 ≈ 138 j-agent (≈ 160 avec les relectures) en 15 lots, V1 ≈ 115 à 135, V2 ≈ 70 à 90.
-19. Risques majeurs : envoi hors CRM, art. 14 en retard, port 25, fuite entre locataires, réputation partagée.
+19. Risques majeurs : envoi hors CRM, calendrier légal, port 25, fuite entre locataires, réputation partagée.
 20. Les horloges hors code (domaines de 21 jours, port 25) sont à lancer dès maintenant par Will.

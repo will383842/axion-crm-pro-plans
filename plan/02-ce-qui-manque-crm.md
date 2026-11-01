@@ -173,7 +173,7 @@ Le CRM n'a aujourd'hui **aucune** campagne d'envoi : `/cold-email` répond 501 (
 | J7 | Textes : bloc art. 14 par flux, pied de message, page publique « prospection » sur le site, politique de conservation écrite (illimitée, motif) | MANQUE | Z5 J4, J6, J11 | M (2) rédaction | P0 | D-07, D-26 |
 | J8 | AIPD révisée, analyses d'intérêt légitime par flux, ligne au registre art. 30, contrats de sous-traitance | MANQUE | Z5 J3, J12, J13, J14 ; `TODO.md` §3 | M (3) rédaction | P0 | décisions de Will |
 | J9 | Désactiver les workflows qui suppriment encore des fiches (`purge-non-commercial`, `purge-non-diffusible`) | MANQUE | `.github/workflows/prospection-collect-region.yml:104-105` | S (0,5) | P0 | accord de Will (respect de « ne rien purger ») |
-| J10 | Notification CNIL de la fuite du 19/08 (ou motif écrit de non-notification) | MANQUE | `TODO.md` §4 | — (décision) | P0 | Will |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | J11 | Retirer du dépôt public les données de journalistes | MANQUE | Z7 C2 | S (0,5) | P0 | Will |
 | J12 | Écran Conformité : registre, sous-traitants, analyses, entité, versions des textes | MANQUE | E21 du cahier | M (2) | P1 | J7, J8 |
 
@@ -209,7 +209,7 @@ Base existante : espaces de travail (`workspaces`, `user_workspaces`, `workspace
 
 | # | Fonction | État | Preuve | Effort | Prio | Dépendances |
 |---|---|---|---|---|---|---|
-| M0 | **Choix du modèle** : une instance par client (base et serveur séparés) ou des espaces dans une instance commune. Recommandation : instance dédiée par client tant que la RLS n'est pas prouvée (fuite du 19/08) | MANQUE (décision) | — | — | P0 | Will |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | M1 | Isolement des données prouvé : RLS armée, test IDOR, aucune donnée d'Axion (base INSEE, presse, oppositions d'Axion) visible chez un client | PARTIEL | I5 ; `opt_out` et `email_suppressions` sans `workspace_id` (Z1 M4) | L (4) | P0 | I5 |
 | M2 | Rôles par client : owner du client, membres, lecteurs ; accès support d'Axion tracé et limité dans le temps | PARTIEL (rôles globaux) | `PermissionsAndRolesSeeder.php` | M (3) | P0 | I8 |
 | M3 | Configuration par client : identité de l'annonceur, segments ouverts, référentiels, étapes du pipeline, champs personnalisés, gabarits, heures d'envoi, textes art. 14 au nom du client | MANQUE (`settings` libre) | `Workspace.php:45-50` | L (4) | P0 | A12, E6 |

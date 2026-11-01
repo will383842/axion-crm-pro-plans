@@ -40,7 +40,7 @@ Responsable exécution, en lecture seule. RIEN N'EST CODÉ. Aucun e-mail, aucun 
 | H3 | Hébergeur des boîtes de réponse (D-70) et **personnes titulaires** des boîtes (06 B3) | 2 boîtes pour P1, 4 en P3, 14-16 en P13 | montée au-delà de ≈ 600/j | S1 pour 2-4 boîtes ; S16 pour la suite |
 | H4 | Vérificateur d'adresses : compte et DPA | 1 à 2 semaines | E4 | S1-S2 |
 | H5 | Entité expéditrice (D-07) et textes art. 14 (D-26), rédigés par l'IA puis relus par Will | relecture de Will | T1 | S1 (décision), S7 (relecture) |
-| H6 | Notification CNIL de la fuite du 19/08 et organisateurs en retard art. 14 (D-01) | **déjà en retard** | légal, indépendant du code | **S1** |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | H7 | Troisième domaine (2e cohorte, P11) | 21 jours d'âge | 1 000/j | au plus tard le 15 mars 2027 |
 
 ### 1.B Tableau par lot
@@ -60,7 +60,7 @@ Légende : **Par.** = parallélisable avec d'autres lots (Oui / Non / Découpabl
 | **S7** | RLS armée par défaut, rôle applicatif Postgres, suite de tests sous ce rôle, refus de démarrer sans RLS, IDOR en boîte noire (02 M1, I5 ; 05 M4 ; règle 7) | — | 6 | Découpable 2 | S + audit O sécurité | test « deux clients factices » vert sous le rôle de production ; démarrage refusé si `CRM_DB_APP_ROLE_ENABLED=false` en prod |
 | **S8** | Corriger le décalage de 2 h des horodatages (02 L9) | — | 1 | Non (touche beaucoup de fichiers : PR seule, fusionnée en premier) | S | test d'horodatage heure de Paris ; aucune régression |
 | **S9** | Exploitation P0 : copie hors site quotidienne et restauration mensuelle (L2), alertes e-mail et bouton « alerte de test » (L4), inventaire des drapeaux (L5), pare-feu et déploiement (L6), joignabilité planifiée (L8), workflows de purge éteints (J9), journalistes retirés du dépôt (J11), battement externe « qui surveille le surveillant » (06 C6, 11 n° 8) | — | 9 | Découpable 2 | S + relecture O | alerte de test reçue ; battement coupé → e-mail reçu ; restauration chronométrée |
-| **P1** | ADR envoi agnostique, licences, dictionnaire, convention « tenant », arbitrage des tables échafaudées, drapeau du module (éteint), 8 permissions, gardes CI G1-G9 dont « jamais axion-ia.com », clés PEM et IP publiques (03 E0, 05 M0, règles 3 et 5) | — | 6 | Non (tête de chaîne) | **O conçoit**, S code les gardes | ADR fusionné ; chaque garde a un test qui échoue sur un faux secret, une fausse IP, `axion-ia.com` |
+_[Passage retiré du dépôt public : voir les notes privées.]_
 | **P2** | `workspace_id` sur `opt_out` et `email_suppressions` (en citant le choix `scope` de la migration `2026_08_14_000004`, 06 X10), identité légale et quotas par espace (03 E1, règle 2) | P1 | 4 | Non | S + audit O | test : l'opposition de A ne bloque pas B ; l'opposition d'Axion gagne partout dans l'espace Axion |
 | **P3** | Édition « produit » : rien d'Axion en dur (espaces figés, gardes « Axion »), l'espace Axion traité comme un client parmi d'autres (05 M3, règles 1 et 8) | P1 | 5 | Oui | S + relecture O | recherche « axion » dans `app/` : seulement la configuration ; test d'un espace « Client factice » complet |
 | **P4** | Contrat d'API signée CRM ↔ console (usage, quotas), signature et rejeu refusé (règle 4) | P1 | 2 | Oui | O conçoit, S code | test de signature et d'anti-rejeu |
@@ -261,7 +261,7 @@ Montée : jours effectifs = jours d'envoi réels. Toute pause recule la date d'a
 | # | Quand | Quoi | Temps |
 |---|---|---|---|
 | W1 | **S1** | Feu vert et décisions bloquantes : premier client et mutualisé (06 Q1-Q3), personnes des boîtes (Q4), 2FA 12 h ou 30 j (Q6), alertes (Q7), budget qui bloque ou informe (Q9), France seulement (Q10), entité D-07, hébergeur D-03, licence du code | 1 h |
-| W2 | **S1** | Achats et comptes H1-H4 ; CNIL et art. 14 en retard (H6) ; rotation des clés | 2 h |
+| W2 | **S1** | Achats et comptes H1-H4 ; CNIL et calendrier légal (H6) ; rotation des clés | 2 h |
 | W3 | S3 | Test des maquettes (45 min) | 45 min |
 | W4 | S5 | Demande de port 25, chez les deux hébergeurs | 20 min |
 | W5 | S7 | Relire les textes art. 14 et les 2 séquences | 1 h |
