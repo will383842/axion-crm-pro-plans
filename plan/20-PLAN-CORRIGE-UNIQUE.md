@@ -266,7 +266,7 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 | S6 | 7-11 déc | E6, E7, E8, E3b, C1, RP1, écran 5, U11 | **BANC OK (≈ 11 déc)** |
 | S7 | 14-18 déc | E7, E8, C1, RP1-RP2, écrans 6 et 7, U11 | **W5 relire art. 14 et séquences (1 h)** |
 | S8-S9 | 21 déc-1er janv | lots sans décision de Will ; pas de train les jours fériés | semaines creuses |
-| S10 | 4-8 janv | fin E7, C1, C2, C3, RP3, écrans 8 et 11, J1, J3 ; serveur réel si port 25 | port 25 obtenu (sinon 3e hébergeur au 15 déc) |
+| S10 | 4-8 janv | fin E7, C1, C2, C3, RP3, écrans 8 et 11, J1, J3 ; serveur réel si port 25 | port 25 obtenu (sinon : relais tiers temporaire, voir § 9, point 1) |
 | S11 | 11-15 janv | fin C2-C3, RP3, U10, intégration | |
 | S12 | 18-22 janv | T1 : scénarios complets, préproduction | **W6 second test (15 min)** |
 | S13 | 25-29 janv | déploiement d'activation, essai à blanc, 3 jours « témoins seulement » | **PREMIER ENVOI INTERNE (≈ 27 janv)** ; passage à 5 routines |
@@ -332,7 +332,7 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 | 23 | Contrôles exigés pour fusionner : Gitleaks + Semgrep bloquant ? | **Oui** | aucune minute de CI en plus |
 | 24 | Capacité de réponses : 15 par jour par défaut ? | **Oui** | le frein ralentit les nouveaux messages si les réponses s'accumulent |
 | 25 | Avis par e-mail regroupé pour chaque réponse « intéressée », sans nom dans l'e-mail ? | **Oui** | — |
-| 26 | Interdits : bloquer « agréé », « labellisé », « accrédité » ; « garanti » en simple avertissement ? | **Oui** | — |
+| 26 | Interdits dans les messages : bloquer « agréé », « labellisé », « accrédité » **et** « Aucun gain garanti » (déjà interdit par vous), plus Grenoble, « certifié », Qualiopi ; « garanti » seul en avertissement ? | **Oui** | — |
 | 27 | Menu « Pipeline » renommé « Affaires » ? | **Oui**, sauf si vous tenez au mot | vocabulaire sans anglicisme |
 | 28 | Licence du code : A = propriétaire « source visible », B = AGPL ? | **A** | bloque la première vente, pas l'envoi |
 | 29 | Téléphone : A = en V1 avec le premier client, B = dès la V0 pour vos prospects (+ 9 j) ? | **A** | B retarde le premier envoi d'environ 2 jours de calendrier |
@@ -342,7 +342,7 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 | # | Question | Recommandation | Conséquence |
 |---|---|---|---|
 | 30 | Base sectorielle (ex. pharmacies) : A = fournie aux clients en attribution retirable, B = jamais fournie ? | **A** (votre exemple du 26/10) | A ajoute un contrat propre et une information des pharmaciens |
-| 31 | Fin de contrat : Axion exécute une suppression **ordonnée par écrit par le client** ? | **Oui** | obligation légale ; ce n'est pas une suppression décidée par Axion |
+| 31 | **Exception légale à votre règle « jamais de suppression »** : à la fin d'un contrat, Axion exécute une suppression **uniquement sur ordre écrit du client** (art. 28 RGPD) ? Axion ne décide jamais seule. | **Oui** | obligation légale ; ce n'est pas une suppression décidée par Axion |
 | 32 | Données des clients jamais utilisées par Axion (pas de liste commune, pas d'entraînement d'IA) ? | **Oui** | Axion reste simple sous-traitant |
 | 33 | Domaine et page de désinscription d'un client parti gardés 3 ans ? | **Oui** | les désinscriptions continuent de marcher |
 | 34 | Première campagne de chaque client validée par un humain d'Axion ? | **Oui** | protège la réputation des serveurs |
@@ -357,14 +357,14 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 | # | Question | Recommandation |
 |---|---|---|
 | 40 | Au-delà de 600-800/jour : nommer une 2e personne réelle pour des boîtes ? | à décider au printemps, selon les réponses |
-| 41 | Options relais tiers (F20) et clics agrégés (F21) ? | **Non** pour l'instant |
+| 41 | Relais tiers (F20) : l'autoriser **seulement comme secours temporaire** si le port 25 tarde ? Clics agrégés (F21) : non. | **Oui pour F20 en secours** (voir § 9), **non** pour F21 |
 | 42 | Champs qui reviennent du CRM vers la console ? | à fixer pendant K6 |
 
 ---
 
 ## 7. Actions hors code de Will : semaine du 2 novembre
 
-Ce sont des **horloges** : on ne peut pas les accélérer. Lancées le 2 novembre, elles sont prêtes avant la mi-décembre.
+Ce sont des **horloges** : on ne peut pas les accélérer. Lancées le 2 novembre, elles sont prêtes avant la mi-décembre, **sauf le port 25** (5 à 7 semaines d'attente après la demande, voir § 9).
 
 | # | Action | Délai incompressible | Remarque |
 |---|---|---|---|
@@ -418,3 +418,20 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 18. 42 décisions simples, dont **10 BLOQUENT LE PREMIER ENVOI** (feu vert, entité, CNIL, lot de septembre, clés, France, boîtes, serveurs, hébergeur des boîtes, garde Sirene).
 19. Semaine du 2 novembre : domaines, Hetzner + OVH, boîtes, vérificateur, entité, CNIL, rotation des clés, boîtes témoins, taille du vivier.
 20. Limites : rien n'est rejoué, ce fichier n'est pas encore relu par un second agent, estimations à ± 30 %, marge du calendrier presque nulle.
+
+---
+
+## 9. Corrections issues de la relecture critique (01/11/2026)
+
+Un second agent (Opus) a relu ce fichier. **Totaux recalculés : exacts** (323 / 212 / 115 = 650 j ; 71 lots ; 10 décisions bloquantes). Les points ci-dessous **s'ajoutent** au plan et priment sur les lignes contraires.
+
+1. **Port 25 : le calendrier ne tient pas sans repli.** La demande part en S5 (début décembre), la réponse prend 5 à 7 semaines : accord entre le 6 et le 22 janvier. Un 3e hébergeur ne répare rien (il repart pour un mois). **Repli retenu : relais tiers temporaire (F20)** pour le premier envoi interne et réel, puis bascule vers le serveur propre dès l'accord. **Date réaliste :** premier envoi interne ≈ 27 janvier **seulement si** serveur réel ou relais prêt avant le 18 janvier ; sinon premier envoi réel limité décalé d'environ 3 semaines (fin février).
+2. **Moteur de secours.** Le lot E10 (repli Postfix + rspamd) est en V2. **Proposition : l'avancer en V0 « b »** (après le premier envoi, +4 j environ) ; sinon écrire que le risque est accepté jusqu'en mai.
+3. **Décisions déjà prises, reposées par erreur** (à traiter comme *confirmation*, pas comme question) : 11 (fusion déjà autorisée le 15/10 ; seule reste la délégation à plusieurs), 14 (purge déjà interdite), 19 (presse décidée le 01/10), 20 (déjà comptée), 35 (facturation dans le Hub décidée le 27/10), 39 (si pas déjà tranché).
+4. **Décisions bloquantes absentes ou mal classées** : 17 (expéditeur des codes) à trancher **avant le 9 novembre** ; le choix du **vérificateur d'adresses** (H4) et de l'**hébergeur des boîtes** (H3) sont de vraies décisions qui bloquent E4 puis C1.
+5. **Budget mensuel à annoncer avant les achats** : serveur d'envoi 30 à 80 €/mois en V0, plus domaines, vérificateur d'adresses et éventuelle licence Spamhaus (prix à revérifier).
+6. **Questions trop techniques : à reformuler par leur effet** avant de vous les poser (10, 13, 16, 21, 23, 28). Les 15, 16 et 18 (2FA) fusionnent en une seule.
+7. **Lots à corriger** : P1 doit inclure le **modèle de données de la base sectorielle** (double opposition) ; E3 doit retrouver le **PTR** (indispensable à l'envoi) et le **contrôle DNS quotidien** (+3 j) ; les écrans « réponses à rattacher » et « demandes RGPD » passent de U12 à U11 (avant le premier envoi) ; les étapes commerciales « rendez-vous » et « contacté » sont posées par RP2 et C1, pas par Q1b.
+8. **Zone grise avec vos rejets** : l'héritage « plateforme → secteur → client » (lot K2) ressemble aux « modèles prêts à l'emploi » que vous avez rejetés. À présenter comme des **réglages**, ou à confirmer avec vous.
+9. **Les 8 règles de préparation multi-client** sont toutes au plan, dispersées : règles de contrat unique dans E1 ; aucun secret/IP/nom de client dans S5 et P1 ; test à deux clients factices dans S7 ; les autres dans P1 à P5.
+10. **Petites incohérences** : « banc OK 11 déc » alors que E7 et E8 finissent en S10 (le banc est « OK sans les derniers réglages ») ; 3e domaine « avant le 15 mars » ; plafond de réponses 15/jour ici, 20 dans le fichier 13 (à trancher : **15** retenu) ; arrondis 16,5 → 16 et 33,5 → 34 au § 2.2 sans effet sur les totaux ; le plafond de 8 routines en parallèle tient compte des autres chantiers.
