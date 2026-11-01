@@ -20,52 +20,14 @@ def _campagnes():
             ('Commerces de Lyon', 'Prospection', 'Terminée', 'Fin', '92', '92', '11 (4)', '2', '28 oct.'),
             ('Clubs sportifs', 'Prospection', 'En pause', 'Message 1 sur 3', '140', '40', '2 (0)', '0', '—'),
             ('Relance salon', 'Prospection', 'Brouillon', '—', '—', '—', '—', '—', '—')]
-    lignes = [['<a href="campagne-suivi.html"><strong>%s</strong></a>' % r[0], r[1], st(r[2]), r[3]] + ['<span class="chiffre">%s</span>' % x for x in r[4:8]] + [r[8], btn('Ouvrir', 'petit-discret', 'campagne-suivi.html')] for r in rows]
+    lignes = [['<a href="campagne-suivi.html"><strong>%s</strong></a>' % r[0], st(r[2]), r[3]] + ['<span class="chiffre">%s</span>' % x for x in r[4:8]] + [r[8], btn('Ouvrir', 'petit-discret', 'campagne-suivi.html')] for r in rows]
     normal = (tuiles([('En cours', '1', 'Organisateurs Rhône-Alpes'), ('À valider', '1', 'Fédérations T1'), ('Réponses ce mois', '22', 'dont 7 positives'), ('Désinscriptions', '3', '0,9 % des envoyés')])
               + filtres(['Toutes', 'En cours', 'À valider', 'Programmées', 'Terminées', 'Brouillons'])
-              + tableau('Campagnes', ['Campagne', 'Nature', 'Statut', 'Étape', 'Joignables', 'Envoyés', 'Réponses (positives)', 'Désinscr.', 'Fin prévue', ''], lignes))
+              + tableau('Campagnes', ['Campagne', 'Statut', 'Étape', 'Joignables', 'Envoyés', 'Réponses', 'Désinscr.', 'Fin', ''], lignes))
     vide = etat_vide('campagne', 'Aucune campagne', 'Une campagne envoie une suite de 1 à 4 messages à une liste, au rythme de la montée en douceur.', btn('Créer une campagne', 'plein', 'campagne-nouvelle.html'))
     P['campagnes.html'] = page('campagnes', 'Campagnes', '<strong>1 campagne en cours</strong>, 1 à valider. Volume possible aujourd’hui : 120.', normal, vide,
                                actions=btn('Messages types', 'contour', 'messages-types.html', 'message') + btn('Créer une campagne', 'plein', 'campagne-nouvelle.html', 'plus'),
                                onglets_haut='<nav class="onglets" aria-label="Sections de Campagnes"><a href="campagnes.html" aria-current="page">Campagnes</a><a href="messages-types.html">Messages types</a><a href="presse.html">Presse</a><a href="v1-ecrans.html#declenches">Messages déclenchés <span class="repere-v1">V1</span></a><a href="v1-ecrans.html#lettre">Lettre <span class="repere-v1">V1</span></a></nav>')
-
-
-# ---------------- Création en 5 étapes ----------------
-def _nouvelle():
-    etapes = ['Cible', 'Message', 'Envoi', 'Vérification', 'Lancement']
-    frise = '<ol class="frise" aria-label="Étapes de la campagne">%s</ol>' % ''.join(
-        '<li><button type="button"%s><span class="n">%d</span><span class="txt">%s</span></button></li>' % (' aria-current="step"' if i == 0 else '', i + 1, e) for i, e in enumerate(etapes))
-    suiv = lambda n, lib: '<div class="bloc-pied"><button type="button" class="btn btn-plein" data-aller="%d">Continuer : %s</button>%s</div>' % (n, lib, ('<button type="button" class="btn btn-discret" data-aller="%d">Retour</button>' % (n - 2)) if n > 2 else '')
-    e1 = ('<h2>Qui reçoit la campagne ?</h2><p class="petit" style="margin:4px 0 16px">Choisissez une liste. On retire tout seul les oppositions et les adresses refusées.</p>'
-          '<div class="choix" role="radiogroup" aria-label="Liste"><label><span><input type="radio" name="liste" checked> <strong>Organisateurs Rhône-Alpes</strong></span><small>312 personnes · 290 joignables</small></label>'
-          '<label><span><input type="radio" name="liste"> <strong>Fédérations nationales</strong></span><small>84 personnes · 80 joignables</small></label>'
-          '<label><span><input type="radio" name="liste"> <strong>Salon des artisans 2026</strong></span><small>100 personnes · 92 joignables</small></label></div>'
-          + champ('Exclure une adresse, une organisation ou un domaine', 'excl', aide='Facultatif. Exemple : concurrent.example')
-          + suiv(2, 'message'))
-    e2 = ('<h2>Quel message ?</h2><p class="petit" style="margin:4px 0 16px">Une suite de 1 à 4 messages. Les relances partent dans le même fil.</p>'
-          '<div class="choix"><label><span><input type="radio" name="mt" checked> <strong>Message type n° 1</strong></span><small>Organisateurs · validé · v3</small></label><label><span><input type="radio" name="mt"> <strong>Message type n° 2</strong></span><small>Fédérations · validé · v1</small></label></div>'
-          '<ol class="liste"><li>%s<span class="quoi"><strong>Message 1</strong><small>Jour 0</small></span>%s</li><li>%s<span class="quoi"><strong>Message 2 (relance)</strong><small>+ 4 jours ouvrés si pas de réponse</small></span>%s</li><li>%s<span class="quoi"><strong>Message 3</strong><small>+ 7 jours ouvrés</small></span>%s</li></ol>'
-          % (badge('vert', 'Validé', '✓'), btn('Aperçu', 'petit-discret', 'message-editeur.html'), badge('vert', 'Validé', '✓'), btn('Aperçu', 'petit-discret', 'message-editeur.html'), badge('vert', 'Validé', '✓'), btn('Aperçu', 'petit-discret', 'message-editeur.html'))
-          + '<div class="bloc-pied">%s</div>' % btn('M’envoyer un test', 'petit', icone='test', attrs='data-ouvre="fen-test"') + suiv(3, 'envoi'))
-    e3 = ('<h2>Quand et par quelles boîtes ?</h2>'
-          '<div class="ligne-champs">' + champ('Départ', 'dep', 'date', '2026-11-04') + champ('Fenêtre d’envoi', 'fen', 'select', ['09:00 – 17:00, jours ouvrés', '10:00 – 16:00, jours ouvrés']) + '</div>'
-          '<fieldset style="border:0;padding:0;margin:0 0 16px"><legend class="lib" style="font-weight:600;margin-bottom:6px">Boîtes d’envoi</legend>'
-          '<label class="case"><input type="checkbox" checked> claire@prospection-a.example · 40 par jour</label><label class="case"><input type="checkbox" checked> will@prospection-b.example · 40 par jour</label><label class="case"><input type="checkbox"> paul@prospection-c.example · en montée en douceur (jour 6)</label></fieldset>'
-          '<p class="petit">Fin prévue le 20 nov. au rythme actuel. Arrêt automatique pour une entreprise dès qu’une personne répond.</p>' + suiv(4, 'vérification'))
-    ctrl = ['Liste figée possible (312 personnes)', 'Oppositions retirées (22)', 'Bloc d’information présent', 'Lien de désinscription en un clic', 'Aucun lien vers le site d’Axion', 'Aucun mot interdit', 'Boîtes saines (2 sur 2)']
-    e4 = ('<h2>Tout est-il en règle ?</h2><p class="petit" style="margin:4px 0 16px">7 contrôles sur 7 au vert.</p><ul class="liste">%s</ul>' % ''.join('<li>%s<span class="quoi">%s</span></li>' % (feu('vert', 'OK'), c) for c in ctrl)
-          + suiv(5, 'lancement'))
-    e5 = ('<h2>Valider et lancer</h2><p style="margin:8px 0 16px">Liste figée le 2 nov. à 07:10 : <strong>290 personnes</strong>. Départ le 4 nov. à 09:00. Vous avez 5 minutes pour annuler après la validation.</p>'
-          + champ('Votre code reçu par e-mail', 'code-valid', aide='Validation d’un envoi : code redemandé.', attrs='inputmode="numeric" autocomplete="one-time-code"')
-          + '<div class="bloc-pied"><a class="btn btn-plein" href="campagne-suivi.html" data-toast="Campagne validée et programmée.">Valider et programmer</a><button type="button" class="btn btn-discret" data-aller="4">Retour</button></div>')
-    panneaux = ''.join('<div class="bloc" data-etape="%d">%s</div>' % (i + 1, c) for i, c in enumerate([e1, e2, e3, e4, e5]))
-    recap = bloc('Récapitulatif', '<dl><dt>Cible</dt><dd>Organisateurs Rhône-Alpes · 290</dd><dt>Message</dt><dd>Message type n° 1 · 3 messages</dd><dt>Envoi</dt><dd>4 nov. · 2 boîtes · 80 par jour</dd><dt>Fin prévue</dt><dd>20 nov.</dd></dl><p class="petit" style="margin-top:12px">Brouillon enregistré à 10:42.</p>', 'gris', 'liste', mot='Brouillon')
-    normal = '<div data-assistant>%s<div class="assistant"><div>%s</div><aside class="recap" aria-label="Récapitulatif">%s</aside></div></div>' % (frise, panneaux, recap)
-    test = fenetre('fen-test', 'M’envoyer un test', '<label class="case"><input type="checkbox" checked> Moi (will@…)</label><label class="case"><input type="checkbox" checked> Boîtes témoins (4)</label>' + champ('Destinataire d’exemple', 'ex-dest', 'select', ['Claire Durand (Garage Durand)', 'Paul Martin (Boulangerie Martin)']) + '<p class="petit">Le test passe par la même porte qu’un vrai envoi. Il ne compte pas dans la montée en douceur.</p>',
-                   '<button type="button" class="btn btn-contour" data-ferme>Annuler</button><button type="button" class="btn btn-contour" data-ferme data-toast="Test envoyé à 5 adresses.">Envoyer le test</button>')
-    vide = etat_vide('liste', 'Aucune liste à cibler', 'Créez d’abord une liste de contacts joignables.', btn('Créer une liste', 'plein', 'listes.html'))
-    P['campagne-nouvelle.html'] = page('campagne-nouvelle', 'Nouvelle campagne', 'Cinq étapes, environ 5 minutes. Rien ne part sans votre validation.', normal, vide,
-                                       fil=[('Campagnes', 'campagnes.html', 'campagnes')], apres=test)
 
 
 # ---------------- Suivi d'une campagne ----------------
@@ -117,33 +79,7 @@ def _editeur():
                                      fil=[('Campagnes', 'campagnes.html', 'messages-types'), ('Messages types', 'messages-types.html')])
 
 
-# ---------------- Réponses ----------------
-def _reponses():
-    file_ = '<ul class="file-rep" aria-label="Réponses à traiter">%s</ul>' % ''.join(
-        '<li><a href="#"%s><strong>%s</strong> %s<br><small>%s</small></a></li>' % (' aria-current="true"' if i == 0 else '', n, badge(t, s, '●'), x) for i, (n, t, s, x) in enumerate([
-            ('Claire Durand', 'terracotta', 'Intéressé', '« Pouvez-vous me rappeler jeudi ? »'),
-            ('Hugo Petit', 'terracotta', 'Intéressé', '« Envoyez-moi une proposition. »'),
-            ('Inès Moreau', 'gris', 'Absent', 'Absente jusqu’au 12 nov.'),
-            ('Louis Bernard', 'rouge', 'STOP', '« Ne m’écrivez plus. »'),
-            ('inconnu@exemple.example', 'ambre', 'À rattacher', 'Adresse inconnue')]))
-    msg = ('<article class="message" aria-label="Réponse de Claire Durand"><div class="bloc-tete"><h2>Claire Durand · Garage Durand</h2>%s</div><p class="petit">Hier 16:20 · réponse au message 2 · campagne Organisateurs Rhône-Alpes</p>'
-           '<blockquote>Bonjour, c’est intéressant. Pouvez-vous me rappeler jeudi matin ? Claire</blockquote>'
-           '<p><strong>Suggestion :</strong> Intéressé → créer la tâche « Rappeler jeudi » et arrêter la campagne pour Garage Durand.</p>'
-           '<div class="bloc-pied"><button type="button" class="btn btn-plein" data-toast="Réponse traitée : tâche créée, campagne arrêtée pour l’entreprise." data-annulable>Appliquer la suggestion</button></div>'
-           '<div class="gestes" role="group" aria-label="Classer autrement">%s%s%s%s</div><p class="petit" style="margin-top:12px">Raccourcis : 1 à 4 pour classer, S pour STOP, J/K pour suivante/précédente.</p></article>'
-           % (badge('terracotta', 'Intéressé', '●'), btn('Pas intéressé', 'petit', attrs='data-toast="Classée : pas intéressé." data-annulable'), btn('Plus tard', 'petit', attrs='data-toast="Classée : plus tard." data-annulable'),
-              btn('Absent', 'petit', attrs='data-toast="Classée : absent." data-annulable'), btn('STOP', 'petit', attrs='data-ouvre="fen-stop"')))
-    normal = (onglets('Réponses', [('a-traiter', 'À traiter (7)', '<div class="reponses">%s%s</div>' % (file_, msg)),
-                                   ('stop', 'STOP à confirmer (1)', bloc('Louis Bernard', '<blockquote>« Ne m’écrivez plus. »</blockquote>', 'terracotta', 'interdit', pied=btn('Confirmer l’opposition', 'petit', attrs='data-ouvre="fen-stop"'))),
-                                   ('rattacher', 'À rattacher (1)', '<p>%s</p>' % lien('Ouvrir les réponses à rattacher', 'reponses-a-rattacher.html')),
-                                   ('toutes', 'Toutes', '<p class="petit">Historique complet des réponses, filtrable par campagne.</p>')]))
-    stop = fenetre('fen-stop', 'Enregistrer l’opposition de Louis Bernard ?', '<p>Plus aucun message ne lui sera envoyé, par aucune campagne. C’est définitif.</p><label class="case"><input type="checkbox"> Pour toute l’organisation (Atelier Bernard)</label>',
-                   '<button type="button" class="btn btn-contour" data-ferme>Annuler</button><button type="button" class="btn btn-danger" data-ferme data-toast="Opposition enregistrée.">Enregistrer l’opposition</button>')
-    P['reponses.html'] = page('reponses', 'Réponses', '<strong>7 réponses</strong> à traiter : 2 intéressées, 1 STOP, 1 à rattacher. La plus ancienne date d’hier 16:20.', normal,
-                              etat_vide('reponses', 'Aucune réponse à traiter', 'Tout est traité. Les nouvelles réponses arrivent ici dès leur relève (toutes les 5 min).', btn('Voir toutes les réponses', 'plein', attrs='data-toast="Filtre « Toutes » appliqué."')),
-                              apres=stop)
-
-
+# ---------------- Réponses à rattacher ----------------
 def _a_rattacher():
     normal = (bloc('Réponse de inconnu@exemple.example', '<blockquote style="margin:0 0 12px;padding:12px 16px;background:#fff;border-radius:12px">« Bonjour, je transmets à notre présidente, Mme Moreau. »</blockquote><p class="petit">Reçue ce matin 08:12 · boîte claire@ · campagne Fédérations T1</p>', 'ambre', 'reponses', mot='À rattacher')
               + '<h2 class="mini-titre">Fiches proposées</h2>'
@@ -170,5 +106,5 @@ def _presse():
                             actions=btn('Nouveau communiqué', 'plein', icone='plus', attrs='data-toast="Éditeur de communiqué ouvert."'))
 
 
-for f in (_campagnes, _nouvelle, _suivi, _messages_types, _editeur, _reponses, _a_rattacher, _presse):
+for f in (_campagnes, _suivi, _messages_types, _editeur, _a_rattacher, _presse):
     f()

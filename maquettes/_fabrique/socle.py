@@ -66,6 +66,15 @@ _IC = {
     'aide': '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1.1-1.5 2.5M12 17h.01"/>',
     'pieces': '<path d="M4 7h16M4 12h16M4 17h10"/>',
     'puzzle': '<path d="M10 3a2 2 0 014 0v2h4v4h-2a2 2 0 000 4h2v6H5v-6h2a2 2 0 000-4H5V5h5V3z"/>',
+    'coche': '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    'croix': '<path d="M6 6l12 12M18 6L6 18"/>',
+    'filtre': '<path d="M3 5h18l-7 8v6l-4 2v-8L3 5z"/>',
+    'fichier': '<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/>',
+    'chevron-d': '<path d="M9 6l6 6-6 6"/>',
+    'eclair': '<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>',
+    'ajout-personne': '<circle cx="10" cy="8" r="4"/><path d="M2.5 21c.9-4 3.9-6 7.5-6 1.6 0 3 .4 4.2 1.1"/><path d="M19 14v6M16 17h6"/>',
+    'cible': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+    'fusee': '<path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.5-4.5 5.5-8.5 13-9-.5 7.5-4.5 11.5-9 13l-1-1z"/><circle cx="15" cy="9" r="1.6"/>',
     'carte-france': '<path d="M9 3l5 2 4-1 1 5 2 3-3 5 1 4-6-1-5 1-3-4 1-5-3-3 4-2 2-4z"/>',
 }
 
@@ -118,7 +127,7 @@ def _lien_nav(cle, lib, icone, compteur, actif):
         badge = '<span class="compteur" aria-hidden="true">%s</span><span class="visuellement-cache">, %s à traiter</span>' % (compteur, compteur)
     if cle == 'sante':
         badge = '<span class="point-feu" aria-hidden="true"></span><span class="visuellement-cache">, état : bon</span>'
-    return '<li><a class="nav-lien" href="%s.html"%s>%s<span class="lib">%s</span>%s</a></li>' % (cle, cur, ic(icone), E(lib), badge)
+    return '<li><a class="nav-lien" href="%s.html" title="%s"%s>%s<span class="lib">%s</span>%s</a></li>' % (cle, E(lib), cur, ic(icone), E(lib), badge)
 
 
 def barre_laterale(actif):
@@ -132,7 +141,7 @@ def barre_laterale(actif):
         for cle, lib, icone, cpt in items:
             h.append(_lien_nav(cle, lib, icone, cpt, actif))
         h.append('</ul></div>')
-    h.append('</nav><div class="barre-pied"><ul class="liste-pied" style="list-style:none;margin:0;padding:0">')
+    h.append('</nav><div class="barre-pied"><ul class="liste-pied">')
     for cle, lib, icone, cpt in PIED:
         h.append(_lien_nav(cle, lib, icone, cpt, actif))
     h.append('</ul></div></aside>')
@@ -159,7 +168,7 @@ def entete(fil):
     fil_html = ''.join(
         ('<li><a href="%s">%s</a></li>' % (h, E(t))) if h else ('<li aria-current="page">%s</li>' % E(t)) for t, h in fil)
     return '''
-<div class="bandeau-arret" id="bandeau-arret" role="alert" hidden>%s<span style="flex:1">Tous les envois sont arrêtés depuis 10:42 par Will.</span><button type="button" class="btn petit-btn" data-reprendre>Reprendre les envois</button></div>
+<div class="bandeau-arret" id="bandeau-arret" role="alert" hidden>%s<span style="flex:1 1 200px">Tous les envois sont arrêtés depuis 10:42 par Will.</span><button type="button" class="btn petit-btn" data-reprendre>Reprendre les envois</button></div>
 <header class="entete">
   <button type="button" class="bouton-icone bouton-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="barre-laterale">%s</button>
   <nav class="fil" aria-label="Fil d’Ariane"><ol>%s</ol></nav>
@@ -170,7 +179,7 @@ def entete(fil):
   <a href="compte.html" class="avatar" aria-label="Mon compte (Will)">W</a>
 </header>
 <div class="panneau-alertes" id="panneau-alertes" hidden role="region" aria-label="Dernières alertes">
-  <h2 style="font-size:16px;margin-bottom:8px">Alertes</h2>
+  <h2 style="margin-bottom:8px">Alertes</h2>
   <ul class="liste">
     <li><span class="badge ambre" data-s="▲">Attention</span><span class="quoi"><strong>Boîte « claire@ » ralentie</strong><small>Refus temporaires : 3 %%. Il y a 12 min.</small></span></li>
     <li><span class="badge terracotta" data-s="●">À faire</span><span class="quoi"><strong>2 réponses intéressées</strong><small>Il y a 25 min.</small></span></li>
@@ -201,7 +210,7 @@ SELECTEUR = '''<form class="selecteur-etat" aria-label="Maquette : choisir l’�
 </fieldset></form>'''
 
 SQUELETTE = '''<div id="squelette" class="squelette" hidden aria-label="Chargement en cours"><div class="os" style="height:34px;width:40%"></div><div class="os" style="height:20px;width:60%"></div>
-<div class="tuiles" style="margin:0"><div class="os" style="height:96px"></div><div class="os" style="height:96px"></div><div class="os" style="height:96px"></div></div><div class="os" style="height:260px"></div></div>'''
+<div class="kpis" style="margin:0"><div class="os" style="height:150px"></div><div class="os" style="height:150px"></div><div class="os" style="height:150px"></div><div class="os" style="height:150px"></div></div><div class="os" style="height:280px"></div></div>'''
 
 
 def document(titre, corps, description=''):
@@ -237,6 +246,7 @@ def page(cle, titre, phrase, normal, vide=None, erreur=None, actions='', fil=Non
 %s
 <div class="principal">
 %s
+%s
 <main id="contenu" class="contenu" tabindex="-1">
 %s
 %s
@@ -247,10 +257,9 @@ def page(cle, titre, phrase, normal, vide=None, erreur=None, actions='', fil=Non
 </main>
 </div>
 </div>
-%s
 <div class="toasts" id="toasts" aria-live="polite"></div>
 %s
-</body>''' % (barre_laterale(actif), entete(fil_simple), tete, onglets_haut, normal, vide, erreur, SQUELETTE, SELECTEUR, apres)
+</body>''' % (barre_laterale(actif), entete(fil_simple), SELECTEUR, tete, onglets_haut, normal, vide, erreur, SQUELETTE, apres)
     return document(titre, corps, re_texte(phrase))
 
 
@@ -260,8 +269,8 @@ def re_texte(h):
 
 
 def ecran_seul(titre, contenu, selecteur=True):
-    corps = '<body><main id="contenu" class="ecran-seul" tabindex="-1">%s</main><div class="toasts" id="toasts" aria-live="polite"></div>%s</body>' % (
-        contenu, SELECTEUR if selecteur else '')
+    corps = '<body><main id="contenu" class="ecran-seul" tabindex="-1">%s%s</main><div class="toasts" id="toasts" aria-live="polite"></div></body>' % (
+        SELECTEUR if selecteur else '', contenu)
     return document(titre, corps)
 
 
@@ -306,16 +315,18 @@ def bloc(titre, contenu, teinte=None, icone=None, mot=None, pied='', attrs=''):
     return '<section class="%s" %s>%s%s%s</section>' % (cl, attrs, tete, contenu, ('<div class="bloc-pied">%s</div>' % pied) if pied else '')
 
 
-def tableau(legende, colonnes, lignes, cartes=True):
+def tableau(legende, colonnes, lignes, cartes=True, liens=None, secondaires=()):
+    """secondaires = index des colonnes masquées entre 768 et 1180 px (classe col-sec)."""
     h = ['<div class="tableau-cadre"><table%s><caption class="visuellement-cache">%s</caption><thead><tr>' % (' class="cartes"' if cartes else '', E(legende))]
-    for c in colonnes:
-        h.append('<th scope="col">%s</th>' % (E(c) if c else '<span class="visuellement-cache">Actions</span>'))
+    for k, c in enumerate(colonnes):
+        h.append('<th scope="col"%s>%s</th>' % (' class="col-sec"' if k in secondaires else '', E(c) if c else '<span class="visuellement-cache">Actions</span>'))
     h.append('</tr></thead><tbody>')
-    for l in lignes:
-        h.append('<tr>')
+    for n, l in enumerate(lignes):
+        h.append('<tr data-href="%s">' % liens[n] if liens and liens[n] else '<tr>')
         for i, cellule in enumerate(l):
             lab = colonnes[i] if i < len(colonnes) else ''
-            cl = ' class="actions-ligne"' if lab == '' else ''
+            cls = (['actions-ligne'] if lab == '' else []) + (['col-sec'] if i in secondaires else [])
+            cl = (' class="%s"' % ' '.join(cls)) if cls else ''
             h.append('<td data-label="%s"%s>%s</td>' % (E(lab), cl, cellule))
         h.append('</tr>')
     h.append('</tbody></table></div>')
@@ -377,3 +388,134 @@ def filtres(puces, unique=True):
 
 def lien(texte, href):
     return '<a href="%s">%s</a>' % (href, E(texte))
+
+
+# =====================================================================
+# Briques visuelles U1bis (voir maquettes/GUIDE-STYLE.md)
+# Sens des teintes : terracotta = à faire, bleu = en cours, vert = fait,
+# ambre = attention, violet = nouveau, rouge = arrêté, gris = neutre.
+# =====================================================================
+def kpi(lib, val, icone, teinte='bleu', meta='', href=None, graph='', unite=''):
+    """Tuile chiffre : grosse icône, libellé, GROS chiffre, détail court, mini-graphique. Cliquable si href."""
+    u = ('<small> %s</small>' % E(unite)) if unite else ''
+    corps = ('<div class="kpi-tete">%s<span class="kpi-lib">%s</span></div><div class="kpi-val">%s%s</div>%s%s'
+             % (ic(icone), E(lib), val, u, ('<div class="kpi-meta">%s</div>' % meta) if meta else '', graph))
+    if href:
+        return '<a class="kpi teinte-%s" href="%s">%s</a>' % (teinte, href, corps)
+    return '<div class="kpi teinte-%s">%s</div>' % (teinte, corps)
+
+
+def kpis(*tuiles_):
+    return '<div class="kpis">%s</div>' % ''.join(tuiles_)
+
+
+def jauge(lib, val, maxi, teinte='bleu', texte=None):
+    """Jauge horizontale accessible (role=meter)."""
+    pct = 0 if not maxi else max(0, min(100, round(100.0 * val / maxi)))
+    t = texte if texte is not None else '%s / %s' % (val, maxi)
+    return ('<div class="jauge %s" role="meter" aria-valuemin="0" aria-valuemax="%s" aria-valuenow="%s" aria-label="%s : %s">'
+            '<div class="jauge-lib"><span>%s</span><span>%s</span></div><div class="jauge-piste"><span style="width:%d%%"></span></div></div>'
+            % (teinte, maxi, val, E(lib), E(t), E(lib), E(t), pct))
+
+
+def anneau(val, maxi, teinte='vert', centre=None, titre='', sous=''):
+    """Anneau SVG (part d'un total) avec texte à droite."""
+    import math
+    r = 46.0
+    tour = 2 * math.pi * r
+    part = 0 if not maxi else max(0.0, min(1.0, float(val) / maxi))
+    c = centre if centre is not None else '%s/%s' % (val, maxi)
+    svg = ('<svg viewBox="0 0 112 112" role="img" aria-label="%s : %s sur %s"><circle class="piste" cx="56" cy="56" r="46" fill="none" stroke-width="14"/>'
+           '<circle class="arc" cx="56" cy="56" r="46" fill="none" stroke-width="14" stroke-dasharray="%.1f %.1f" transform="rotate(-90 56 56)"/>'
+           '<text x="56" y="65" text-anchor="middle">%s</text></svg>' % (E(titre or 'Part'), val, maxi, tour * part, tour, E(c)))
+    txt = ('<div class="anneau-txt"><strong>%s</strong><span class="petit">%s</span></div>' % (E(titre), sous)) if titre or sous else ''
+    return '<div class="anneau %s">%s%s</div>' % (teinte, svg, txt)
+
+
+def barres(points, teinte='', libelle='Graphique en barres'):
+    """Barres verticales : points = [(axe, valeur)] ou [(axe, valeur, teinte)]."""
+    m = max([p[1] for p in points] or [1]) or 1
+    cols = []
+    for p in points:
+        t = p[2] if len(p) > 2 else teinte
+        cols.append('<div class="col"><span class="val">%s</span><span class="tige %s" style="height:%d%%"></span><span class="axe">%s</span></div>'
+                    % (p[1], t, max(3, round(100.0 * p[1] / m)), E(p[0])))
+    resume = ', '.join('%s : %s' % (p[0], p[1]) for p in points)
+    return '<figure style="margin:0"><div class="barres" role="img" aria-label="%s. %s">%s</div></figure>' % (E(libelle), E(resume), ''.join(cols))
+
+
+def courbe(valeurs, axe, teinte='', libelle='Courbe'):
+    """Courbe SVG avec aire : valeurs = [nombres] ; axe = libellés (début, milieu, fin…)."""
+    n = len(valeurs)
+    m = max(valeurs) or 1
+    pts = ['%.1f,%.1f' % (300.0 * i / (n - 1), 96 - 88.0 * v / m) for i, v in enumerate(valeurs)]
+    aire = '0,100 ' + ' '.join(pts) + ' 300,100'
+    grille = ''.join('<line class="grille-l" x1="0" x2="300" y1="%d" y2="%d"/>' % (y, y) for y in (8, 52, 96))
+    svg = ('<svg class="courbe %s" viewBox="0 0 300 100" preserveAspectRatio="none" role="img" aria-label="%s : de %s à %s, maximum %s">%s'
+           '<polygon class="aire" points="%s"/><polyline class="ligne" points="%s"/></svg>' % (teinte, E(libelle), valeurs[0], valeurs[-1], m, grille, aire, ' '.join(pts)))
+    return '<div class="courbe-cadre">%s<div class="axe-x" aria-hidden="true">%s</div></div>' % (svg, ''.join('<span>%s</span>' % E(a) for a in axe))
+
+
+def points_serie(items):
+    """Série de pastilles rondes : items = [(libellé, teinte, icône)] ; teinte '' = vert."""
+    return '<ul class="points">%s</ul>' % ''.join(
+        '<li><span class="p %s" role="img" aria-label="%s : %s">%s</span>%s</li>' % (t, E(l), {'': 'bon', 'ambre': 'attention', 'rouge': 'échec', 'gris': 'inconnu'}[t], ic(i), E(l)) for l, t, i in items)
+
+
+def chiffres(items):
+    """Mini-tuiles dans un bloc : items = [(chiffre, libellé)]."""
+    return '<div class="chiffres">%s</div>' % ''.join('<div><b>%s</b><span>%s</span></div>' % (v, E(l)) for v, l in items)
+
+
+_ICONE_FEU = {'vert': 'coche', 'ambre': 'alerte', 'rouge': 'arret', 'bleu': 'chauffe', 'gris': 'aide'}
+_MOT_FEU = {'vert': 'Bon', 'ambre': 'Attention', 'rouge': 'Arrêté', 'bleu': 'En montée', 'gris': 'Inconnu'}
+_SYM_FEU = {'vert': '●', 'ambre': '▲', 'rouge': '■', 'bleu': '▶', 'gris': '○'}
+
+
+def tuile_feu(nom, etat, sous, contenu='', href=None):
+    """Grande tuile colorée d'état (feu) : rond plein + nom + pastille + contenu."""
+    tete = ('<div class="tuile-feu-tete"><span class="rond" aria-hidden="true">%s</span><div class="tuile-feu-nom"><strong>%s</strong><span>%s</span></div></div>'
+            % (ic(_ICONE_FEU[etat]), E(nom), badge(etat, _MOT_FEU[etat], _SYM_FEU[etat]) + ' <span class="petit">%s</span>' % E(sous) if sous else badge(etat, _MOT_FEU[etat], _SYM_FEU[etat])))
+    if href:
+        return '<a class="tuile-feu %s" href="%s">%s%s</a>' % (etat, href, tete, contenu)
+    return '<div class="tuile-feu %s">%s%s</div>' % (etat, tete, contenu)
+
+
+def verdict_global(titre, sous, teinte='vert', icone='coche', droite=''):
+    return '<div class="verdict-global %s" role="status"><span class="rond" aria-hidden="true">%s</span><div class="quoi"><strong>%s</strong><span>%s</span></div>%s</div>' % (
+        '' if teinte == 'vert' else teinte, ic(icone), E(titre), sous, droite)
+
+
+def initiales(nom, teinte=''):
+    ini = ''.join(m[0] for m in nom.replace('’', ' ').split() if m[0].isalpha())[:2].upper()
+    return '<span class="initiales %s" aria-hidden="true">%s</span>' % (teinte, ini)
+
+
+def ligne(titre, sous, gauche='', droite='', href=None, attrs=''):
+    """Grande ligne cliquable (≥ 68 px) : pastille à gauche, titre + détail, statut à droite."""
+    corps = '%s<span class="quoi"><strong>%s</strong><span>%s</span></span>%s' % (gauche, titre, sous, droite)
+    if href:
+        return '<li><a class="ligne" href="%s" %s>%s%s</a></li>' % (href, attrs, corps, ic('chevron-d', 'fleche-ligne'))
+    return '<li><div class="ligne" %s>%s</div></li>' % (attrs, corps)
+
+
+def lignes(*items):
+    return '<ul class="lignes">%s</ul>' % ''.join(items)
+
+
+def frise(etapes, courant=1):
+    """Stepper visuel numéroté ; boutons pilotés par app.js ([data-assistant])."""
+    return '<ol class="frise" aria-label="Étapes">%s</ol>' % ''.join(
+        '<li><button type="button"%s%s><span class="n">%s</span><span class="txt">%s</span></button></li>' % (
+            ' aria-current="step"' if i + 1 == courant else '', ' class="fait"' if i + 1 < courant else '',
+            ic('coche') if i + 1 < courant else str(i + 1), E(e)) for i, e in enumerate(etapes))
+
+
+def mini_titre(t):
+    return '<h2 class="mini-titre">%s</h2>' % E(t)
+
+
+def onglets_nav(nom, items, actif):
+    """Onglets de navigation (liens) : items = [(href, libellé, nombre)]."""
+    return '<nav class="onglets" aria-label="%s">%s</nav>' % (E(nom), ''.join(
+        '<a href="%s"%s>%s%s</a>' % (h, ' aria-current="page"' if h == actif else '', E(l), (' <span class="nb">%s</span>' % n) if n else '') for h, l, n in items))

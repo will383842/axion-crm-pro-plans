@@ -11,13 +11,14 @@ Toutes les pages du CRM et la barre latérale, **avant tout codage**. Données f
 
 ## Ce qui est à savoir
 
-- **Le cadre violet pointillé en bas à droite n'est pas dans le produit.** Il sert à voir chaque écran dans ses 4 états : **Normal, Vide, Erreur, Chargement**.
+- **Le cadre violet pointillé « Maquette », sous l'en-tête, n'est pas dans le produit.** Il sert à voir chaque écran dans ses 4 états : **Normal, Vide, Erreur, Chargement**.
 - **Ctrl K** (ou la barre « Rechercher ou agir… ») : aller partout et lancer une action.
 - **Raccourcis** : `G` puis `A` (Aujourd'hui), `R` (Réponses), `C` (Campagnes), `F` (Affaires), `T` (Tâches), `S` (Santé des envois). Désactivables dans « Mon compte ».
 - **Tout arrêter** (bouton rouge en haut) marche vraiment dans la maquette : un bandeau rouge apparaît sur toutes les pages jusqu'à « Reprendre les envois ».
 - Les boutons qui feraient un vrai travail affichent un petit message en bas à gauche (avec « Annuler » quand c'est réversible).
 - Règles tenues : clair seulement ; **un seul bouton plein par écran** ; peu de texte ; « Affaires » et non « Pipeline » ; alertes **console + e-mail** seulement ; aucune marque blanche ; aucun constructeur visuel d'automatisations.
 - Contrôle automatique fait le 01/11 : 45 pages × 4 états × 2 largeurs (1 280 px et 360 px) : **0 erreur, 0 défilement horizontal, 0 page avec deux boutons pleins, 0 violation d'accessibilité** (axe-core, WCAG 2.2 AA).
+- **Lot U1bis (refonte visuelle)** : nouveau socle (cartes à cadre, blocs colorés par sens, pastilles pleines, gros chiffres, graphiques) et 5 pages repères refaites : `index.html`, `contacts.html`, `campagne-nouvelle.html`, `sante.html`, `reponses.html`. Guide des composants : `GUIDE-STYLE.md`. Captures : `captures/`. Contrôle : `python3 _fabrique/controle.py` (0 chevauchement, 0 débordement, 0 contraste sous 4,5:1, 1 seul bouton plein, aux 4 largeurs 1440 / 1024 / 768 / 360 px).
 
 ## Test de 45 minutes avec Will : 7 tâches
 
@@ -48,6 +49,8 @@ Reste du temps (≈ 10 min) : faire défiler `plan-des-pages.html` et noter les 
 ## Fichiers
 
 - `index.html` : coquille (barre latérale, en-tête, recherche, centre d'alertes) + Aujourd'hui.
+- `GUIDE-STYLE.md` : les composants du style (nom, usage, exemple).
+- `captures/` : captures des 5 pages repères à 4 largeurs.
 - `style.css` : jetons de design (couleurs, espacements, rayons, typographie système, états vide / chargement / erreur, contrastes AA mesurés).
 - `app.js` : comportements (menu, onglets au clavier, fenêtres, Ctrl K, états, Tout arrêter). Code maison, aucune bibliothèque, aucune police externe.
 - Une page HTML par écran (liste complète : `plan/23-MAQUETTES-INDEX.md`).

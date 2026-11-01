@@ -13,6 +13,7 @@ import pages_travail  # noqa: E402
 import pages_prospecter  # noqa: E402
 import pages_envois  # noqa: E402
 import pages_reglages  # noqa: E402
+import pages_reperes  # noqa: E402  (lot U1bis : 5 pages repères)
 
 MAQ = os.path.dirname(ICI)
 DEPOT = os.path.dirname(MAQ)
@@ -88,7 +89,7 @@ def plan_des_pages():
         lignes = [['<a href="%s"><strong>%s</strong></a>' % (f, E(p)), badge('gris' if e.startswith('Existante') else 'violet', 'Reprise' if e.startswith('Existante') else ('Nouvelle' if e == NV else 'Outil'), '↻' if e.startswith('Existante') else '+'), E(l), E(c)] for p, f, r, e, l, c in items]
         h.append('<h2 class="mini-titre">%s</h2>' % E(groupe) + tableau(groupe, ['Page', 'État', 'Lot', 'Contenu'], lignes))
     n = sum(len(i) for _, i in INVENTAIRE)
-    P = page('plan-des-pages', 'Toutes les maquettes', '<strong>%d pages</strong>. Chaque page a 4 états : normal, vide, erreur, chargement (sélecteur en bas à droite).' % n, ''.join(h))
+    P = page('plan-des-pages', 'Toutes les maquettes', '<strong>%d pages</strong>. Chaque page a 4 états : normal, vide, erreur, chargement (cadre « Maquette » sous l’en-tête).' % n, ''.join(h))
     return P
 
 
@@ -97,7 +98,7 @@ def index_md():
          '**But.** Montrer TOUTES les pages et la barre latérale avant tout codage d’écran (plan 20, lot U1). Ouvrir `maquettes/index.html` dans un navigateur (mode d’emploi : `maquettes/LISEZ-MOI.md`).', '',
          '**Sources.** Pages existantes : `frontend/src/app/routeTree.tsx` et `components/layout/Sidebar.tsx` du dépôt `axion-crm-pro` (lu, non modifié). Pages nouvelles : plan 20 § 3 (U0 à U13), § 9 à 11 ; `07-ux-ui-2027.md` (13 écrans) ; `12-verif-ui-ecran-par-ecran.md` (UI-xx).', '',
          '**Règles tenues partout.** Clair seulement. Un seul bouton plein visible par écran et par état. Vocabulaire simple (« Affaires », pas « Pipeline »). Blocs colorés au même sens que la console d’Axion. Alertes : console + e-mail seulement. Aucune marque blanche. Aucun constructeur visuel d’automatisations. Données factices (domaines en `.example`, aucune IP, aucune personne réelle).', '',
-         '**États.** Chaque écran a un état normal, vide, erreur (et chargement), choisis par le sélecteur « Maquette » en bas à droite ou par l’adresse `?etat=vide`, `?etat=erreur`, `?etat=chargement`.', '']
+         '**États.** Chaque écran a un état normal, vide, erreur (et chargement), choisis par le cadre « Maquette » placé sous l’en-tête (dans le flux, jamais par-dessus le contenu) ou par l’adresse `?etat=vide`, `?etat=erreur`, `?etat=chargement`.', '']
     total = 0
     for groupe, items in INVENTAIRE:
         l.append('## %s' % groupe)
@@ -119,6 +120,12 @@ def index_md():
           '3. **« Montée en douceur »** dans le menu (lexique de 07), avec « chauffe » entre parenthèses dans cet index.',
           '4. **Affaires** est maquetté maintenant, mais son codage reste en V1 (lot Q2), comme au plan 20.',
           '5. **Collectes de données** passent dans Réglages (07 § 2.1) : ce sont des outils pour alimenter la base, pas de la prospection.', '',
+          '## Lot U1bis : refonte visuelle (01/11/2026)', '',
+          'Retour de Will : éléments qui se chevauchent, trop de texte, pas assez de cadres, de blocs et de pastilles, boutons peu visibles, contraste faible. Réponse :',
+          '- **Nouveau socle** (`maquettes/style.css`, `_fabrique/socle.py`) : cartes blanches à cadre net, blocs colorés par sens, pastilles pleines, tuiles à gros chiffres, jauges, anneaux, barres, courbes, grandes tuiles de feu, stepper, un seul gros bouton plein par écran. Guide : `maquettes/GUIDE-STYLE.md`.',
+          '- **5 pages repères refaites** (`_fabrique/pages_reperes.py`) : Aujourd’hui, Contacts, Nouvelle campagne, Santé des envois, Réponses. Captures : `maquettes/captures/`.',
+          '- **Contrôle automatique** `_fabrique/controle.py` (Playwright) : chevauchements, débordements, contrastes, taille du texte, bouton plein unique, à 1440 / 1024 / 768 / 360 px. Résultat : 0 problème sur les 45 pages.',
+          '- Les 40 autres pages gardent leur contenu mais prennent le nouveau style ; elles seront refaites avec le guide.', '',
           '## Fabrication', '',
           'Les fichiers HTML sont produits par `maquettes/_fabrique/fabrique.py` (Python 3, sans dépendance) : modifier le script, puis relancer `python3 maquettes/_fabrique/fabrique.py`. Ce fichier 23 est régénéré en même temps.', '']
     return '\n'.join(l)
@@ -126,7 +133,7 @@ def index_md():
 
 def main():
     pages = {}
-    for m in (pages_travail, pages_prospecter, pages_envois, pages_reglages):
+    for m in (pages_travail, pages_prospecter, pages_envois, pages_reglages, pages_reperes):
         pages.update(m.P)
     pages['plan-des-pages.html'] = plan_des_pages()
     # Garde : chaque page de l'inventaire existe

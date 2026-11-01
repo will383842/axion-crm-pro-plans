@@ -5,23 +5,6 @@ from socle import *  # noqa: F401,F403
 P = {}
 
 
-def _sante():
-    normal = (tuiles([('Boîtes prêtes', '4 / 4', 'il y a 3 min'), ('Volume possible', '120', 'aujourd’hui'), ('Adresses refusées', '0,8 %', 'seuil 2 %'), ('Plaintes', '0 %', 'seuil 0,1 %')])
-              + '<div class="grille deux">'
-              + bloc('Par domaine', tableau('Domaines', ['Domaine', 'État', 'Boîtes', 'Aujourd’hui'], [
-                  ['<a href="domaines.html"><strong>prospection-a.example</strong></a>', feu('vert'), '2', '<span class="chiffre">48 / 80</span>'],
-                  ['<a href="domaines.html"><strong>prospection-b.example</strong></a>', feu('ambre', 'Ralenti'), '1', '<span class="chiffre">12 / 40</span>'],
-                  ['<a href="domaines.html"><strong>prospection-c.example</strong></a>', feu('vert', 'En montée'), '1', '<span class="chiffre">8 / 10</span>']]))
-              + bloc('Test du matin', '<p>%s 07:05 · 4 boîtes témoins sur 4 · arrivée en boîte de réception.</p><p class="petit" style="margin-top:6px">Signature et autorisation reconnues partout.</p>' % feu('vert', 'Réussi'), 'vert', 'test', pied=btn('Voir les serveurs', 'petit', 'serveurs.html'))
-              + '</div>'
-              + bloc('Une boîte est ralentie', '<p>will@prospection-b.example : 3 % de refus temporaires depuis 09:30. Le système a divisé son volume par deux. Rien à faire si cela redescend avant demain.</p>', 'ambre', 'alerte', pied=btn('Voir ce qui s’est passé', 'plein', 'alertes.html'))
-              + bloc('Arrêt d’urgence', '<p>Coupe tous les envois en 2 clics. Rien n’est perdu.</p>', 'gris', 'arret', mot='Sécurité', pied='<button type="button" class="btn btn-danger" data-ouvre="fen-arret">Tout arrêter</button>'))
-    erreur = etat_erreur('Les chiffres de santé ne sont pas lisibles. Par prudence, on ne les affiche pas en vert. Les envois continuent sous la surveillance du serveur.', 'État des envois inconnu')
-    P['sante.html'] = page('sante', 'Santé des envois', '%s <strong>4 boîtes sur 4 prêtes.</strong> Volume possible aujourd’hui : 120. Une boîte est ralentie.' % feu('vert'), normal,
-                           etat_vide('sante', 'Aucun envoi pour l’instant', 'Ajoutez un domaine et une boîte pour commencer la montée en douceur.', btn('Ajouter un domaine', 'plein', 'domaines.html')), erreur,
-                           onglets_haut='<nav class="onglets" aria-label="Sections des envois"><a href="sante.html" aria-current="page">Vue d’ensemble</a><a href="boites.html">Boîtes</a><a href="domaines.html">Domaines</a><a href="chauffe.html">Montée en douceur</a><a href="desinscriptions.html">Désinscriptions</a><a href="alertes.html">Alertes</a><a href="serveurs.html">Serveurs</a></nav>')
-
-
 def _boites():
     lignes = [['<strong>%s</strong><span class="sous">%s</span>' % (a, n), d, feu(e, m), '<span class="chiffre">%s</span>' % v, p, btn('Ouvrir', 'petit-discret', 'chauffe.html')] for a, n, d, e, m, v, p in [
         ('claire@prospection-a.example', 'Claire (équipe Axion)', 'prospection-a.example', 'vert', 'Bon', '24 / 40', 'Jour 30 · fini'),
@@ -136,5 +119,5 @@ def _statistiques():
                                   actions=btn('Exporter', 'contour', icone='export', attrs='data-toast="Export prêt · Télécharger."'))
 
 
-for f in (_sante, _boites, _domaines, _serveurs, _chauffe, _alertes, _desinscriptions, _desinscription_publique, _statistiques):
+for f in (_boites, _domaines, _serveurs, _chauffe, _alertes, _desinscriptions, _desinscription_publique, _statistiques):
     f()

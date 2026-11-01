@@ -5,78 +5,6 @@ from socle import *  # noqa: F401,F403
 P = {}
 
 
-# ---------------- Aujourd'hui (tableau de bord) ----------------
-def _index():
-    normal = (
-        tuiles([('Réponses à traiter', '7', 'dont 2 intéressées · il y a 3 min'),
-                ('Tâches du jour', '5', '1 en retard'),
-                ('À valider', '1', 'campagne « Fédérations T1 »'),
-                ('Envoyés hier', '96', 'sur 120 possibles')])
-        + '<div class="grille deux">'
-        + bloc('Réponses du matin', '<ul class="liste">'
-               '<li>%s<span class="quoi"><strong>Claire Durand · Garage Durand</strong><small>« Pouvez-vous me rappeler jeudi ? »</small></span></li>'
-               '<li>%s<span class="quoi"><strong>Hugo Petit · Club de voile du Lac</strong><small>« Envoyez-moi une proposition. »</small></span></li>'
-               '<li>%s<span class="quoi"><strong>5 autres réponses</strong><small>3 absences, 1 STOP, 1 à rattacher</small></span></li></ul>'
-               % (badge('terracotta', 'Intéressé'), badge('terracotta', 'Intéressé'), badge('gris', 'À trier', '○')),
-               'terracotta', 'reponses', pied=btn('Traiter les réponses', 'plein', 'reponses.html', 'fleche'),
-               attrs='aria-label="Réponses du matin"')
-        + bloc('Mes tâches du jour', '<ul class="liste">'
-               '<li><input type="checkbox" aria-label="Marquer faite : Appeler Claire Durand" data-toast="Tâche faite." data-annulable style="width:20px;height:20px"><span class="quoi"><strong>Appeler Claire Durand</strong><small>Avant 11:00 · Garage Durand</small></span>%s</li>'
-               '<li><input type="checkbox" aria-label="Marquer faite : Envoyer le devis" data-toast="Tâche faite." data-annulable style="width:20px;height:20px"><span class="quoi"><strong>Envoyer le devis</strong><small>Club de voile du Lac</small></span></li>'
-               '<li><input type="checkbox" aria-label="Marquer faite : Relancer la fédération" data-toast="Tâche faite." data-annulable style="width:20px;height:20px"><span class="quoi"><strong>Relancer la fédération</strong><small>En retard depuis hier</small></span>%s</li></ul>'
-               % (badge('bleu', '11:00', '◷'), badge('rouge', 'En retard', '■')),
-               'bleu', 'taches', pied=btn('Voir toutes les tâches', 'petit', 'taches.html'))
-        + '</div><div class="grille trois" style="margin-top:16px">'
-        + bloc('Campagne à valider', '<p><strong>Fédérations T1</strong> · 84 personnes · message n° 2</p><p class="petit" style="margin-top:6px">Contrôles : 7 sur 7 au vert.</p>',
-               'terracotta', 'campagne', pied=btn('Relire et valider', 'petit', 'campagne-suivi.html'))
-        + bloc('Santé des envois', '<p>%s 4 boîtes sur 4 prêtes.</p><p class="petit" style="margin-top:6px">Volume possible aujourd’hui : 120. Test du matin réussi à 07:05.</p>' % feu('vert'),
-               'vert', 'sante', pied=btn('Voir le détail', 'petit', 'sante.html'))
-        + bloc('Mise en route : 3 sur 5', '<div class="barre-progression" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3" aria-label="Mise en route : 3 jalons faits sur 5"><span style="width:60%"></span></div><p class="petit" style="margin-top:10px">Suivant : premier message (≈ 10 min).</p>',
-               'violet', 'etincelle', pied=btn('Continuer la mise en route', 'petit', 'mise-en-route.html'))
-        + '</div>'
-        + bloc('À valider venant du site', '<ul class="liste"><li>%s<span class="quoi"><strong>3 propositions de fiches</strong><small>Venues de la console du site</small></span><a class="btn btn-discret petit-btn" href="a-valider.html">Ouvrir</a></li>'
-               '<li>%s<span class="quoi"><strong>2 personnes à rattacher</strong><small>Même e-mail, deux fiches possibles</small></span><a class="btn btn-discret petit-btn" href="a-valider.html#rattacher">Ouvrir</a></li></ul>' % (badge('gris', '3', '○'), badge('gris', '2', '○')),
-               'gris', 'liste')
-    )
-    vide = etat_vide('taches', 'Rien à faire aujourd’hui', 'Aucune réponse, aucune tâche, aucune alerte. Profitez-en pour préparer la prochaine campagne.', btn('Créer une campagne', 'plein', 'campagne-nouvelle.html'))
-    P['index.html'] = page('index', 'Aujourd’hui', 'Bonjour Will. <strong>7 réponses</strong> et <strong>5 tâches</strong> vous attendent. Envois : tout va bien.',
-                           normal, vide, actions=btn('Nouvelle campagne', 'contour', 'campagne-nouvelle.html', 'plus'))
-
-
-# ---------------- Contacts (personnes) ----------------
-_PERS = [('Paul Martin', 'Boulangerie Martin', 'Gérant', 'Contacté', 'vert', 'Joignable'),
-         ('Claire Durand', 'Garage Durand', 'Dirigeante', 'Répondu', 'vert', 'Joignable'),
-         ('Hugo Petit', 'Club de voile du Lac', 'Président', 'Rendez-vous', 'vert', 'Joignable'),
-         ('Inès Moreau', 'Fédération des Fêtes de Village', 'Secrétaire', 'À contacter', 'ambre', 'À revérifier'),
-         ('Louis Bernard', 'Atelier Bernard', 'Artisan', 'Perdu', 'gris', 'Ne plus écrire')]
-
-
-def _contacts():
-    lignes = []
-    for n, e, r, et, f, j in _PERS:
-        lignes.append(['<input type="checkbox" aria-label="Choisir %s" style="width:20px;height:20px;vertical-align:middle;margin-right:8px"><a href="contact.html"><strong>%s</strong></a>' % (n, n),
-                       '<a href="entreprise.html">%s</a>' % e, r, badge('bleu' if et not in ('Perdu',) else 'gris', et, '◆'),
-                       feu(f, j), btn('Ouvrir', 'petit-discret', 'contact.html')])
-    liste = (filtres(['Toutes', 'Moi', 'À contacter', 'Ont répondu', 'Ne plus écrire'])
-             + tableau('Personnes', ['Personne', 'Entreprise', 'Rôle', 'Étape', 'Joignable', ''], lignes)
-             + '<div class="barre-selection" role="region" aria-label="Sélection">2 personnes choisies %s %s %s</div>'
-             % (btn('Ajouter à une liste', 'petit'), btn('Ajouter une étiquette', 'petit'), btn('Changer l’étape', 'petit')))
-    ajout = fenetre('fen-ajout', 'Ajouter un contact',
-                    champ('Prénom et nom', 'aj-nom', valeur='') + champ('E-mail', 'aj-mail', 'email', aide='On vérifie les doublons pendant la saisie.')
-                    + champ('Entreprise', 'aj-ent') + champ('Provenance', 'aj-prov', 'select', ['Choisir…', 'Salon', 'Site internet', 'Recommandation', 'Fichier importé'], aide='Obligatoire : d’où vient ce contact ?'),
-                    '<button type="button" class="btn btn-contour" data-ferme>Annuler</button><button type="button" class="btn btn-plein" data-ferme data-toast="Contact ajouté.">Ajouter le contact</button>')
-    import_ = fenetre('fen-import', 'Importer un fichier',
-                      '<ol class="etapes-com" style="margin-bottom:16px"><li aria-current="step">1. Fichier</li><li>2. Colonnes</li><li>3. Contrôle</li></ol>'
-                      + champ('Fichier (CSV ou Excel)', 'imp-fichier', 'text', 'contacts-salon-factice.csv') + champ('Provenance', 'imp-prov', 'select', ['Salon des artisans 2026', 'Autre…']),
-                      '<button type="button" class="btn btn-contour" data-ferme>Annuler</button><button type="button" class="btn btn-contour" data-ferme data-toast="100 lignes lues : 92 nouvelles, 8 doublons à vérifier.">Continuer : colonnes</button>')
-    vide = etat_vide('personnes', 'Aucun contact pour l’instant', 'Importez un fichier ou ajoutez votre premier contact à la main.', btn('Importer un fichier', 'plein', attrs='data-ouvre="fen-import"'))
-    P['contacts.html'] = page('contacts', 'Contacts', '<strong>1 248 personnes</strong> · 1 102 joignables · 8 doublons à vérifier.',
-                              liste, vide,
-                              actions=btn('Importer', 'contour', icone='collecte', attrs='data-ouvre="fen-import"') + btn('Ajouter un contact', 'plein', icone='plus', attrs='id="ajout" data-ouvre="fen-ajout"'),
-                              onglets_haut='<nav class="onglets" aria-label="Sections de Contacts"><a href="contacts.html" aria-current="page">Personnes</a><a href="listes.html">Listes</a><a href="listes.html#etiquettes">Étiquettes</a><a href="doublons.html">Doublons (8)</a><a href="a-valider.html">À valider (5)</a></nav>',
-                              apres=ajout + import_)
-
-
 # ---------------- Fiche contact ----------------
 def _contact():
     gauche = (bloc('Étape', '<ol class="etapes-com" aria-label="Étapes commerciales"><li class="passe">À contacter</li><li class="passe">Contacté</li><li aria-current="step">Répondu</li><li>Rendez-vous</li><li>Devis</li><li>Gagné</li><li>Perdu</li></ol>')
@@ -238,5 +166,5 @@ def _mise_en_route():
                                    actions=btn('Écrire le premier message', 'plein', 'message-editeur.html', 'fleche'), fil=[('Aujourd’hui', 'index.html', 'index')])
 
 
-for f in (_index, _contacts, _contact, _entreprises, _entreprise, _reseaux, _listes, _doublons, _a_valider, _affaires, _taches, _mise_en_route):
+for f in (_contact, _entreprises, _entreprise, _reseaux, _listes, _doublons, _a_valider, _affaires, _taches, _mise_en_route):
     f()

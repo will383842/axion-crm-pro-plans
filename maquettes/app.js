@@ -150,8 +150,8 @@
     b.hidden = !actif;
     var feu = $('.feu-entete');
     if (feu) {
-      feu.style.background = actif ? '#fdecec' : '';
-      feu.style.color = actif ? '#8f1414' : '';
+      feu.style.background = actif ? '#b91c1c' : '';
+      feu.style.color = actif ? '#ffffff' : '';
       var mot = $('.mot-feu', feu); if (mot) { mot.textContent = actif ? 'Envois : arrêtés' : 'Envois : normaux'; }
       feu.setAttribute('aria-label', actif ? 'État des envois : arrêtés' : 'État des envois : normaux');
     }
@@ -219,7 +219,14 @@
     if (ev.key === '/') { ev.preventDefault(); ouvrirPalette(); }
   });
 
+  /* ---------- Lignes de tableau cliquables (le lien de la 1re cellule reste la voie clavier) ---------- */
+  document.addEventListener('click', function (ev) {
+    var tr = ev.target.closest('tr[data-href]');
+    if (tr && !ev.target.closest('a, button, input, select, label, textarea')) { window.location.href = tr.getAttribute('data-href'); }
+  });
+
   /* ---------- Assistant à étapes ---------- */
+  var COCHE = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   $$('[data-assistant]').forEach(function (a) {
     var panneaux = $$('[data-etape]', a), boutons = $$('.frise button', a);
     function aller(n) {
@@ -227,6 +234,8 @@
       boutons.forEach(function (b, i) {
         if (i + 1 === n) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
         b.classList.toggle('fait', i + 1 < n);
+        var rond = $('.n', b);
+        if (rond) { rond.innerHTML = i + 1 < n ? COCHE : String(i + 1); }
       });
       var titre = $('[data-etape="' + n + '"] h2', a); if (titre) { titre.setAttribute('tabindex', '-1'); titre.focus(); }
     }

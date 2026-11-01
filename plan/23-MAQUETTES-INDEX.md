@@ -6,7 +6,7 @@
 
 **Règles tenues partout.** Clair seulement. Un seul bouton plein visible par écran et par état. Vocabulaire simple (« Affaires », pas « Pipeline »). Blocs colorés au même sens que la console d’Axion. Alertes : console + e-mail seulement. Aucune marque blanche. Aucun constructeur visuel d’automatisations. Données factices (domaines en `.example`, aucune IP, aucune personne réelle).
 
-**États.** Chaque écran a un état normal, vide, erreur (et chargement), choisis par le sélecteur « Maquette » en bas à droite ou par l’adresse `?etat=vide`, `?etat=erreur`, `?etat=chargement`.
+**États.** Chaque écran a un état normal, vide, erreur (et chargement), choisis par le cadre « Maquette » placé sous l’en-tête (dans le flux, jamais par-dessus le contenu) ou par l’adresse `?etat=vide`, `?etat=erreur`, `?etat=chargement`.
 
 ## Travailler
 
@@ -97,6 +97,14 @@
 3. **« Montée en douceur »** dans le menu (lexique de 07), avec « chauffe » entre parenthèses dans cet index.
 4. **Affaires** est maquetté maintenant, mais son codage reste en V1 (lot Q2), comme au plan 20.
 5. **Collectes de données** passent dans Réglages (07 § 2.1) : ce sont des outils pour alimenter la base, pas de la prospection.
+
+## Lot U1bis : refonte visuelle (01/11/2026)
+
+Retour de Will : éléments qui se chevauchent, trop de texte, pas assez de cadres, de blocs et de pastilles, boutons peu visibles, contraste faible. Réponse :
+- **Nouveau socle** (`maquettes/style.css`, `_fabrique/socle.py`) : cartes blanches à cadre net, blocs colorés par sens, pastilles pleines, tuiles à gros chiffres, jauges, anneaux, barres, courbes, grandes tuiles de feu, stepper, un seul gros bouton plein par écran. Guide : `maquettes/GUIDE-STYLE.md`.
+- **5 pages repères refaites** (`_fabrique/pages_reperes.py`) : Aujourd’hui, Contacts, Nouvelle campagne, Santé des envois, Réponses. Captures : `maquettes/captures/`.
+- **Contrôle automatique** `_fabrique/controle.py` (Playwright) : chevauchements, débordements, contrastes, taille du texte, bouton plein unique, à 1440 / 1024 / 768 / 360 px. Résultat : 0 problème sur les 45 pages.
+- Les 40 autres pages gardent leur contenu mais prennent le nouveau style ; elles seront refaites avec le guide.
 
 ## Fabrication
 
