@@ -144,6 +144,10 @@
 - Pages sans entrée de menu (le menu reste celui de Will) : Mes tâches et Affaires (onglets du Tableau de bord), Mon compte (avatar), Sauvegardes (carte de Santé du système) ; côté Envoi : Résultats, Messages types, Calendrier (onglets de Campagnes), Chercher un envoi et Feu vert (onglets de Santé des envois), Configuration (onglet de Serveurs), fiches Boîte et Domaine.
 - Pages retirées par rapport au lot U1bis : `a-valider`, `presse`, `reseaux`, `technique`, `statistiques`, `reglages`, `equipe`, `sauvegardes`, `mise-en-route`, `v1-ecrans` (leur contenu est réparti dans les pages ci-dessus, au bon endroit du menu de Will). Les écrans V1/V2 (clients, synchro, API…) restent décrits au plan 20.
 
+## Contrôle automatique (01/11/2026)
+
+`controle.py --toutes` : **73 pages × 4 largeurs (1440, 1024, 768, 360 px) = 1 300 vues** (4 états, chaque onglet, chaque étape d’assistant). Résultat : **0 chevauchement, 0 débordement, 0 contraste insuffisant, 0 texte sous 16 px (hors pastilles), 0 écran à deux boutons pleins, 0 erreur JavaScript.** Captures légères (premier écran) de 8 pages clés dans `maquettes/captures/`.
+
 ## Les 15 ajouts prioritaires du plan 27 : où les voir
 
 | Rang | Ajout | Maquette |

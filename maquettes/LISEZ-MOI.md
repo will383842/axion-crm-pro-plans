@@ -19,7 +19,7 @@ Deux produits distincts, facturés à part, **avant tout codage**. Données fact
 - **Ctrl K** : aller partout, chercher un envoi par adresse, ajouter une adresse IP, lancer une campagne vers une étiquette.
 - **Tout arrêter** (dans Envoi, bouton rouge en haut) marche dans la maquette : un bandeau rouge reste affiché jusqu'à « Reprendre les envois ».
 - Les boutons qui feraient un vrai travail affichent un petit message en bas à gauche.
-- Contrôle automatique (`python3 _fabrique/controle.py --toutes`) : toutes les pages, 4 états, chaque onglet et chaque étape, à 1440, 1024, 768 et 360 px. Résultat dans `plan/23-MAQUETTES-INDEX.md` et ci-dessous.
+- Contrôle automatique (`python3 _fabrique/controle.py --toutes`) : toutes les pages, 4 états, chaque onglet et chaque étape, à 1440, 1024, 768 et 360 px. Résultat du 01/11 : **73 pages, 1 300 vues, 0 chevauchement, 0 débordement, 0 contraste insuffisant, 0 texte trop petit, 1 seul bouton plein par écran, 0 erreur JavaScript.**
 
 ## Test de 45 minutes avec Will : 7 tâches
 
