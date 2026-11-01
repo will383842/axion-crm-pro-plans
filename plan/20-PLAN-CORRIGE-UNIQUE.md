@@ -435,3 +435,29 @@ Un second agent (Opus) a relu ce fichier. **Totaux recalculés : exacts** (323 /
 8. **Zone grise avec vos rejets** : l'héritage « plateforme → secteur → client » (lot K2) ressemble aux « modèles prêts à l'emploi » que vous avez rejetés. À présenter comme des **réglages**, ou à confirmer avec vous.
 9. **Les 8 règles de préparation multi-client** sont toutes au plan, dispersées : règles de contrat unique dans E1 ; aucun secret/IP/nom de client dans S5 et P1 ; test à deux clients factices dans S7 ; les autres dans P1 à P5.
 10. **Petites incohérences** : « banc OK 11 déc » alors que E7 et E8 finissent en S10 (le banc est « OK sans les derniers réglages ») ; 3e domaine « avant le 15 mars » ; plafond de réponses 15/jour ici, 20 dans le fichier 13 (à trancher : **15** retenu) ; arrondis 16,5 → 16 et 33,5 → 34 au § 2.2 sans effet sur les totaux ; le plafond de 8 routines en parallèle tient compte des autres chantiers.
+
+---
+
+## 10. Décisions de Will du 01/11/2026 (elles priment sur le § 6)
+
+**Entité d'envoi : SAS française (décidé).** **Date de lancement : Will la choisit** ; rien ne démarre sans son feu vert explicite, toutes les dates se décalent d'autant.
+
+| Décision | Réponse de Will |
+|---|---|
+| 3 (point juridique en retard) | Suivre la recommandation : régler maintenant (brouillon préparé dans les notes privées, dépôt par Will) |
+| 4, 5, 6 | Oui (information du lot de septembre ; historique + rotation des clés ; France seulement) |
+| 7 | Oui : une boîte par domaine, au nom de Will (expéditeur réel et identifié ; jamais de faux nom) |
+| 8 | **A : 150 envois par boîte et par jour en V0** (la chauffe progressive reste la limite avant) |
+| 9 | **Un seul serveur d'envoi au début, le second prévu pour plus tard** (moteur remplaçable ; risque : refus du port 25 = repli par relais tiers, décision 41) |
+| 10, 14 à 16, 18 à 28 | Oui |
+| 11 | B (délégation à la routine Opus des lots d'écrans et de textes ; Will garde sécurité et envoi) |
+| 12 | Plus de 6 routines possibles (jusqu'à 8) ; les délais incompressibles (domaines, port 25) limitent plus que le code |
+| 13 | Oui : mesurer l'état réel du serveur actuel du CRM, **dans le premier lot (S1/S2), au lancement** |
+| 17 | A : codes envoyés depuis l'adresse transactionnelle dédiée ; vérifier que le domaine est vérifié (premier contrôle de S2) |
+| 29 | A : téléphone en V1 |
+| 31, 33 à 38, 40 | Oui |
+| 32 | Jamais d'utilisation des données d'un client sans son accord écrit |
+| 41 | Oui au relais tiers (F20) **en secours temporaire** ; non à F21 |
+| 30, 39, 42 | Plus tard |
+
+**Ce qui reste, côté plan :** rien. **Côté Will :** choisir la date de lancement, déposer la notification CNIL (brouillon prêt), changer le mot de passe exposé, puis les achats de la semaine de lancement (§ 7).
