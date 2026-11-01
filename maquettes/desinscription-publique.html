@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Désinscription">
+<meta name="description" content="Se désinscrire">
 <meta name="robots" content="noindex">
-<title>Désinscription · Axion CRM Pro (maquette)</title>
+<title>Se désinscrire · Axion Envoi (maquette)</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body><main id="contenu" class="ecran-seul" tabindex="-1"><form class="selecteur-etat" aria-label="Maquette : choisir l’état affiché" onsubmit="return false"><fieldset><legend>Maquette</legend>
+<body data-produit="envoi"><main id="contenu" class="ecran-seul" tabindex="-1"><form class="selecteur-etat" aria-label="Maquette : choisir l’état affiché" onsubmit="return false"><p class="note-reprise"><span class="badge violet" data-s="+">Nouvelle</span><span>Nouvelle page</span></p><fieldset><legend>Maquette</legend>
 <label><input type="radio" name="etat" value="normal" checked><span>Normal</span></label>
 <label><input type="radio" name="etat" value="vide"><span>Vide</span></label>
 <label><input type="radio" name="etat" value="erreur"><span>Erreur</span></label>
 <label><input type="radio" name="etat" value="chargement"><span>Chargement</span></label>
-</fieldset></form><div class="carte-seule"><section data-etat="normal"><p class="petit">prospection-a.example</p><h1 style="margin:8px 0 12px">Vous ne recevrez plus de messages d’Axion-IA.</h1><p>C’est fait, en un clic. Aucune autre démarche.</p><label class="case" style="margin-top:16px"><input type="checkbox"> Pour toute mon organisation</label><button type="button" class="btn btn-plein" style="width:100%;margin-top:8px" data-toast="C’est noté pour toute votre organisation.">Confirmer</button><p class="petit" style="margin-top:16px"><a href="#" data-toast="Page « Pourquoi ce message » ouverte.">Pourquoi ai-je reçu ce message ?</a></p></section><section data-etat="vide" hidden><h1>Déjà fait</h1><p style="margin-top:8px">Cette adresse est déjà désinscrite. Vous ne recevrez plus rien.</p></section><section data-etat="erreur" hidden role="alert"><h1>Lien incomplet</h1><p style="margin-top:8px">Répondez simplement « STOP » au message : c’est pris en compte de la même façon.</p></section></div></main><div class="toasts" id="toasts" aria-live="polite"></div></body>
+</fieldset></form><div class="carte-seule" style="text-align:center"><p class="petit">Message de la part de <strong>Axion-IA</strong></p><h1 style="margin:10px 0">Se désinscrire</h1><p style="margin-bottom:14px">p***@boulangerie-tilleuls.example ne recevra plus rien de notre part.</p><label class="case" style="justify-content:center"><input type="checkbox"> Toute mon organisation</label><button type="button" class="btn btn-plein large" data-toast="C’est fait. Vous ne recevrez plus rien.">Confirmer la désinscription</button><p class="petit" style="margin-top:12px">Un clic suffit. Aucune connexion demandée.</p></div></main><div class="toasts" id="toasts" aria-live="polite"></div></body>
 <script src="app.js"></script>
 </html>

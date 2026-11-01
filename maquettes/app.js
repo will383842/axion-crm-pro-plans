@@ -37,15 +37,13 @@
   });
 
   /* ---------- Barre latérale : groupes repliables + tiroir mobile ---------- */
-  $$('.groupe-titre').forEach(function (b) {
-    var id = b.getAttribute('aria-controls');
-    var cle = 'groupe-' + id;
-    if (lire(cle) === 'ferme') { b.setAttribute('aria-expanded', 'false'); $('#' + id).hidden = true; }
+  /* Menu en accordéon, comme le vrai menu : une seule section ouverte à la fois. */
+  var titres = $$('.groupe-titre');
+  titres.forEach(function (b) {
     b.addEventListener('click', function () {
-      var ouvert = b.getAttribute('aria-expanded') === 'true';
-      b.setAttribute('aria-expanded', String(!ouvert));
-      $('#' + id).hidden = ouvert;
-      ecrire(cle, ouvert ? 'ferme' : null);
+      var ouvrir = b.getAttribute('aria-expanded') !== 'true';
+      titres.forEach(function (x) { x.setAttribute('aria-expanded', 'false'); $('#' + x.getAttribute('aria-controls')).hidden = true; });
+      if (ouvrir) { b.setAttribute('aria-expanded', 'true'); $('#' + b.getAttribute('aria-controls')).hidden = false; }
     });
   });
   var barre = $('.barre'), boutonMenu = $('.bouton-menu'), voile = null;
@@ -211,7 +209,7 @@
     if (lire('raccourcis') === 'non') { return; }
     if (attenteG) {
       attenteG = false;
-      var dest = { a: 'index.html', r: 'reponses.html', c: 'campagnes.html', f: 'affaires.html', t: 'taches.html', s: 'sante.html' }[ev.key.toLowerCase()];
+      var dest = { a: 'index.html', r: 'reponses.html', c: 'campagnes.html', f: 'affaires.html', t: 'taches.html', s: 'sante.html', e: 'entreprises.html' }[ev.key.toLowerCase()];
       if (dest) { window.location.href = dest; }
       return;
     }
@@ -275,7 +273,7 @@
       ev.preventDefault();
       var v = $('#adresse-verif').value.trim().toLowerCase(), r = $('#resultat-verif');
       if (!v) { r.innerHTML = '<p class="petit">Saisissez une adresse e-mail ou un domaine.</p>'; return; }
-      var non = /paul@boulangerie-martin|garage-durand/.test(v);
+      var non = /paul@boulangerie-tilleuls|garage-saules/.test(v);
       r.innerHTML = non
         ? '<div class="verdict teinte-terracotta bloc"><strong>Non.</strong> Désinscription le 12 oct. 2026 (lien dans le message). Définitif.</div>'
         : '<div class="verdict teinte-vert bloc"><strong>Oui.</strong> Aucune opposition, aucune désinscription, adresse vérifiée il y a 9 jours.</div>';

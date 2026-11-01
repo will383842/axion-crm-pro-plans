@@ -1,111 +1,170 @@
-# 23 : Index des maquettes (lots U0 + U1) : 01/11/2026
+# 23 : Index des maquettes (lot M1 : deux produits, menu réel, reprise fidèle) : 01/11/2026
 
-**But.** Montrer TOUTES les pages et la barre latérale avant tout codage d’écran (plan 20, lot U1). Ouvrir `maquettes/index.html` dans un navigateur (mode d’emploi : `maquettes/LISEZ-MOI.md`).
+**But.** Montrer TOUTES les pages avant tout codage d’écran. Ouvrir `maquettes/index.html` dans un navigateur (mode d’emploi : `maquettes/LISEZ-MOI.md`).
 
-**Sources.** Pages existantes : `frontend/src/app/routeTree.tsx` et `components/layout/Sidebar.tsx` du dépôt `axion-crm-pro` (lu, non modifié). Pages nouvelles : plan 20 § 3 (U0 à U13), § 9 à 11 ; `07-ux-ui-2027.md` (13 écrans) ; `12-verif-ui-ecran-par-ecran.md` (UI-xx).
+**Décisions de Will appliquées (lot M1).**
+- **D1. Deux produits distincts**, facturés à part : **CRM Pro** (bleu de marque `#2448e5`) et **Envoi** (bleu-vert `#0a6e78`, texte blanc 6,0:1). Chaque page montre son produit : liseré coloré du menu, sélecteur de produit en haut du menu, badge et bande de couleur dans l’en-tête, bouton principal de la couleur du produit.
+- **D2. Menu du CRM = menu réel de Will, à l’identique** (`Sidebar.tsx`) : Tableau de bord ; À traiter ; Ma base ; Presse ; Réseaux ; Ciblage ; Alimenter la base ; Réglages ; Technique (accordéon : une section ouverte à la fois). **Envoi** est un espace à part : Campagnes, Réponses, Boîtes d’envoi, Domaines, Serveurs et adresses IP, Chauffe, Santé des envois, Désinscriptions, Alertes d’envoi, Réglages d’envoi.
+- **D3. Fidélité à l’existant** : chaque page qui existe dans le CRM réel reprend ses titres, colonnes, filtres, actions et textes (relevé du code, lecture seule). La colonne « Reprise de » donne le composant ; « Nouvelle » sinon. La même note est affichée en tête de chaque page (cadre « Maquette »).
+- **D4. Style** : `maquettes/GUIDE-STYLE.md`. **D5. Ajouts** : les 52 ajouts du plan 27 (dont les 15 premiers) ; voir le tableau en fin de fichier. **D6.** La cloche se remplit (6 notifications, des deux produits). **D7.** Données factices réalistes, aucun vrai nom.
 
-**Règles tenues partout.** Clair seulement. Un seul bouton plein visible par écran et par état. Vocabulaire simple (« Affaires », pas « Pipeline »). Blocs colorés au même sens que la console d’Axion. Alertes : console + e-mail seulement. Aucune marque blanche. Aucun constructeur visuel d’automatisations. Données factices (domaines en `.example`, aucune IP, aucune personne réelle).
+**États.** Chaque écran a un état normal, vide, erreur et chargement (cadre « Maquette » sous l’en-tête, ou `?etat=vide`, `?etat=erreur`, `?etat=chargement`).
 
-**États.** Chaque écran a un état normal, vide, erreur (et chargement), choisis par le cadre « Maquette » placé sous l’en-tête (dans le flux, jamais par-dessus le contenu) ou par l’adresse `?etat=vide`, `?etat=erreur`, `?etat=chargement`.
+## CRM Pro
 
-## Travailler
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Bonjour Will | `maquettes/index.html` | CRM Pro | `frontend/src/features/dashboard/DashboardPage.tsx (+ AFaire, MesAudiences, SizeDistributionChart)` |
+| Affaires | `maquettes/affaires.html` | CRM Pro | Nouvelle |
+| Mes tâches | `maquettes/taches.html` | CRM Pro | Nouvelle |
 
-| Page | Maquette | Route(s) actuelle(s) | État | Lot du plan 20 | Contenu en une phrase |
-|---|---|---|---|---|---|
-| Barre latérale et en-tête | `maquettes/index.html` | coquille actuelle (Sidebar, Header) | Existante, reprise dans le nouveau style | U0, U1 | Menu groupé (Travailler, Prospecter, Envois, Mesurer, Réglages), recherche Ctrl K, feu des envois, cloche des alertes, « Tout arrêter ». |
-| Aujourd’hui (tableau de bord) | `maquettes/index.html` | `/` | Existante, reprise dans le nouveau style | U2-U9 (07 § 3.1) ; frein UI-45 en U11 | Ce qu’il faut faire aujourd’hui : réponses, tâches, campagne à valider, santé, mise en route. |
-| Mise en route | `maquettes/mise-en-route.html` | — | Nouvelle | U12 (UI-19) | Les 5 jalons jusqu’à la première campagne, avec le temps de chacun. |
-| Contacts (personnes) | `maquettes/contacts.html` | `/contacts, /console/contacts, /crm (redirection)` | Existante, reprise dans le nouveau style | Q1 + U2-U9 (07 § 3.4) ; ajout rapide UI-55 en U12 | Liste des personnes, filtres, ajout, import de fichier, actions de masse. |
-| Fiche contact | `maquettes/contact.html` | `/console/personnes/$personKey` | Existante, reprise dans le nouveau style | U2-U9 (07 § 3.2) + Q1 | Étape commerciale, historique, « peut-on lui écrire ? », prochaine tâche, notes. |
-| Entreprises | `maquettes/entreprises.html` | `/companies` | Existante, reprise dans le nouveau style | U2-U9 | Liste des entreprises avec secteur, ville, nombre de personnes et étape. |
-| Fiche entreprise | `maquettes/entreprise.html` | `/companies/$companyId` | Existante, reprise dans le nouveau style | U2-U9 (07 § 3.2) | Affaire en cours, personnes, historique, questionnaire « X sur N », droit d’écrire. |
-| Réseaux (fédérations, événements, international) | `maquettes/reseaux.html` | `/federations, /federations/$id, /evenements, /evenements/$id, /international/roumanie` | Existante, reprise dans le nouveau style | U2-U9 (reprise) | Fédérations et ordres, événements, entreprises hors de France (lecture seule). |
-| Listes, listes dynamiques, étiquettes | `maquettes/listes.html` | `/listes, /listes/$id, /audiences, /audiences/new, /audiences/$id, /tags` | Existante, reprise dans le nouveau style | U2-U9 (07 § 3.4) ; vérification UI-21 en U12 | Listes fixes et dynamiques, adresses joignables, étiquettes. |
-| Doublons à vérifier | `maquettes/doublons.html` | `/doublons` | Existante, reprise dans le nouveau style | U2-U9 (reprise) | Paires de fiches à fusionner ou à écarter, avec annulation. |
-| À valider (venu du site) | `maquettes/a-valider.html` | `/console/propositions, /console/arbitrage, /console/lettre-et-guide, /console/lettre-et-guide/$id, /console/vivier` | Existante, reprise dans le nouveau style | U2-U9 (reprise) ; synchro selon § 11 point 2 | Propositions de la console du site, personnes à rattacher, abonnés lettre et guide (candidats : même écran, filtre). |
-| Affaires (tableau en colonnes) | `maquettes/affaires.html` | — | Nouvelle | Maquette en U1 ; codage en Q2 (V1) | Affaires par étape (à contacter → gagné / perdu), « Déplacer vers… » au clavier. |
-| Tâches | `maquettes/taches.html` | — | Nouvelle | Q1b (b) | Mes tâches du jour et en retard, créées aussi par les réponses ; rappel du matin. |
+## CRM Pro · À traiter
 
-## Prospecter
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Doublons à vérifier | `maquettes/doublons.html` | CRM Pro | `frontend/src/features/doublons/DoublonsPage.tsx` |
+| Personnes à rattacher | `maquettes/personnes-a-rattacher.html` | CRM Pro | `frontend/src/features/crm-console/ArbitragePage.tsx` |
+| Propositions à valider | `maquettes/propositions.html` | CRM Pro | `frontend/src/features/propositions/PropositionsPage.tsx` |
 
-| Page | Maquette | Route(s) actuelle(s) | État | Lot du plan 20 | Contenu en une phrase |
-|---|---|---|---|---|---|
-| Campagnes (liste) | `maquettes/campagnes.html` | — | Nouvelle | U2-U9 (UI-58) | Toutes les campagnes avec statut (7 badges), étape, envoyés, réponses, désinscriptions. |
-| Campagne : création en 5 étapes | `maquettes/campagne-nouvelle.html` | — | Nouvelle | U2-U9 (07 § 3.5) + C1 | Cible, message, envoi, vérification (7 contrôles), validation par code e-mail. |
-| Campagne : suivi | `maquettes/campagne-suivi.html` | — | Nouvelle | U2-U9 (UI-58) + RP3 | Progression, ce qui se passe, résultats par message, pause. |
-| Messages types | `maquettes/messages-types.html` | — | Nouvelle | U12 (UI-08) | Liste des messages types avec version et statut (jamais supprimés : archivés). |
-| Éditeur de message | `maquettes/message-editeur.html` | — | Nouvelle | U2-U9 (07 § 3.6) ; test UI-06 en C2 | Objet, texte, champs, aperçu réel, contrôles, « m’envoyer un test ». |
-| Réponses | `maquettes/reponses.html` | — | Nouvelle | U2-U9 (07 § 3.7) + RP1 | File des réponses, suggestion en un geste, STOP à confirmer. |
-| Réponses à rattacher | `maquettes/reponses-a-rattacher.html` | — | Nouvelle | U11 (UI-61, avancé par § 9 point 7) | Une réponse d’adresse inconnue et 3 fiches proposées. |
-| Presse | `maquettes/presse.html` | `/media, /media/$id, /journalists, /journalists/$id, /presse/envois` | Existante, reprise dans le nouveau style | Reprise ; UI-24 en U13 (V1) | Médias, journalistes, communiqués envoyés. |
+## CRM Pro · Ma base
 
-## Envois
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Entreprises | `maquettes/entreprises.html` | CRM Pro | `frontend/src/features/companies/CompaniesListPage.tsx` |
+| Boulangerie des Tilleuls | `maquettes/entreprise.html` | CRM Pro | `frontend/src/features/companies/CompanyDetailPage.tsx` |
+| Contacts | `maquettes/contacts.html` | CRM Pro | `frontend/src/features/crm-console/ContactsHubPage.tsx (et contacts/ContactsListPage.tsx hors console)` |
+| Paul Morin | `maquettes/contact.html` | CRM Pro | `frontend/src/features/crm-console/PersonTimelinePage.tsx` |
+| Newsletter et guide | `maquettes/newsletter-guide.html` | CRM Pro | `frontend/src/features/crm-console/PersonnesPage.tsx` |
+| Hugo Marchand | `maquettes/personne-newsletter.html` | CRM Pro | `frontend/src/features/crm-console/PersonneDetailPage.tsx` |
+| Candidats | `maquettes/candidats.html` | CRM Pro | `frontend/src/features/crm-console/CandidatesPage.tsx` |
 
-| Page | Maquette | Route(s) actuelle(s) | État | Lot du plan 20 | Contenu en une phrase |
-|---|---|---|---|---|---|
-| Santé des envois | `maquettes/sante.html` | — | Nouvelle | U2-U9 (07 § 3.8, C-01, C-17) | Feux par domaine, test du matin, boîte ralentie, arrêt d’urgence. |
-| Boîtes d’envoi | `maquettes/boites.html` | — | Nouvelle | U11 (UI-14) | Boîtes, état, volume du jour, ajout avec test de connexion. |
-| Domaines | `maquettes/domaines.html` | — | Nouvelle | U2-U9 (07 § 3.9) ; UI-17 U12 ; UI-18 U13 ; UI-50 U12 | Domaines d’envoi, assistant DNS, « qui envoie en votre nom ? », listes noires. |
-| Serveurs et test du matin | `maquettes/serveurs.html` | — | Nouvelle | U11 (UI-04, UI-05) ; UI-16 en U13 | État du serveur, boîtes témoins, adresses IP, ajout d’un serveur. |
-| Montée en douceur (chauffe) | `maquettes/chauffe.html` | — | Nouvelle | U2-U9 (07 § 3.8) | Courbe de montée par boîte, avec texte équivalent et tableau. |
-| Alertes (centre d’alertes) | `maquettes/alertes.html` | — | Nouvelle | U11 (UI-01) | Alertes en cours, ce que le système a fait, que faire. |
-| Désinscriptions (ne plus écrire) | `maquettes/desinscriptions.html` | — | Nouvelle | U2-U9 (07 § 3.10, C-02) | « Puis-je écrire à… ? » en premier, puis la liste des oppositions. |
-| Page publique de désinscription | `maquettes/desinscription-publique.html` | — | Nouvelle | U11 (UI-62) | Désinscription en un clic, option « toute mon organisation ». |
+## CRM Pro · Presse
 
-## Mesurer
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Médias | `maquettes/medias.html` | CRM Pro | `frontend/src/features/media/MediaListPage.tsx` |
+| Le Courrier du Rhône | `maquettes/media.html` | CRM Pro | `frontend/src/features/media/MediaDetailPage.tsx` |
+| Journalistes | `maquettes/journalistes.html` | CRM Pro | `frontend/src/features/media/JournalistsListPage.tsx` |
+| Léa Fournier | `maquettes/journaliste.html` | CRM Pro | `frontend/src/features/media/JournalistDetailPage.tsx` |
+| Communiqués envoyés | `maquettes/communiques.html` | CRM Pro | `frontend/src/features/media/EnvoisPressePage.tsx` |
 
-| Page | Maquette | Route(s) actuelle(s) | État | Lot du plan 20 | Contenu en une phrase |
-|---|---|---|---|---|---|
-| Statistiques | `maquettes/statistiques.html` | `/coverage, /analytics (redirection)` | Existante, reprise dans le nouveau style | U2-U9 (07 § 3.11) ; rapports UI-43 en V1 | Résultats, entonnoir, carte de France, rapports (sans mesure d’ouverture). |
+## CRM Pro · Réseaux
 
-## Réglages
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Fédérations et ordres | `maquettes/federations.html` | CRM Pro | `frontend/src/features/federations/FederationsPage.tsx` |
+| Fédération BTP Rhône | `maquettes/federation.html` | CRM Pro | `frontend/src/features/federations/FederationDetailPage.tsx` |
+| Événements | `maquettes/evenements.html` | CRM Pro | `frontend/src/features/evenements/EvenementsPage.tsx` |
+| Salon des artisans de Vienne | `maquettes/evenement.html` | CRM Pro | `frontend/src/features/evenements/EvenementDetailPage.tsx` |
 
-| Page | Maquette | Route(s) actuelle(s) | État | Lot du plan 20 | Contenu en une phrase |
-|---|---|---|---|---|---|
-| Réglages (accueil) | `maquettes/reglages.html` | `/settings` | Existante, reprise dans le nouveau style | U0 | Toutes les cartes de réglage, rangées en 6 groupes. |
-| Mon compte et sécurité | `maquettes/compte.html` | `/settings (partie compte)` | Existante, reprise dans le nouveau style | S4 (UI-12) | Profil, codes de secours, appareils de confiance, raccourcis. |
-| Alertes et avis | `maquettes/reglages-alertes.html` | — | Nouvelle | U11 (UI-02, UI-03) | Type × canal : console et e-mail seulement ; alerte de test ; seconde adresse. |
-| Règles de prudence, horaires, automatismes | `maquettes/regles-prudence.html` | — | Nouvelle | U11 (UI-07) ; UI-26 et UI-30 en U12 | Règles en phrases (durcir seulement en V0), fenêtre d’envoi, interrupteurs. |
-| Identité de l’expéditeur | `maquettes/identite.html` | — | Nouvelle | U11 (UI-13) ; lien RDV UI-59 en U12 | Entité qui écrit, bloc d’information art. 14, lien de rendez-vous. |
-| Équipe et rôles | `maquettes/equipe.html` | `/users` | Existante, reprise dans le nouveau style | U12 (UI-11) | Personnes, rôles, invitation, désactivation (jamais de suppression). |
-| Journal | `maquettes/journal.html` | `/audit-logs` | Existante, reprise dans le nouveau style | U12 (UI-10) | Qui a fait quoi, filtres, export avec code e-mail. |
-| Sauvegardes | `maquettes/sauvegardes.html` | — | Nouvelle | U12 (UI-09) | Dernière sauvegarde, copie hors site, place, dernier exercice. |
-| Demandes RGPD et registre de l’IA | `maquettes/rgpd.html` | `/rgpd/requests, /rgpd/ai-act` | Existante, reprise dans le nouveau style | U11 (UI-28, avancé par § 9 point 7) | Demandes avec délai restant, registre de l’IA, registre des traitements (V1). |
-| Configuration technique | `maquettes/configuration.html` | — | Nouvelle | U11 (UI-15) + E3b | Version prête, différences en clair, appliquer, historique, retour automatique. |
-| Outils techniques | `maquettes/technique.html` | `/admin/observability, /llm/router, /llm/proxy-providers, /llm/rotations` | Existante, reprise dans le nouveau style | Reprise (U12) | Santé du système, moteurs d’IA, serveurs relais, rotation des accès. |
-| Collectes de données (ex-campagnes de collecte) | `maquettes/collectes.html` | `/campaigns, /campaigns/new, /campaigns/$id, /scraper-runs` | Existante, reprise dans le nouveau style | § 11 point 5 : renommer avant C1 (redirection + test) | Collectes en cours et terminées, historique ; anciens liens redirigés. |
-| Écrans V1 et V2 | `maquettes/v1-ecrans.html` | — | Nouvelle | U13, K3, C5, C6, RP4, K9 (V1) | Clients, synchro, usage, exports, messages déclenchés, lettre, files, mises à jour, API, champs, appels, aide. |
+## CRM Pro · Ciblage
 
-## Hors coquille
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Audiences | `maquettes/audiences.html` | CRM Pro | `frontend/src/features/audiences/AudiencesListPage.tsx` |
+| Nouvelle audience | `maquettes/audience-nouvelle.html` | CRM Pro | `frontend/src/features/audiences/AudienceBuilderPage.tsx (+ éditeur ET / OU / SAUF : ajout plan 27 n° 4)` |
+| Organisateurs Rhône-Alpes | `maquettes/audience.html` | CRM Pro | `frontend/src/features/audiences/AudienceDetailPage.tsx` |
+| Listes | `maquettes/listes.html` | CRM Pro | `frontend/src/features/listes/ListesManuellesPage.tsx` |
+| Invités salon des artisans | `maquettes/liste.html` | CRM Pro | `frontend/src/features/listes/ListeManuelleDetailPage.tsx` |
 
-| Page | Maquette | Route(s) actuelle(s) | État | Lot du plan 20 | Contenu en une phrase |
-|---|---|---|---|---|---|
-| Connexion et code par e-mail | `maquettes/connexion.html` | `/login, /2fa, /magic-link, /magic-link/verify, /password-reset` | Existante, reprise dans le nouveau style | S4 (07 § 3.13, C-04) | E-mail + mot de passe, code à 6 chiffres (collage accepté), appareil de confiance, codes de secours. |
-| Page introuvable | `maquettes/introuvable.html` | notFoundComponent, /pas-encore-livre, /cold-email et /linkedin (retirées) | Existante, reprise dans le nouveau style | U2-U9 (reprise) | Lien ancien : retour à Aujourd’hui. |
-| Toutes les maquettes | `maquettes/plan-des-pages.html` | — | Outil de maquette | U1 | Plan cliquable de toutes les pages. |
+## CRM Pro · Alimenter la base
+
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Collectes | `maquettes/collectes.html` | CRM Pro | `frontend/src/features/campaigns/CampaignsListPage.tsx (route /campaigns → /collectes)` |
+| Nouvelle collecte | `maquettes/collecte-nouvelle.html` | CRM Pro | `frontend/src/features/campaigns/CampaignWizardPage.tsx` |
+| Rhône — PME artisanat | `maquettes/collecte.html` | CRM Pro | `frontend/src/features/campaigns/CampaignDetailPage.tsx` |
+| Carte de France | `maquettes/carte-france.html` | CRM Pro | `frontend/src/features/coverage/CoveragePage.tsx (+ FranceCoverageMap.tsx)` |
+
+## CRM Pro · Réglages
+
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Paramètres | `maquettes/parametres.html` | CRM Pro | `frontend/src/features/settings/SettingsPage.tsx` |
+| Mon compte et sécurité | `maquettes/compte.html` | CRM Pro | `frontend/src/features/settings/ChangerMotDePasse.tsx (+ sécurité : nouvelle)` |
+| Utilisateurs | `maquettes/utilisateurs.html` | CRM Pro | `frontend/src/features/users/UsersPage.tsx` |
+| Étiquettes | `maquettes/etiquettes.html` | CRM Pro | `frontend/src/features/tags/TagsManagerPage.tsx (+ « Campagne vers cette étiquette » : ajout plan 27 n° 5)` |
+| Demandes RGPD | `maquettes/rgpd.html` | CRM Pro | `frontend/src/features/rgpd/RgpdRequestsPage.tsx` |
+
+## CRM Pro · Technique
+
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Entreprises en Roumanie | `maquettes/roumanie.html` | CRM Pro | `frontend/src/features/international/RoumaniePage.tsx` |
+| Historique des collectes | `maquettes/historique-collectes.html` | CRM Pro | `frontend/src/features/scraping/ScraperRunsPage.tsx` |
+| Santé du système | `maquettes/sante-systeme.html` | CRM Pro | `frontend/src/features/observability/ObservabilityPage.tsx (+ settings/ReglagesTechniques.tsx ; carte Sauvegardes : nouvelle)` |
+| Moteurs d’IA | `maquettes/moteurs-ia.html` | CRM Pro | `frontend/src/features/llm/LlmRouterPage.tsx` |
+| Serveurs relais | `maquettes/serveurs-relais.html` | CRM Pro | `frontend/src/features/llm/ProxyProvidersPage.tsx` |
+| Rotation des accès | `maquettes/rotation-acces.html` | CRM Pro | `frontend/src/features/llm/RotationsPage.tsx` |
+| Registre de l’IA | `maquettes/registre-ia.html` | CRM Pro | `frontend/src/features/rgpd/AiActRegisterPage.tsx` |
+| Journal des actions | `maquettes/journal.html` | CRM Pro | `frontend/src/features/rgpd/AuditLogsPage.tsx` |
+
+## Envoi
+
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Campagnes | `maquettes/campagnes.html` | Envoi | Nouvelle |
+| Calendrier des envois | `maquettes/calendrier-envois.html` | Envoi | Nouvelle |
+| Nouvelle campagne | `maquettes/campagne-nouvelle.html` | Envoi | Nouvelle |
+| Organisateurs Rhône-Alpes | `maquettes/campagne-suivi.html` | Envoi | Nouvelle |
+| Organisateurs · v3 | `maquettes/message-editeur.html` | Envoi | Nouvelle |
+| Messages types | `maquettes/messages-types.html` | Envoi | Nouvelle |
+| Résultats | `maquettes/resultats.html` | Envoi | Nouvelle |
+| Réponses | `maquettes/reponses.html` | Envoi | Nouvelle |
+| Réponse à rattacher | `maquettes/reponses-a-rattacher.html` | Envoi | Nouvelle |
+| Boîtes d’envoi | `maquettes/boites.html` | Envoi | Nouvelle |
+| will@prospection-b.example | `maquettes/boite.html` | Envoi | Nouvelle |
+| Domaines | `maquettes/domaines.html` | Envoi | Nouvelle |
+| prospection-a.example | `maquettes/domaine.html` | Envoi | Nouvelle |
+| Serveurs et adresses IP | `maquettes/serveurs.html` | Envoi | Nouvelle |
+| Configuration du serveur | `maquettes/configuration.html` | Envoi | Nouvelle |
+| Chauffe | `maquettes/chauffe.html` | Envoi | Nouvelle |
+| Santé des envois | `maquettes/sante.html` | Envoi | Nouvelle |
+| Chercher un envoi | `maquettes/chercher-envoi.html` | Envoi | Nouvelle |
+| Feu vert | `maquettes/feu-vert.html` | Envoi | Nouvelle |
+| Désinscriptions | `maquettes/desinscriptions.html` | Envoi | Nouvelle |
+| Alertes d’envoi | `maquettes/alertes.html` | Envoi | Nouvelle |
+| Réglages d’envoi | `maquettes/reglages-envoi.html` | Envoi | Nouvelle |
+| Identité de l’expéditeur | `maquettes/identite.html` | Envoi | Nouvelle |
+| Alertes et avis | `maquettes/reglages-alertes.html` | Envoi | Nouvelle |
+| Règles et horaires | `maquettes/regles-prudence.html` | Envoi | Nouvelle |
+
+## Hors coquille (écrans seuls)
+
+| Page | Maquette | Produit | Reprise de |
+|---|---|---|---|
+| Connexion | `maquettes/connexion.html` | CRM Pro | `frontend/src/features/auth/LoginPage.tsx, TwoFactorPage.tsx, MagicLinkPage.tsx, PasswordResetPage.tsx` |
+| Se désinscrire | `maquettes/desinscription-publique.html` | Envoi | Nouvelle |
+| Page introuvable | `maquettes/introuvable.html` | CRM Pro | `frontend/src/features/misc/NotFoundPage.tsx` |
 
 ## Totaux
 
-- **46 pages** dans ce tableau (**45 fichiers HTML** : la barre latérale et « Aujourd’hui » partagent `index.html`) : **21 existantes** reprises dans le nouveau style, **24 nouvelles**, 1 outil (plan des pages).
-- **Toutes les routes de `routeTree.tsx` ont une place** (aucune page existante oubliée). Routes retirées sans écran : `/cold-email` et `/linkedin` (déjà redirigées), `/pas-encore-livre` (devient la page introuvable).
-- Fenêtres et tiroirs maquettés dans les pages : Tout arrêter, changer d’espace, ajouter un contact, importer, note, opposition (STOP), m’envoyer un test, pause de campagne, ajout de boîte, assistant DNS, « qui envoie en votre nom ? », détail d’alerte, inviter, joignables.
+- **72 pages** (+ le plan des pages) : **44 reprises** de l’existant, **28 nouvelles**. Produit CRM Pro : 47 ; produit Envoi : 25.
+- Toutes les routes de `routeTree.tsx` ont une page : `/doublons`, `/console/arbitrage`, `/console/propositions`, `/companies(/$id)`, `/console/contacts` (et `/contacts`), `/console/lettre-et-guide(/$id)`, `/console/vivier`, `/console/personnes/$key`, `/media(/$id)`, `/journalists(/$id)`, `/presse/envois`, `/federations(/$id)`, `/evenements(/$id)`, `/audiences(/new, /$id)`, `/listes(/$id)`, `/campaigns(/new, /$id)` (= Collectes), `/coverage`, `/settings`, `/users`, `/tags`, `/rgpd/requests`, `/international/roumanie`, `/scraper-runs`, `/admin/observability`, `/llm/router`, `/llm/proxy-providers`, `/llm/rotations`, `/rgpd/ai-act`, `/audit-logs`, `/login`, `/2fa`, `/magic-link`, `/password-reset`, page introuvable.
+- Pages sans entrée de menu (le menu reste celui de Will) : Mes tâches et Affaires (onglets du Tableau de bord), Mon compte (avatar), Sauvegardes (carte de Santé du système) ; côté Envoi : Résultats, Messages types, Calendrier (onglets de Campagnes), Chercher un envoi et Feu vert (onglets de Santé des envois), Configuration (onglet de Serveurs), fiches Boîte et Domaine.
+- Pages retirées par rapport au lot U1bis : `a-valider`, `presse`, `reseaux`, `technique`, `statistiques`, `reglages`, `equipe`, `sauvegardes`, `mise-en-route`, `v1-ecrans` (leur contenu est réparti dans les pages ci-dessus, au bon endroit du menu de Will). Les écrans V1/V2 (clients, synchro, API…) restent décrits au plan 20.
 
-## Écarts assumés (à valider par Will au test de 45 min)
+## Les 15 ajouts prioritaires du plan 27 : où les voir
 
-1. **Barre latérale à 18 entrées en 4 groupes repliables**, au lieu de 7 entrées avec onglets (07 § 2.1). Raison : la mission demande que boîtes, domaines, serveurs, chauffe, alertes et désinscriptions soient trouvables directement. Chaque groupe se replie (choix mémorisé). Si Will préfère 7 entrées, on garde les onglets déjà présents en haut des pages et on retire les entrées du menu.
-2. **Barre latérale claire** (blanche), et non bleu nuit (07 § 4.1) : Will veut le clair seulement ; la barre sombre ressemblait à un mode sombre partiel.
-3. **« Montée en douceur »** dans le menu (lexique de 07), avec « chauffe » entre parenthèses dans cet index.
-4. **Affaires** est maquetté maintenant, mais son codage reste en V1 (lot Q2), comme au plan 20.
-5. **Collectes de données** passent dans Réglages (07 § 2.1) : ce sont des outils pour alimenter la base, pas de la prospection.
-
-## Lot U1bis : refonte visuelle (01/11/2026)
-
-Retour de Will : éléments qui se chevauchent, trop de texte, pas assez de cadres, de blocs et de pastilles, boutons peu visibles, contraste faible. Réponse :
-- **Nouveau socle** (`maquettes/style.css`, `_fabrique/socle.py`) : cartes blanches à cadre net, blocs colorés par sens, pastilles pleines, tuiles à gros chiffres, jauges, anneaux, barres, courbes, grandes tuiles de feu, stepper, un seul gros bouton plein par écran. Guide : `maquettes/GUIDE-STYLE.md`.
-- **5 pages repères refaites** (`_fabrique/pages_reperes.py`) : Aujourd’hui, Contacts, Nouvelle campagne, Santé des envois, Réponses. Captures : `maquettes/captures/`.
-- **Contrôle automatique** `_fabrique/controle.py` (Playwright) : chevauchements, débordements, contrastes, taille du texte, bouton plein unique, à 1440 / 1024 / 768 / 360 px. Résultat : 0 problème sur les 45 pages.
-- Les 40 autres pages gardent leur contenu mais prennent le nouveau style ; elles seront refaites avec le guide.
+| Rang | Ajout | Maquette |
+|---|---|---|
+| 1 | Campagne vers une étiquette | `etiquettes.html` (bouton plein), `entreprise.html`, `campagnes.html`, `campagne-nouvelle.html` (étape 1) |
+| 2 | Fiche d’un domaine (30 jours) | `domaine.html` |
+| 3 | Fiche d’une boîte | `boite.html` |
+| 4 | État de chaque destinataire | `campagne-suivi.html` (onglet Destinataires), `contact.html` |
+| 5 | Résultats par boîte, domaine, liste | `resultats.html` |
+| 6 | Répondre depuis le CRM | `reponses.html` (bloc Répondre, même fil) |
+| 7 | Reprogrammer (changer la date) | `campagnes.html`, `campagne-suivi.html` (fenêtre « Changer la date ») |
+| 8 | Dupliquer | `campagnes.html`, `campagne-suivi.html` |
+| 9 | Pause depuis la liste | `campagnes.html` (bouton Pause dans la ligne) |
+| 10 | Terminer | `campagnes.html`, `campagne-suivi.html` |
+| 11 | Ajouter une adresse IP (et appliquer) | `serveurs.html` (fenêtre), Ctrl K |
+| 12 | Chercher un envoi | `chercher-envoi.html`, Ctrl K, `campagnes.html` |
+| 13 | Éditeur ET / OU / SAUF | `audience-nouvelle.html` |
+| 14 | Export d’une liste ou sélection | `entreprises.html`, `contacts.html`, `listes.html`, `liste.html`, `audience.html`, `etiquettes.html` |
+| 15 | Export du registre des oppositions | `desinscriptions.html`, `rgpd.html` |
+| + | Programmer / reprogrammer, test A/B | `campagne-nouvelle.html` (étapes 2 et 3), `campagne-suivi.html` (onglet Test A/B) |
 
 ## Fabrication
 
-Les fichiers HTML sont produits par `maquettes/_fabrique/fabrique.py` (Python 3, sans dépendance) : modifier le script, puis relancer `python3 maquettes/_fabrique/fabrique.py`. Ce fichier 23 est régénéré en même temps.
+Les fichiers HTML sont produits par `maquettes/_fabrique/fabrique.py` (Python 3, sans dépendance). Contrôle : `python3 maquettes/_fabrique/controle.py --toutes` (Playwright). Ce fichier 23 est régénéré en même temps.

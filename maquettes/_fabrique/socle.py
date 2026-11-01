@@ -75,6 +75,22 @@ _IC = {
     'ajout-personne': '<circle cx="10" cy="8" r="4"/><path d="M2.5 21c.9-4 3.9-6 7.5-6 1.6 0 3 .4 4.2 1.1"/><path d="M19 14v6M16 17h6"/>',
     'cible': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
     'fusee': '<path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.5-4.5 5.5-8.5 13-9-.5 7.5-4.5 11.5-9 13l-1-1z"/><circle cx="15" cy="9" r="1.6"/>',
+    'micro': '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3M8 21h8"/>',
+    'monument': '<path d="M3 21h18M5 18h14M6 18V10M10 18V10M14 18V10M18 18V10M3 10l9-6 9 6z"/>',
+    'liste-cochee': '<path d="M11 6h10M11 12h10M11 18h10"/><path d="M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/>',
+    'balance': '<path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 006 0L5 7zM19 7l-3 7a3 3 0 006 0l-3-7z"/>',
+    'boite-entree': '<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13L22 12v7H2v-7L5.5 5z"/>',
+    'diplome': '<path d="M2 9l10-5 10 5-10 5L2 9z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>',
+    'utilisateur-reglage': '<circle cx="9" cy="8" r="4"/><path d="M2 21c1-4 4-6 7-6 1.4 0 2.6.3 3.7.9"/><circle cx="18" cy="17" r="2.5"/><path d="M18 12.5v2M18 19.5v2M13.5 17h2M20.5 17h2"/>',
+    'diese': '<path d="M5 9h15M4 15h15M10 3L8 21M16 3l-2 18"/>',
+    'robot': '<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9 17h6"/>',
+    'reseau': '<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-4h14v4"/>',
+    'parchemin': '<path d="M8 21h11a2 2 0 002-2v-2H10v2a2 2 0 01-4 0V5a2 2 0 00-2-2h11a2 2 0 012 2v12"/><path d="M10 8h5M10 12h5"/>',
+    'copie': '<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 00-2-2H5a2 2 0 00-2 2v9a2 2 0 002 2h3"/>',
+    'ab': '<rect x="2" y="5" width="9" height="14" rx="2"/><rect x="13" y="5" width="9" height="14" rx="2"/><path d="M4.5 15l2-6 2 6M5.2 13h2.6M15.5 9h2.5a1.5 1.5 0 010 3h-2.5zM15.5 12h3a1.5 1.5 0 010 3h-3z"/>',
+    'repondre': '<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 016 6v4"/>',
+    'stop-carre': '<rect x="5" y="5" width="14" height="14" rx="2"/>',
+    'lecture': '<path d="M7 4l13 8-13 8V4z"/>',
     'carte-france': '<path d="M9 3l5 2 4-1 1 5 2 3-3 5 1 4-6-1-5 1-3-4 1-5-3-3 4-2 2-4z"/>',
 }
 
@@ -84,108 +100,189 @@ def ic(nom, classe=''):
     return '<svg class="%s" viewBox="0 0 24 24" aria-hidden="true" focusable="false">%s</svg>' % (c, _IC[nom])
 
 
-# ---------- Menu (barre latérale groupée) ----------
-NAV = [
-    ('travailler', 'Travailler', [
-        ('index', 'Aujourd’hui', 'accueil', '12'),
-        ('contacts', 'Contacts', 'personnes', ''),
+# ---------- Deux produits distincts (décision D1 de Will) ----------
+# CRM Pro : bleu de marque. Envoi : bleu-vert (teal), facturé à part.
+PRODUITS = {
+    'crm': {'nom': 'CRM Pro', 'court': 'CRM', 'accueil': 'index.html', 'sous': 'Base, presse, réseaux, ciblage'},
+    'envoi': {'nom': 'Envoi', 'court': 'Envoi', 'accueil': 'campagnes.html', 'sous': 'Campagnes et délivrabilité'},
+}
+
+# ---------- Menu du CRM : menu RÉEL de Will, à l'identique (Sidebar.tsx) ----------
+NAV_CRM = [
+    ('accueil', '', [('index', 'Tableau de bord', 'accueil', '')]),
+    ('a-traiter', 'À traiter', [
+        ('doublons', 'Doublons à vérifier', 'doublon', '12'),
+        ('personnes-a-rattacher', 'Personnes à rattacher', 'balance', '7'),
+        ('propositions', 'Propositions à valider', 'boite-entree', '4'),
+    ]),
+    ('ma-base', 'Ma base', [
         ('entreprises', 'Entreprises', 'entreprise', ''),
-        ('affaires', 'Affaires', 'affaires', ''),
-        ('taches', 'Tâches', 'taches', '5'),
+        ('contacts', 'Contacts', 'personnes', ''),
+        ('newsletter-guide', 'Newsletter et guide', 'message', ''),
+        ('candidats', 'Candidats', 'diplome', ''),
     ]),
-    ('prospecter', 'Prospecter', [
-        ('campagnes', 'Campagnes', 'campagne', '1'),
-        ('messages-types', 'Messages types', 'message', ''),
+    ('presse', 'Presse', [
+        ('medias', 'Médias', 'presse', ''),
+        ('journalistes', 'Journalistes', 'micro', ''),
+        ('communiques', 'Communiqués envoyés', 'envoi', ''),
+    ]),
+    ('reseaux', 'Réseaux', [
+        ('federations', 'Fédérations et ordres', 'monument', ''),
+        ('evenements', 'Événements', 'calendrier', ''),
+    ]),
+    ('ciblage', 'Ciblage', [
+        ('audiences', 'Audiences', 'personnes', ''),
+        ('listes', 'Listes', 'liste-cochee', ''),
+    ]),
+    ('alimenter', 'Alimenter la base', [
+        ('collectes', 'Collectes', 'campagne', ''),
+        ('carte-france', 'Carte de France', 'carte', ''),
+    ]),
+    ('reglages', 'Réglages', [
+        ('parametres', 'Paramètres', 'reglages', ''),
+        ('utilisateurs', 'Utilisateurs', 'utilisateur-reglage', ''),
+        ('etiquettes', 'Étiquettes', 'diese', ''),
+        ('rgpd', 'Demandes RGPD', 'bouclier', ''),
+    ]),
+    ('technique', 'Technique', [
+        ('roumanie', 'Entreprises en Roumanie', 'domaine', ''),
+        ('historique-collectes', 'Historique des collectes', 'sante', ''),
+        ('sante-systeme', 'Santé du système', 'sante', ''),
+        ('moteurs-ia', 'Moteurs d’IA', 'robot', ''),
+        ('serveurs-relais', 'Serveurs relais', 'reseau', ''),
+        ('rotation-acces', 'Rotation des accès', 'rafraichir', ''),
+        ('registre-ia', 'Registre de l’IA', 'fichier', ''),
+        ('journal', 'Journal des actions', 'parchemin', ''),
+    ]),
+]
+
+# ---------- Menu d'Envoi : espace à part (décision D2) ----------
+NAV_ENVOI = [
+    ('envoi', '', [
+        ('campagnes', 'Campagnes', 'envoi', '1'),
         ('reponses', 'Réponses', 'reponses', '7'),
-        ('presse', 'Presse', 'presse', ''),
-    ]),
-    ('envois', 'Envois', [
-        ('sante', 'Santé des envois', 'sante', ''),
         ('boites', 'Boîtes d’envoi', 'boite', ''),
         ('domaines', 'Domaines', 'domaine', ''),
-        ('serveurs', 'Serveurs', 'serveur', ''),
-        ('chauffe', 'Montée en douceur', 'chauffe', ''),
-        ('alertes', 'Alertes', 'alerte', '1'),
+        ('serveurs', 'Serveurs et adresses IP', 'serveur', ''),
+        ('chauffe', 'Chauffe', 'chauffe', ''),
+        ('sante', 'Santé des envois', 'sante', ''),
         ('desinscriptions', 'Désinscriptions', 'interdit', ''),
-    ]),
-    ('mesurer', 'Mesurer', [
-        ('statistiques', 'Statistiques', 'stats', ''),
+        ('alertes', 'Alertes d’envoi', 'alerte', '2'),
+        ('reglages-envoi', 'Réglages d’envoi', 'reglages', ''),
     ]),
 ]
-PIED = [
-    ('reglages', 'Réglages', 'reglages', ''),
-    ('plan-des-pages', 'Toutes les maquettes', 'liste', ''),
-]
-TITRE_NAV = {k: lib for _, _, items in NAV for k, lib, _, _ in items}
-TITRE_NAV.update({k: lib for k, lib, _, _ in PIED})
+NAV = {'crm': NAV_CRM, 'envoi': NAV_ENVOI}
+TITRE_NAV = {k: lib for p in NAV for _, _, items in NAV[p] for k, lib, _, _ in items}
+PRODUIT_NAV = {k: p for p in NAV for _, _, items in NAV[p] for k, _, _, _ in items}
+SECTION_NAV = {k: gid for p in NAV for gid, _, items in NAV[p] for k, _, _, _ in items}
+# Pages sans entrée de menu : (entrée de menu qui reste allumée)
+RATTACHE = {}
 
 
 def _lien_nav(cle, lib, icone, compteur, actif):
     cur = ' aria-current="page"' if cle == actif else ''
-    badge = ''
+    badge_ = ''
     if compteur:
-        badge = '<span class="compteur" aria-hidden="true">%s</span><span class="visuellement-cache">, %s à traiter</span>' % (compteur, compteur)
+        badge_ = '<span class="compteur" aria-hidden="true">%s</span><span class="visuellement-cache">, %s à traiter</span>' % (compteur, compteur)
     if cle == 'sante':
-        badge = '<span class="point-feu" aria-hidden="true"></span><span class="visuellement-cache">, état : bon</span>'
-    return '<li><a class="nav-lien" href="%s.html" title="%s"%s>%s<span class="lib">%s</span>%s</a></li>' % (cle, E(lib), cur, ic(icone), E(lib), badge)
+        badge_ = '<span class="point-feu" aria-hidden="true"></span><span class="visuellement-cache">, état : bon</span>'
+    return '<li><a class="nav-lien" href="%s.html" title="%s"%s>%s<span class="lib">%s</span>%s</a></li>' % (cle, E(lib), cur, ic(icone), E(lib), badge_)
 
 
-def barre_laterale(actif):
-    h = ['<aside class="barre" id="barre-laterale" aria-label="Barre latérale">',
-         '<a class="barre-marque" href="index.html"><span class="barre-logo" aria-hidden="true">A</span><span><strong>Axion CRM Pro</strong></span></a>',
+def selecteur_produit(produit):
+    h = ['<nav class="choix-produit" aria-label="Choisir le produit">']
+    for p in ('crm', 'envoi'):
+        d = PRODUITS[p]
+        h.append('<a class="produit-%s" href="%s"%s><span class="pastille-produit" aria-hidden="true"></span><span class="nom-produit">%s</span></a>' % (
+            p, d['accueil'], ' aria-current="true"' if p == produit else '', E(d['nom'])))
+    h.append('</nav>')
+    return ''.join(h)
+
+
+def barre_laterale(actif, produit):
+    sect_actif = SECTION_NAV.get(actif)
+    h = ['<aside class="barre" id="barre-laterale" aria-label="Navigation latérale">',
+         '<a class="barre-marque" href="%s"><span class="barre-logo" aria-hidden="true">%s</span><span class="barre-nom"><strong>%s</strong><small>%s</small></span></a>' % (
+             PRODUITS[produit]['accueil'], 'A' if produit == 'crm' else 'E', 'Axion CRM Pro' if produit == 'crm' else 'Axion Envoi', E(PRODUITS[produit]['sous'])),
+         selecteur_produit(produit),
          '<button type="button" class="espace" data-ouvre="fen-espace" aria-label="Espace actuel : Axion-IA. Changer d’espace"><span class="repere" aria-hidden="true"></span><span class="nom">Axion-IA</span>%s</button>' % ic('chevron', 'petite'),
-         '<nav aria-label="Navigation principale">']
-    for gid, gtitre, items in NAV:
-        h.append('<div class="groupe"><button type="button" class="groupe-titre" aria-expanded="true" aria-controls="g-%s">%s %s</button>' % (gid, E(gtitre), ic('chevron', 'petite')))
-        h.append('<ul id="g-%s">' % gid)
+         '<nav aria-label="Navigation principale" data-accordeon>']
+    for gid, gtitre, items in NAV[produit]:
+        if not gtitre:
+            h.append('<div class="groupe sans-titre"><ul id="g-%s">' % gid)
+        else:
+            ouvert = (gid == sect_actif) or (sect_actif is None and gid == 'a-traiter')
+            somme = sum(int(c) for _, _, _, c in items if c)
+            pastille = ('<span class="compteur" aria-hidden="true">%d</span>' % somme) if somme else ''
+            h.append('<div class="groupe"><button type="button" class="groupe-titre" aria-expanded="%s" aria-controls="g-%s"><span>%s</span>%s%s</button>' % (
+                'true' if ouvert else 'false', gid, E(gtitre), pastille, ic('chevron', 'petite')))
+            h.append('<ul id="g-%s"%s>' % (gid, '' if ouvert else ' hidden'))
         for cle, lib, icone, cpt in items:
             h.append(_lien_nav(cle, lib, icone, cpt, actif))
         h.append('</ul></div>')
     h.append('</nav><div class="barre-pied"><ul class="liste-pied">')
-    for cle, lib, icone, cpt in PIED:
-        h.append(_lien_nav(cle, lib, icone, cpt, actif))
+    h.append(_lien_nav('plan-des-pages', 'Toutes les maquettes', 'liste', '', actif))
     h.append('</ul></div></aside>')
     return '\n'.join(h)
 
 
 PALETTE = [
-    ('Actions', [('campagne-nouvelle.html', 'Nouvelle campagne', 'plus'), ('contacts.html#ajout', 'Ajouter un contact', 'plus'),
-                 ('reponses.html', 'Traiter les réponses', 'reponses'), ('desinscriptions.html', 'Puis-je écrire à… ?', 'interdit'),
-                 ('sante.html', 'Tout arrêter', 'arret'), ('domaines.html', 'Ajouter un domaine', 'domaine')]),
-    ('Pages', [(k + '.html', TITRE_NAV[k], 'fleche') for _, _, it in NAV for k, _, _, _ in it] + [('reglages.html', 'Réglages', 'reglages')]),
-    ('Récents', [('entreprise.html', 'Boulangerie Martin', 'entreprise'), ('contact.html', 'Paul Martin', 'personne'), ('campagne-suivi.html', 'Organisateurs Rhône-Alpes', 'campagne')]),
+    ('Actions', [('campagne-nouvelle.html?cible=etiquette', 'Campagne vers une étiquette', 'diese', 'envoi'),
+                 ('chercher-envoi.html', 'Chercher un envoi (une adresse)', 'chercher', 'envoi'),
+                 ('serveurs.html#ajout-ip', 'Ajouter une adresse IP', 'serveur', 'envoi'),
+                 ('desinscriptions.html', 'Puis-je écrire à… ?', 'interdit', 'envoi'),
+                 ('contacts.html#ajout', 'Ajouter un contact', 'ajout-personne', 'crm'),
+                 ('collecte-nouvelle.html', 'Nouvelle collecte', 'campagne', 'crm'),
+                 ('audience-nouvelle.html', 'Nouvelle audience', 'personnes', 'crm'),
+                 ('sante.html', 'Tout arrêter', 'arret', 'envoi')]),
+    ('Pages du CRM', [(k + '.html', lib, 'fleche', 'crm') for _, _, it in NAV_CRM for k, lib, _, _ in it]),
+    ('Pages d’Envoi', [(k + '.html', lib, 'fleche', 'envoi') for _, _, it in NAV_ENVOI for k, lib, _, _ in it]),
+    ('Récents', [('entreprise.html', 'Boulangerie des Tilleuls', 'entreprise', 'crm'), ('contact.html', 'Paul Morin', 'personne', 'crm'),
+                 ('campagne-suivi.html', 'Organisateurs Rhône-Alpes', 'envoi', 'envoi')]),
+]
+
+ALERTES_CLOCHE = [
+    ('envoi', 'ambre', '▲', 'Attention', 'Boîte « claire@ » ralentie', 'Refus temporaires : 3 %. Il y a 12 min.', 'alertes.html'),
+    ('envoi', 'terracotta', '●', 'À faire', '2 réponses intéressées', 'Organisateurs Rhône-Alpes. Il y a 25 min.', 'reponses.html'),
+    ('crm', 'terracotta', '●', 'À faire', '12 doublons à vérifier', 'Collecte « Rhône » terminée. 09:40.', 'doublons.html'),
+    ('crm', 'ambre', '▲', 'Attention', 'Demande RGPD : 5 jours restants', 'Droit d’accès. Reçue le 8 oct.', 'rgpd.html'),
+    ('envoi', 'violet', '✦', 'Nouveau', 'DMARC : passer à « quarantaine »', 'prospection-a.example. Le 15 nov.', 'domaine.html'),
+    ('envoi', 'vert', '✓', 'Fait', 'Test du matin réussi', '07:05, 4 témoins sur 4.', 'sante.html'),
 ]
 
 
-def entete(fil):
-    pal = ['<dialog class="palette" id="palette" aria-label="Rechercher ou agir"><label class="visuellement-cache" for="palette-champ">Rechercher une page, une fiche ou une action</label>',
-           '<input id="palette-champ" type="search" placeholder="Rechercher ou agir…" autocomplete="off"><ul id="palette-liste">']
+def entete(fil, produit):
+    pal = ['<dialog class="palette" id="palette" aria-label="Rechercher ou agir"><label class="visuellement-cache" for="palette-champ">Rechercher une page, une fiche, une adresse ou une action</label>',
+           '<input id="palette-champ" type="search" placeholder="Rechercher, une adresse e-mail, une action…" autocomplete="off"><ul id="palette-liste">']
     for g, items in PALETTE:
         pal.append('<li class="groupe-pal" aria-hidden="true">%s</li>' % E(g))
-        for href, lib, icone in items:
-            pal.append('<li><a href="%s">%s%s</a></li>' % (href, ic(icone, 'petite'), E(lib)))
+        for href, lib, icone, prod in items:
+            pal.append('<li><a href="%s">%s<span class="lib-pal">%s</span><span class="tag-produit %s">%s</span></a></li>' % (href, ic(icone, 'petite'), E(lib), prod, PRODUITS[prod]['court']))
     pal.append('</ul></dialog>')
     fil_html = ''.join(
         ('<li><a href="%s">%s</a></li>' % (h, E(t))) if h else ('<li aria-current="page">%s</li>' % E(t)) for t, h in fil)
+    alertes = ''.join(
+        '<li><a class="alerte-cloche" href="%s"><span class="badge %s" data-s="%s">%s</span><span class="quoi"><strong>%s</strong><small>%s</small></span><span class="tag-produit %s">%s</span></a></li>' % (
+            href, t, s, E(m), E(ti), E(so), p, PRODUITS[p]['court']) for p, t, s, m, ti, so, href in ALERTES_CLOCHE)
+    envoi_seul = ''
+    if produit == 'envoi':
+        envoi_seul = ('<a class="feu-entete" href="sante.html" aria-label="État des envois : normaux"><span aria-hidden="true">●</span><span class="mot-feu">Envois : normaux</span></a>'
+                      '<button type="button" class="btn btn-danger petit-btn bouton-arret" data-ouvre="fen-arret" aria-label="Tout arrêter">%s<span class="mot-arret">Tout arrêter</span></button>' % ic('arret'))
     return '''
 <div class="bandeau-arret" id="bandeau-arret" role="alert" hidden>%s<span style="flex:1 1 200px">Tous les envois sont arrêtés depuis 10:42 par Will.</span><button type="button" class="btn petit-btn" data-reprendre>Reprendre les envois</button></div>
 <header class="entete">
   <button type="button" class="bouton-icone bouton-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="barre-laterale">%s</button>
+  <a class="badge-produit" href="%s" title="Produit : %s"><span class="pastille-produit" aria-hidden="true"></span><span class="nom-produit">%s</span></a>
   <nav class="fil" aria-label="Fil d’Ariane"><ol>%s</ol></nav>
   <button type="button" class="recherche" data-palette aria-label="Rechercher ou agir (Ctrl K)">%s<span class="lib-recherche">Rechercher ou agir…</span><kbd>Ctrl K</kbd></button>
-  <a class="feu-entete" href="sante.html" aria-label="État des envois : normaux"><span aria-hidden="true">●</span><span class="mot-feu">Envois : normaux</span></a>
-  <button type="button" class="bouton-icone" id="bouton-cloche" aria-label="Alertes : 3 non lues" aria-expanded="false" aria-controls="panneau-alertes">%s<span class="pastille" aria-hidden="true">3</span></button>
-  <button type="button" class="btn btn-danger petit-btn bouton-arret" data-ouvre="fen-arret" aria-label="Tout arrêter">%s<span class="mot-arret">Tout arrêter</span></button>
+  %s
+  <button type="button" class="bouton-icone" id="bouton-cloche" aria-label="Notifications (6 non lues)" aria-expanded="false" aria-controls="panneau-alertes">%s<span class="pastille" aria-hidden="true">6</span></button>
   <a href="compte.html" class="avatar" aria-label="Mon compte (Will)">W</a>
 </header>
 <div class="panneau-alertes" id="panneau-alertes" hidden role="region" aria-label="Dernières alertes">
-  <h2 style="margin-bottom:8px">Alertes</h2>
-  <ul class="liste">
-    <li><span class="badge ambre" data-s="▲">Attention</span><span class="quoi"><strong>Boîte « claire@ » ralentie</strong><small>Refus temporaires : 3 %%. Il y a 12 min.</small></span></li>
-    <li><span class="badge terracotta" data-s="●">À faire</span><span class="quoi"><strong>2 réponses intéressées</strong><small>Il y a 25 min.</small></span></li>
-    <li><span class="badge vert" data-s="✓">Fait</span><span class="quoi"><strong>Test du matin réussi</strong><small>07:05, 4 témoins sur 4.</small></span></li>
-  </ul>
-  <div class="bloc-pied"><a class="btn btn-contour petit-btn" href="alertes.html">Voir toutes les alertes</a><a class="btn btn-discret petit-btn" href="reglages-alertes.html">Régler les alertes</a></div>
+  <div class="panneau-tete"><h2>Notifications</h2><span class="badge rouge" data-s="●">6 non lues</span></div>
+  <ul class="liste-alertes">%s</ul>
+  <div class="bloc-pied"><a class="btn btn-contour petit-btn" href="alertes.html">Alertes d’envoi</a><button type="button" class="btn btn-discret petit-btn" data-toast="6 alertes marquées comme lues.">Tout marquer lu</button></div>
 </div>
 %s
 <dialog id="fen-arret" aria-labelledby="t-arret">
@@ -197,23 +294,32 @@ def entete(fil):
   <div class="fen-tete"><h2 id="t-espace">Changer d’espace</h2><button type="button" class="bouton-icone" data-ferme aria-label="Fermer">%s</button></div>
   <div class="fen-corps"><ul class="liste">
     <li><span class="repere" style="width:12px;height:12px;border-radius:50%%;background:#2346c8" aria-hidden="true"></span><span class="quoi"><strong>Axion-IA</strong><small>Espace actuel</small></span><span class="badge vert" data-s="✓">Actuel</span></li>
-    <li><span class="repere" style="width:12px;height:12px;border-radius:50%%;background:#b45309" aria-hidden="true"></span><span class="quoi"><strong>Garage Durand (factice)</strong><small>Client · V1</small></span><a class="btn btn-contour petit-btn" href="v1-ecrans.html#clients">Ouvrir</a></li>
+    <li><span class="repere" style="width:12px;height:12px;border-radius:50%%;background:#b45309" aria-hidden="true"></span><span class="quoi"><strong>Garage des Saules (factice)</strong><small>Client · V1</small></span><button type="button" class="btn btn-contour petit-btn" data-toast="Espace client : prévu en V1.">Ouvrir</button></li>
   </ul></div>
-</dialog>''' % (ic('arret'), ic('menu'), fil_html, ic('chercher'), ic('cloche'), ic('arret'), '\n'.join(pal), ic('alerte'), ic('fermer'))
+</dialog>''' % (ic('arret'), ic('menu'), PRODUITS[produit]['accueil'], E(PRODUITS[produit]['nom']), E(PRODUITS[produit]['nom']), fil_html, ic('chercher'),
+                 envoi_seul, ic('cloche'), alertes, '\n'.join(pal), ic('alerte'), ic('fermer'))
 
 
-SELECTEUR = '''<form class="selecteur-etat" aria-label="Maquette : choisir l’état affiché" onsubmit="return false"><fieldset><legend>Maquette</legend>
+def selecteur(reprise=None):
+    if reprise:
+        note = '<p class="note-reprise"><span class="badge gris" data-s="↻">Reprise</span><span>Reprise de : <code>%s</code></span></p>' % E(reprise)
+    else:
+        note = '<p class="note-reprise"><span class="badge violet" data-s="+">Nouvelle</span><span>Nouvelle page</span></p>'
+    return '''<form class="selecteur-etat" aria-label="Maquette : choisir l’état affiché" onsubmit="return false">%s<fieldset><legend>Maquette</legend>
 <label><input type="radio" name="etat" value="normal" checked><span>Normal</span></label>
 <label><input type="radio" name="etat" value="vide"><span>Vide</span></label>
 <label><input type="radio" name="etat" value="erreur"><span>Erreur</span></label>
 <label><input type="radio" name="etat" value="chargement"><span>Chargement</span></label>
-</fieldset></form>'''
+</fieldset></form>''' % note
+
+
+SELECTEUR = selecteur(None)
 
 SQUELETTE = '''<div id="squelette" class="squelette" hidden aria-label="Chargement en cours"><div class="os" style="height:34px;width:40%"></div><div class="os" style="height:20px;width:60%"></div>
 <div class="kpis" style="margin:0"><div class="os" style="height:150px"></div><div class="os" style="height:150px"></div><div class="os" style="height:150px"></div><div class="os" style="height:150px"></div></div><div class="os" style="height:280px"></div></div>'''
 
 
-def document(titre, corps, description=''):
+def document(titre, corps, description='', produit='crm'):
     return '''<!doctype html>
 <html lang="fr">
 <head>
@@ -221,26 +327,35 @@ def document(titre, corps, description=''):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="%s">
 <meta name="robots" content="noindex">
-<title>%s · Axion CRM Pro (maquette)</title>
+<title>%s · Axion %s (maquette)</title>
 <link rel="stylesheet" href="style.css">
 </head>
 %s
 <script src="app.js"></script>
 </html>
-''' % (E(description or titre), E(titre), corps)
+''' % (E(description or titre), E(titre), 'CRM Pro' if produit == 'crm' else 'Envoi', corps)
 
 
-def page(cle, titre, phrase, normal, vide=None, erreur=None, actions='', fil=None, onglets_haut='', apres=''):
-    """Écran dans la coquille. `actions` = boutons d'en-tête affichés seulement à l'état normal."""
-    actif = cle if cle in TITRE_NAV else (fil[0][2] if fil and len(fil[0]) > 2 else cle)
+# Registre des pages fabriquées : fichier -> infos (produit, reprise, titre). Sert à l'index.
+REGISTRE = {}
+
+
+def page(cle, titre, phrase, normal, vide=None, erreur=None, actions='', fil=None, onglets_haut='', apres='', reprise=None, produit=None, menu=None):
+    """Écran dans la coquille.
+    `reprise` = chemin du composant React repris (None = nouvelle page).
+    `menu` = entrée de menu à allumer quand la page n'a pas d'entrée propre.
+    `actions` = boutons d'en-tête affichés seulement à l'état normal."""
+    actif = cle if cle in TITRE_NAV else (menu or (fil[0][2] if fil and len(fil[0]) > 2 else cle))
+    produit = produit or PRODUIT_NAV.get(actif, 'crm')
     fil_simple = [(t, h) for (t, h, *_r) in (fil or [])] + [(titre, None)]
     if vide is None:
         vide = etat_vide('liste', 'Rien à afficher pour le moment', 'Les éléments apparaîtront ici dès qu’il y en aura.', '')
     if erreur is None:
         erreur = etat_erreur()
+    REGISTRE[cle + '.html'] = {'produit': produit, 'reprise': reprise, 'titre': titre, 'menu': TITRE_NAV.get(actif, '—')}
     tete = '''<div class="tete-page"><div class="titres"><h1>%s</h1><p class="phrase-etat" data-seulement="normal">%s</p></div>%s</div>''' % (
         E(titre), phrase, ('<div class="actions" data-seulement="normal">%s</div>' % actions) if actions else '')
-    corps = '''<body>
+    corps = '''<body data-produit="%s">
 <a class="lien-evitement" href="#contenu">Aller au contenu</a>
 <div class="coquille">
 %s
@@ -259,8 +374,8 @@ def page(cle, titre, phrase, normal, vide=None, erreur=None, actions='', fil=Non
 </div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 %s
-</body>''' % (barre_laterale(actif), entete(fil_simple), SELECTEUR, tete, onglets_haut, normal, vide, erreur, SQUELETTE, apres)
-    return document(titre, corps, re_texte(phrase))
+</body>''' % (produit, barre_laterale(actif, produit), entete(fil_simple, produit), selecteur(reprise), tete, onglets_haut, normal, vide, erreur, SQUELETTE, apres)
+    return document(titre, corps, re_texte(phrase), produit)
 
 
 def re_texte(h):
@@ -268,10 +383,12 @@ def re_texte(h):
     return re.sub('<[^>]+>', '', h)
 
 
-def ecran_seul(titre, contenu, selecteur=True):
-    corps = '<body><main id="contenu" class="ecran-seul" tabindex="-1">%s%s</main><div class="toasts" id="toasts" aria-live="polite"></div></body>' % (
-        SELECTEUR if selecteur else '', contenu)
-    return document(titre, corps)
+def ecran_seul(titre, contenu, selecteur_=True, cle=None, reprise=None, produit='crm'):
+    if cle:
+        REGISTRE[cle + '.html'] = {'produit': produit, 'reprise': reprise, 'titre': titre, 'menu': 'Hors menu'}
+    corps = '<body data-produit="%s"><main id="contenu" class="ecran-seul" tabindex="-1">%s%s</main><div class="toasts" id="toasts" aria-live="polite"></div></body>' % (
+        produit, selecteur(reprise) if selecteur_ else '', contenu)
+    return document(titre, corps, '', produit)
 
 
 # ---------- Briques ----------
@@ -398,8 +515,10 @@ def lien(texte, href):
 def kpi(lib, val, icone, teinte='bleu', meta='', href=None, graph='', unite=''):
     """Tuile chiffre : grosse icône, libellé, GROS chiffre, détail court, mini-graphique. Cliquable si href."""
     u = ('<small> %s</small>' % E(unite)) if unite else ''
-    corps = ('<div class="kpi-tete">%s<span class="kpi-lib">%s</span></div><div class="kpi-val">%s%s</div>%s%s'
-             % (ic(icone), E(lib), val, u, ('<div class="kpi-meta">%s</div>' % meta) if meta else '', graph))
+    import re as _re
+    cl_val = 'kpi-val texte' if _re.search('[a-zA-Zé]{3,}', _re.sub('<[^>]+>', '', str(val))) else 'kpi-val'
+    corps = ('<div class="kpi-tete">%s<span class="kpi-lib">%s</span></div><div class="%s">%s%s</div>%s%s'
+             % (ic(icone), E(lib), cl_val, val, u, ('<div class="kpi-meta">%s</div>' % meta) if meta else '', graph))
     if href:
         return '<a class="kpi teinte-%s" href="%s">%s</a>' % (teinte, href, corps)
     return '<div class="kpi teinte-%s">%s</div>' % (teinte, corps)
@@ -519,3 +638,44 @@ def onglets_nav(nom, items, actif):
     """Onglets de navigation (liens) : items = [(href, libellé, nombre)]."""
     return '<nav class="onglets" aria-label="%s">%s</nav>' % (E(nom), ''.join(
         '<a href="%s"%s>%s%s</a>' % (h, ' aria-current="page"' if h == actif else '', E(l), (' <span class="nb">%s</span>' % n) if n else '') for h, l, n in items))
+
+
+# =====================================================================
+# Briques M1 : filtres à étiquettes (fidèles aux vrais écrans), pagination
+# =====================================================================
+def filtres_champs(items, pied=''):
+    """items = [('r', libellé, placeholder, id)] pour une recherche, [('s', libellé, [options], id)] pour une liste,
+    [('c', libellé, '', id)] pour une case, [('t', libellé, placeholder, id)] pour un petit champ texte."""
+    h = []
+    for sorte, lib, val, cid in items:
+        if sorte == 'r':
+            h.append('<div class="champ large"><label for="%s">%s</label><span class="champ-recherche">%s<input type="search" id="%s" placeholder="%s"></span></div>' % (cid, E(lib), ic('chercher'), cid, E(val)))
+        elif sorte == 's':
+            h.append('<div class="champ"><label for="%s">%s</label><select id="%s">%s</select></div>' % (cid, E(lib), cid, ''.join('<option>%s</option>' % E(o) for o in val)))
+        elif sorte == 'c':
+            h.append('<label class="case" for="%s"><input type="checkbox" id="%s"> %s</label>' % (cid, cid, E(lib)))
+        else:
+            h.append('<div class="champ"><label for="%s">%s</label><input type="text" id="%s" placeholder="%s"></div>' % (cid, E(lib), cid, E(val)))
+    return '<div class="filtres-champs" role="search">%s%s</div>' % (''.join(h), ('<div class="filtres-pied">%s</div>' % pied) if pied else '')
+
+
+def pagination(texte, pages=True):
+    nums = ''
+    if pages:
+        nums = '<span class="num-pages"><span class="page-active" aria-current="page">1</span><span>2</span><span>3</span><span>…</span><span>13</span></span>'
+    return ('<nav class="pagination" aria-label="Pagination"><span>%s</span><span class="pagination-boutons"><button type="button" class="btn btn-contour petit-btn" aria-disabled="true">← Précédent</button>%s'
+            '<button type="button" class="btn btn-contour petit-btn">Suivant →</button></span></nav>' % (texte, nums))
+
+
+def dl(paires, deux=True):
+    return '<dl class="infos%s">%s</dl>' % (' deux-col' if deux else '', ''.join('<div><dt>%s</dt><dd>%s</dd></div>' % (E(a), b) for a, b in paires))
+
+
+def chrono(items):
+    """Frise : items = [(date, titre, sous, icone, teinte)]."""
+    return '<ol class="chronologie">%s</ol>' % ''.join(
+        '<li><span class="rond %s" aria-hidden="true">%s</span><strong>%s</strong><span class="petit">%s · %s</span></li>' % (t, ic(i), E(ti), E(d), E(s)) for d, ti, s, i, t in items)
+
+
+def barre_masse(texte, boutons):
+    return '<div class="barre-selection" role="region" aria-label="Sélection"><span style="flex:1 1 180px">%s</span>%s</div>' % (texte, boutons)

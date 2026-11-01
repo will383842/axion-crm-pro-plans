@@ -1,4 +1,4 @@
-# Guide du style visuel : maquettes Axion CRM Pro (lot U1bis)
+# Guide du style visuel : maquettes Axion CRM Pro et Axion Envoi (lots U1bis + M1)
 
 Ce guide sert à **régénérer les 40 autres pages sans rien inventer**. Chaque composant existe déjà dans `maquettes/_fabrique/socle.py` (fonction Python) et dans `maquettes/style.css` (classe). Les 5 pages repères dans `_fabrique/pages_reperes.py` montrent chaque composant en vrai.
 
@@ -29,12 +29,25 @@ Pages repères : `index.html` (Aujourd'hui), `contacts.html`, `campagne-nouvelle
 
 Marque (bouton plein, liens, onglet actif) : `#2448e5` (6,7:1 avec blanc). Fond de page : `#eef1f6`.
 
+## 2 bis. Deux produits, deux couleurs (lot M1, décision D1)
+
+| Produit | Couleur | Foncé | Pâle | Où elle se voit |
+|---|---|---|---|---|
+| **CRM Pro** | `#2448e5` (6,7:1 avec blanc) | `#1b37b8` | `#e8edff` | liseré gauche du menu (8 px), sélecteur de produit, badge et bande haute de l'en-tête (6 px), onglet actif, **bouton plein** |
+| **Envoi** | `#0a6e78` bleu-vert (6,0:1 avec blanc) | `#075159` | `#e2f4f3` | idem |
+
+- Le produit est porté par `<body data-produit="crm|envoi">` : `style.css` redéfinit `--marque` pour Envoi. Aucune autre couleur de sens ne change.
+- Le bleu-vert d'Envoi reste distinct du vert « fait » (`#15803d`) et du bleu « en cours » (`#1d4ed8`).
+- Python : `page(..., reprise='frontend/src/features/…/X.tsx')` affiche « Reprise de : … » dans le cadre Maquette ; sans `reprise`, la page est marquée « Nouvelle ». Le produit vient de l'entrée de menu (`NAV_CRM`, `NAV_ENVOI`) ou de l'argument `menu=`.
+- Menus : `NAV_CRM` = menu réel de Will (accordéon, une section ouverte) ; `NAV_ENVOI` = espace à part. Pastilles `tag-produit crm|envoi` dans Ctrl K et dans la cloche.
+- Nouvelles briques : `filtres_champs()` (filtres à étiquettes, fidèles aux vrais écrans), `pagination()`, `dl()`, `chrono()`, `barre_masse()`, `.bandeau` (vert, ambre, rouge, violet, bleu), `.paire` (doublons), `.critere` + `.operateur` (éditeur ET / OU / SAUF), `.version-ab`, `.fil-message` + `.bulle` (répondre dans le même fil).
+
 ## 3. Coquille
 
 | Composant | Usage | Exemple (Python) |
 |---|---|---|
 | Page dans la coquille | Toute page de l'application | `page('contacts', 'Contacts', '<strong>1 248 personnes</strong>, 1 102 joignables.', normal, vide, actions=…, onglets_haut=…)` |
-| Barre latérale | 264 px dès 1024 px ; **rail d'icônes** de 76 px entre 768 et 1023 px (dans la grille, ne recouvre rien) ; masquée sous 768 px, ouverte en tiroir par le bouton menu | automatique |
+| Barre latérale | Sélecteur de produit en haut, liseré de la couleur du produit ; 264 px dès 1024 px ; **rail d'icônes** de 76 px entre 768 et 1023 px (dans la grille, ne recouvre rien) ; masquée sous 768 px, ouverte en tiroir par le bouton menu | automatique |
 | En-tête collant | Fil d'Ariane, recherche Ctrl K, feu des envois (pastille pleine), cloche, « Tout arrêter », compte | automatique |
 | Cadre « Maquette » | Choisir l'état : Normal, Vide, Erreur, Chargement. **Sous l'en-tête, dans le flux** | automatique |
 | Titre de page | `h1` 28 px + phrase d'état courte (18 px) + actions à droite | arguments `titre`, `phrase`, `actions` de `page()` |
@@ -69,7 +82,7 @@ Marque (bouton plein, liens, onglet actif) : `#2448e5` (6,7:1 avec blanc). Fond 
 | Séquence | Messages d'une campagne (Jour 0, +4, +11) | `<ol class="sequence">` |
 | Contrôles | Liste de vérifications réussies (tuiles vertes cochées) | `<ul class="controles">` |
 | **Tableau** | Zébré, survol bleu pâle, ligne entière cliquable ; cartes empilées sous 768 px | `tableau('Personnes', colonnes, lignes, liens=['contact.html', …], secondaires=(1, 4, 5))` |
-| Colonnes secondaires | Masquées entre 768 et 1180 px pour éviter tout défilement | argument `secondaires` de `tableau()` |
+| Colonnes secondaires | Masquées entre 768 et 1520 px pour éviter tout défilement | argument `secondaires` de `tableau()` |
 | Cellule personne | Case + initiales + nom + entreprise | classe `cellule-personne` (voir `_contacts()`) |
 | Barre d'outils | Recherche + puces de filtre avec nombres | `<div class="barre-outils">` + `champ-recherche` + `filtres([…])` |
 | Barre de sélection | Actions de masse (fond foncé, dans le flux) | `<div class="barre-selection">` |
@@ -93,7 +106,7 @@ Marque (bouton plein, liens, onglet actif) : `#2448e5` (6,7:1 avec blanc). Fond 
 
 `maquettes/_fabrique/controle.py` (Playwright + Chromium) ouvre les pages à 1440, 1024, 768 et 360 px, dans les 4 états, chaque onglet et chaque étape, et cherche : chevauchements entre éléments frères, débordements horizontaux (page, élément, contenu), contrastes sous 4,5:1 (3:1 pour le gros texte), texte sous 16 px hors pastilles, plus d'un bouton plein visible, bouton plein sous 48 px, erreurs JavaScript.
 
-- `python3 maquettes/_fabrique/controle.py` : 5 pages repères + captures dans `maquettes/captures/`.
-- `python3 maquettes/_fabrique/controle.py --toutes` : les 45 pages.
+- `python3 maquettes/_fabrique/controle.py` : 8 pages clés + captures légères dans `maquettes/captures/`.
+- `python3 maquettes/_fabrique/controle.py --toutes` : toutes les pages ; `--largeur=360` pour une seule largeur.
 
 Compatibilité : les anciennes classes (`tuiles`, `bloc`, `liste`, `frise`, `choix`, `colonnes`, `fiche`…) restent dans `style.css`. Les 40 pages non régénérées s'ouvrent avec le nouveau style (pastilles pleines, cadres, boutons) et passent le contrôle, mais restent **textuelles** tant qu'elles ne sont pas refaites.

@@ -626,7 +626,7 @@ dl.infos dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
   .recherche .lib-recherche, .recherche kbd { display: none; }
 }
 /* Écrans moyens : les colonnes secondaires des tableaux se masquent (la ligne reste cliquable). */
-@media (min-width: 768px) and (max-width: 1180px) {
+@media (min-width: 768px) and (max-width: 1520px) {
   .col-sec { display: none; }
 }
 /* 768 à 1023 px : barre en rail d'icônes, toujours dans la grille (ne recouvre rien). */
@@ -716,3 +716,129 @@ dl.infos dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
   .kpi-lib { font-size: 16px; }
   .entete .feu-entete { padding: 0 12px; }
 }
+
+/* =========================================================
+   Lot M1 : DEUX PRODUITS DISTINCTS (décision D1 de Will)
+   CRM Pro = bleu de marque #2448e5 ; Envoi = bleu-vert #0a6e78
+   (texte blanc 6,0:1 ; distinct du vert « fait » #15803d et du bleu « en cours »).
+   La couleur du produit pilote : liseré du menu, pastille, badge d'en-tête,
+   bande haute, onglet actif et LE bouton plein.
+   ========================================================= */
+:root { --crm: #2448e5; --crm-fonce: #1b37b8; --crm-pale: #e8edff; --envoi: #0a6e78; --envoi-fonce: #075159; --envoi-pale: #e2f4f3; --envoi-texte: #0b4f57; }
+body[data-produit="envoi"] {
+  --marque: var(--envoi); --marque-fonce: var(--envoi-fonce); --marque-pale: var(--envoi-pale);
+  --ombre-cta: 0 6px 16px rgba(10, 110, 120, .35), 0 2px 4px rgba(10, 110, 120, .25);
+}
+body[data-produit="envoi"] .btn-plein:hover { box-shadow: 0 8px 22px rgba(10, 110, 120, .45); }
+/* Liseré de produit sur le menu */
+.barre { border-left: 8px solid var(--marque); }
+.barre-nom { display: grid; min-width: 0; }
+.barre-nom small { font-size: 14px; line-height: 18px; font-weight: 700; color: var(--texte-doux); }
+/* Sélecteur de produit en haut du menu */
+.choix-produit { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 14px; background: var(--surface-3); border: 1px solid var(--cadre); }
+.choix-produit a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 8px; border-radius: 10px; color: var(--texte); text-decoration: none; font-weight: 800; border: 2px solid transparent; min-width: 0; }
+.choix-produit a:hover { background: var(--surface); }
+.choix-produit a.produit-crm[aria-current="true"] { background: var(--crm); color: #fff; }
+.choix-produit a.produit-envoi[aria-current="true"] { background: var(--envoi); color: #fff; }
+.pastille-produit { width: 14px; height: 14px; border-radius: 50%; flex: none; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--cadre); }
+.produit-crm .pastille-produit { background: var(--crm); }
+.produit-envoi .pastille-produit { background: var(--envoi); }
+body[data-produit="crm"] .badge-produit .pastille-produit { background: #fff; }
+body[data-produit="envoi"] .badge-produit .pastille-produit { background: #fff; }
+/* Badge et bande de produit en haut de chaque page */
+.entete { border-top: 6px solid var(--marque); }
+.badge-produit { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 999px; background: var(--marque); color: #fff; font-weight: 800; text-decoration: none; flex: none; white-space: nowrap; }
+.tag-produit { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border-radius: 999px; font: 800 14px/20px var(--police); color: #fff; flex: none; }
+.tag-produit.crm { background: var(--crm); } .tag-produit.envoi { background: var(--envoi); }
+.palette li a .lib-pal { flex: 1; min-width: 0; }
+.groupe.sans-titre ul { display: grid; }
+.groupe-titre > span:first-child { flex: 1; text-align: left; }
+.groupe-titre .compteur { margin-right: 6px; }
+.nav-lien[aria-current="page"] { color: var(--texte); }
+/* Note « Reprise de » dans le cadre Maquette */
+.selecteur-etat { justify-content: space-between; }
+.note-reprise { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; flex: 1 1 260px; min-width: 0; font-weight: 600; color: var(--texte); }
+.note-reprise > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.note-reprise code { font: 600 16px/22px ui-monospace, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
+/* Cloche : liste d'alertes des deux produits */
+.panneau-tete { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.liste-alertes { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 60vh; overflow-y: auto; }
+.alerte-cloche { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--cadre-leger); color: var(--texte); text-decoration: none; font-weight: 400; }
+.alerte-cloche:hover { border-color: var(--marque); background: var(--marque-pale); }
+.alerte-cloche .quoi { flex: 1 1 150px; min-width: 0; display: grid; }
+/* Divers M1 */
+.ligne-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.critere { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--cadre-leger); }
+.critere { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); }
+.critere select, .critere input { width: 100%; min-width: 0; }
+.critere .operateur { justify-self: start; }
+.operateur { display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border-radius: 999px; font: 800 14px/20px var(--police); color: #fff; background: var(--bleu-filet); }
+.operateur.ou { background: var(--violet-filet); } .operateur.sauf { background: var(--rouge-filet); }
+.groupe-criteres { display: grid; gap: 10px; padding: 14px; border-radius: 14px; border: 2px dashed var(--cadre-champ); }
+.carte-france { display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
+.carte-france path { stroke: #fff; stroke-width: 2; }
+.legende { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-weight: 700; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.legende i { width: 18px; height: 18px; border-radius: 4px; display: inline-block; }
+.version-ab { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--e4); }
+.fil-message { display: grid; gap: 12px; }
+.bulle { padding: 14px 16px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--cadre-leger); display: grid; gap: 6px; }
+.bulle.moi { background: var(--marque-pale); border-color: var(--marque); }
+.bulle .qui { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font-weight: 700; }
+dl.infos.deux-col { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+dl.infos.deux-col > div { display: grid; gap: 2px; }
+@media (max-width: 1023px) {
+  .barre { border-left-width: 6px; }
+  .choix-produit { grid-template-columns: 1fr; }
+  .choix-produit .nom-produit, .barre-nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .groupe-titre .compteur { display: none; }
+}
+@media (max-width: 767px) {
+  .barre.ouverte .choix-produit { grid-template-columns: 1fr 1fr; }
+  .barre.ouverte .choix-produit .nom-produit, .barre.ouverte .barre-nom { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
+  .badge-produit { padding: 0 10px; }
+  .badge-produit .nom-produit { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .entete .feu-entete .mot-feu { display: none; }
+}
+.filtres-champs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px 16px; align-items: end; padding: 16px; background: var(--surface); border: 1px solid var(--cadre); border-radius: var(--r-bloc); box-shadow: var(--ombre-carte); margin-bottom: var(--e5); }
+.filtres-champs .champ { margin: 0; }
+.filtres-champs .champ.large { grid-column: span 2; }
+.filtres-champs .champ-recherche { min-height: 48px; }
+.filtres-pied { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+@media (max-width: 560px) { .filtres-champs .champ.large { grid-column: auto; } }
+.pagination { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: var(--e4); font-weight: 700; }
+.pagination-boutons, .num-pages { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.num-pages span { min-width: 36px; height: 36px; display: inline-grid; place-items: center; border-radius: 10px; }
+.num-pages .page-active { background: var(--texte); color: #fff; }
+.chronologie .rond.vert { background: var(--vert-filet); } .chronologie .rond.ambre { background: var(--ambre-filet); } .chronologie .rond.violet { background: var(--violet-filet); }
+.chronologie .rond.terracotta { background: var(--terracotta-filet); } .chronologie .rond.gris { background: var(--gris-filet); } .chronologie .rond.rouge { background: var(--rouge-filet); }
+.paire { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--e4); }
+.paire > div { display: grid; gap: 4px; padding: 14px; border-radius: 14px; border: 2px solid var(--vert-filet); background: var(--vert-fond); min-width: 0; }
+.paire > div.absorbee { border-color: var(--ambre-filet); background: var(--ambre-fond); }
+.paire .etiquette-paire { font: 800 14px/18px var(--police); text-transform: uppercase; letter-spacing: .04em; }
+.cartes-pile { display: grid; gap: var(--e4); }
+.bandeau { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 18px; border-radius: var(--r-bloc); border: 2px solid; font-weight: 700; margin-bottom: var(--e5); }
+.bandeau.vert { border-color: var(--vert-filet); background: var(--vert-fond); color: var(--vert-texte); }
+.bandeau.ambre { border-color: var(--ambre-filet); background: var(--ambre-fond); color: var(--ambre-texte); }
+.bandeau.rouge { border-color: var(--rouge-filet); background: var(--rouge-fond); color: var(--rouge-texte); }
+.bandeau.violet { border-color: var(--violet-filet); background: var(--violet-fond); color: var(--violet-texte); }
+.bandeau.bleu { border-color: var(--bleu-filet); background: var(--bleu-fond); color: var(--bleu-texte); }
+.puces-etiq { display: flex; flex-wrap: wrap; gap: 6px; }
+.puce-etiq { display: inline-flex; align-items: center; min-height: 28px; padding: 0 10px; border-radius: 999px; background: var(--gris-fond); border: 1px solid var(--cadre); font-weight: 700; color: var(--gris-texte); }
+.ancien { text-decoration: line-through; color: var(--texte-doux); }
+.mono { font-family: ui-monospace, Menlo, Consolas, monospace; }
+.barre-temperature { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface-3); }
+.fiche-tete { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: var(--e5); }
+.fiche-tete .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.barre-nom small { font-size: 16px; line-height: 20px; }
+.kpi-val { overflow-wrap: anywhere; min-width: 0; }
+.kpi-val.texte { font-size: 28px; line-height: 34px; }
+.tableau-cadre td { overflow-wrap: anywhere; }
+dl.infos:not(.deux-col) > div { display: contents; }
+dl.infos dt { overflow-wrap: anywhere; min-width: 0; }
+@media (max-width: 560px) { dl.infos { grid-template-columns: minmax(0, 1fr); gap: 2px 0; } dl.infos dd { margin-bottom: 8px; } }
+
+.quoi .badge, .ligne .badge, .bloc-tete .badge { color: #fff; }
+.bloc-tete .badge { flex: 0 1 auto; white-space: normal; }
+.ecran-seul { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+.ecran-seul > * { max-width: 100%; min-width: 0; }

@@ -8,6 +8,11 @@
 <title>Page introuvable · Axion CRM Pro (maquette)</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body><main id="contenu" class="ecran-seul" tabindex="-1"><div class="carte-seule" style="text-align:center"><svg class="ic grande" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><h1 style="margin:12px 0 8px">Page introuvable</h1><p class="petit" style="margin-bottom:20px">Le lien est peut-être ancien. Les anciennes pages redirigent vers les nouvelles.</p><a class="btn btn-plein" href="index.html">Retour à Aujourd’hui</a></div></main><div class="toasts" id="toasts" aria-live="polite"></div></body>
+<body data-produit="crm"><main id="contenu" class="ecran-seul" tabindex="-1"><form class="selecteur-etat" aria-label="Maquette : choisir l’état affiché" onsubmit="return false"><p class="note-reprise"><span class="badge gris" data-s="↻">Reprise</span><span>Reprise de : <code>frontend/src/features/misc/NotFoundPage.tsx</code></span></p><fieldset><legend>Maquette</legend>
+<label><input type="radio" name="etat" value="normal" checked><span>Normal</span></label>
+<label><input type="radio" name="etat" value="vide"><span>Vide</span></label>
+<label><input type="radio" name="etat" value="erreur"><span>Erreur</span></label>
+<label><input type="radio" name="etat" value="chargement"><span>Chargement</span></label>
+</fieldset></form><div class="carte-seule" style="text-align:center"><svg class="ic grande" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1.1-1.5 2.5M12 17h.01"/></svg><h1 style="margin:12px 0 8px">Page introuvable</h1><p class="petit" style="margin-bottom:18px">Ce lien est ancien ou a changé d’adresse.</p><a class="btn btn-plein" href="index.html" ><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Retour au tableau de bord</a></div></main><div class="toasts" id="toasts" aria-live="polite"></div></body>
 <script src="app.js"></script>
 </html>

@@ -14,8 +14,9 @@ Sort avec le code 1 s'il reste un problème.
 
 Usage :
     pip install playwright        (Chromium déjà présent : /opt/pw-browsers/chromium)
-    python3 maquettes/_fabrique/controle.py               # 5 pages repères + captures
-    python3 maquettes/_fabrique/controle.py --toutes      # les 45 pages (sans captures)
+    python3 maquettes/_fabrique/controle.py               # 8 pages clés + captures légères
+    python3 maquettes/_fabrique/controle.py --toutes      # toutes les pages (sans captures)
+    option --largeur=1440 : une seule largeur (pour lancer les 4 largeurs en parallèle)
     python3 maquettes/_fabrique/controle.py index.html    # une page
 """
 import os
@@ -24,7 +25,7 @@ import sys
 ICI = os.path.dirname(os.path.abspath(__file__))
 MAQ = os.path.dirname(ICI)
 CAPTURES = os.path.join(MAQ, 'captures')
-REPERES = ['index.html', 'contacts.html', 'campagne-nouvelle.html', 'sante.html', 'reponses.html']
+REPERES = ['index.html', 'medias.html', 'entreprises.html', 'etiquettes.html', 'campagnes.html', 'campagne-suivi.html', 'reponses.html', 'domaine.html']
 LARGEURS = [1440, 1024, 768, 360]
 ETATS = ['normal', 'vide', 'erreur', 'chargement']
 
@@ -113,7 +114,7 @@ JS = r"""
     for (let i = pile.length - 1; i >= 0; i--) f = melange(pile[i], f);
     return f;
   };
-  const PETIT_PERMIS = '.badge, .compteur, kbd, .touche, .mot, .repere-v1, .pastille, .nb, thead, .sequence .jour, .groupe-titre, .selecteur-etat legend, .groupe-pal, .mini-titre';
+  const PETIT_PERMIS = '.badge, .compteur, kbd, .touche, .mot, .repere-v1, .pastille, .nb, thead, .sequence .jour, .groupe-titre, .selecteur-etat legend, .groupe-pal, .mini-titre, .etiquette-paire, .tag-produit, .operateur';
   for (const el of vis) {
     if (cache(el)) continue;
     const texte = Array.from(el.childNodes).some(n => n.nodeType === 3 && n.textContent.trim());
@@ -206,6 +207,10 @@ def main():
     else:
         pages = args or REPERES
     captures = not toutes and not args and '--sans-captures' not in sys.argv
+    global LARGEURS
+    for a in sys.argv:
+        if a.startswith('--largeur='):
+            LARGEURS = [int(a.split('=')[1])]
     problemes, nb_vues = lancer(pages, captures)
     vus = set()
     par_sorte = {}
