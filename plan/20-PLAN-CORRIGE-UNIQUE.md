@@ -145,7 +145,7 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 | ID | Contenu | Dépend de | j | Quand | Modèle | Preuve de réussite |
 |---|---|---|---|---|---|---|
 | **U0** | Système de design 2027 : clair seulement (pas de mode sombre), un seul bouton plein par écran, vocabulaire simple (12 C-03, C-09, C-10) | — | 5 | a | **O conçoit**, S code | gardes automatiques vertes |
-| **U1** | Maquettes cliquables, test de 45 min avec Will | — | 4 | a | **O** | 7 tâches réussies |
+| **U1** | Maquettes cliquables de **TOUTES les pages et de la barre latérale** (écrans existants repris dans le nouveau style compris), **validées par Will avant tout codage d'écran** ; test de 45 min avec Will | — | 6 | a | **O** | 7 tâches réussies ; validation écrite de Will |
 | **U2-U9** | Écrans 1, 5 à 11 de 07, avec les corrections 12 C-01, C-02, C-05 à C-08, C-12, C-13, C-17 ; liste et suivi des campagnes (UI-58) | U0, U1 | 22 | a | S + relecture O | e2e par écran ; campagne en 5 min et 15 clics |
 | **U10** | Passe finale : clavier seul, 360 px, lecteur d'écran | U2-U9 | 2 | a | **O** relit | critères 6.1 de 07 tenus |
 | **U11** | Écrans d'exploitation indispensables avant l'envoi : centre d'alertes, réglages des alertes (console + e-mail seulement), serveurs et test du matin, adresses IP, ajout de boîte, règles de prudence (durcir seulement), configuration (écran de E3b), identité de l'expéditeur, frein, page publique de désinscription (12 UI-01, 02, 04, 05, 07, 13, 14, 15, 45, 62) | U0, lots servis | 12 | a | S | e2e par écran ; alerte de test reçue par les 2 canaux |
@@ -461,3 +461,6 @@ Un second agent (Opus) a relu ce fichier. **Totaux recalculés : exacts** (323 /
 | 30, 39, 42 | Plus tard |
 
 **Ce qui reste, côté plan :** rien. **Côté Will :** choisir la date de lancement, déposer la notification CNIL (brouillon prêt), changer le mot de passe exposé, puis les achats de la semaine de lancement (§ 7).
+
+
+**Ajout du 01/11 (Will) :** les maquettes de toutes les pages et de la barre latérale sont faites en premier et validées par Will avant tout codage d'écran (lot U1, 6 j au lieu de 4). Un contrôle indépendant du risque de casse du CRM existant, de la prise en compte de la console du site et de l'accord entre écrans et serveur a été lancé ; ses ajouts seront intégrés ici.
