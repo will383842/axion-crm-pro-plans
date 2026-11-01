@@ -464,3 +464,19 @@ Un second agent (Opus) a relu ce fichier. **Totaux recalculés : exacts** (323 /
 
 
 **Ajout du 01/11 (Will) :** les maquettes de toutes les pages et de la barre latérale sont faites en premier et validées par Will avant tout codage d'écran (lot U1, 6 j au lieu de 4). Un contrôle indépendant du risque de casse du CRM existant, de la prise en compte de la console du site et de l'accord entre écrans et serveur a été lancé ; ses ajouts seront intégrés ici.
+
+---
+
+## 11. Contrôle indépendant du 01/11 : risque de casse, consoles, écrans/serveur
+
+Verdicts d'un second agent (lecture seule, rien exécuté) : **risque de casse : OUI** (le plan 20 ne prévoit aucun test de non-régression) ; **console du site : PARTIELLEMENT** ; **écrans et serveur accordés : PARTIELLEMENT**, et **aucun moyen prévu pour les garder accordés**. Ces 5 ajouts s'ajoutent au plan :
+
+1. **Lot R0 (≈ 4 j, avant S1) : relevé de l'existant et filet de non-régression.** Inventaire des tâches planifiées, des workflows de déploiement et d'exploitation, des interrupteurs (simulateurs, drapeaux de synchro), des tables d'ébauche, de la chaîne d'envoi faite à la main et des canaux signés avec le site. Puis une suite « ne doit pas régresser » **bloquante pour tous les lots**. Toute migration réversible. Toute nouveauté derrière un drapeau éteint par défaut.
+2. **Accord CRM ↔ consoles : une décision écrite (ADR) dans P1, puis un lot de synchro.** Nommer les deux consoles (console d'administration du site ; console des automatisations) ; un seul canal signé (fusionner P4 avec le chantier prévu au cahier de la console des automatisations) ; un seul identifiant client ; dire qui possède tâches, notes et affaires (console du site ou CRM) ; dire comment un client se connecte en V1 ; raccorder la fin de client (« perdu » ou « dormant », jamais supprimé). Puis ouvrir la synchro du dossier client **dans les deux sens** avec les garde-fous du 25/10 (le plus récent gagne, aucune suppression ne se propage, l'opposition RGPD gagne, aucune purge pour les fiches venues de la console).
+3. **Contrat d'API entre écrans et serveur, dans U0 (≈ 5 j).** Décrire l'API, générer les types de l'interface, test de contrat en CI qui échoue si un champ diverge. Brancher d'abord les routes serveur déjà prêtes qui n'ont pas d'écran (contacts, vues sauvegardées, actions de masse).
+4. **Sécurité en deux temps avec retour arrière :** allumer l'isolation entre clients seulement après avoir rejoué toutes les tâches planifiées et entrées de synchro sous le rôle de production en préproduction ; retirer les clés d'accès des workflows seulement après avoir remplacé chacun d'eux ; la 2FA actuelle reste jusqu'à S12 avec un test de connexion de bout en bout. Une ligne de retour arrière par lot.
+5. **Reprendre l'existant avant de reconstruire :** renommer les « campagnes de collecte » existantes avant C1 (redirection + test de route) ; l'ancienne commande de retours d'envoi devient une simple source d'import ; arbitrer les tables d'ébauche (réutiliser ou retirer de l'export RGPD avec un test « l'export contient tout ce qu'il contenait ») ; vérifier avant S8, E4 et E8 ce qui existe déjà (étendre, ne pas réécrire) ; mettre les commandes de purge d'entreprises en accord avec l'interdiction de purger ; garde « démarrage refusé en production si un simulateur est allumé » dans S2 ou P1.
+
+**Avant de coder :** la copie locale du CRM doit être mise à jour (des fusions récentes manquent).
+
+**Effet sur le total :** ≈ + 15 à 20 j-agent en V0 (R0, ADR consoles, contrat d'API, tests de non-régression), non encore répartis lot par lot.
