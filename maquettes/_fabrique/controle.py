@@ -180,7 +180,7 @@ def lancer(pages, captures):
                         pg.goto(url)
                         pg.wait_for_timeout(60)
                         cible = os.path.join(CAPTURES, '%s-%d.png' % (fichier[:-5], largeur))
-                        pg.screenshot(path=cible, full_page=True)
+                        pg.screenshot(path=cible, full_page=False)  # premier écran seulement : capture légère
                         alleger(cible)
             for e in erreurs_js:
                 problemes.append(('(script)', largeur, '-', 'erreur JS', e))
@@ -196,7 +196,7 @@ def alleger(chemin):
     except ImportError:
         return
     im = Image.open(chemin).convert('RGB')
-    im.quantize(colors=48, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(chemin, optimize=True)
+    im.quantize(colors=32, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(chemin, optimize=True)
 
 
 def main():

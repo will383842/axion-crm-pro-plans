@@ -842,3 +842,19 @@ dl.infos dt { overflow-wrap: anywhere; min-width: 0; }
 .bloc-tete .badge { flex: 0 1 auto; white-space: normal; }
 .ecran-seul { grid-template-columns: minmax(0, 1fr); justify-items: center; }
 .ecran-seul > * { max-width: 100%; min-width: 0; }
+.ligne .quoi .badge, .ligne .quoi strong .badge { color: #fff; }
+.chiffres b, .chiffres span, .kpi-meta { overflow-wrap: anywhere; min-width: 0; }
+td .badge { white-space: normal; }
+@media (max-width: 1023px) { .barre-marque { overflow: hidden; } }
+td .badge { flex: 0 1 auto; min-width: 0; }
+.barre nav.choix-produit { flex: 0 0 auto; align-content: center; }
+.choix-produit a { white-space: nowrap; padding: 0 6px; }
+.phrase-etat { display: block; }
+.phrase-etat .badge { vertical-align: middle; margin-right: 4px; }
+@media (min-width: 768px) { td .badge { white-space: nowrap; flex: none; } }
+@media (max-width: 767px) {
+  .badge-produit .nom-produit { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+  .badge-produit { padding: 0 10px; gap: 6px; }
+  .entete .feu-entete { display: none; }
+  .entete .recherche { flex: 0 0 44px; }
+}

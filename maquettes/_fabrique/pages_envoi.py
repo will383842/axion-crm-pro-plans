@@ -94,7 +94,7 @@ def _nouvelle():
                + champ('Exclure aussi (facultatif)', 'excl', aide='Adresse, organisation, domaine ou étiquette.'), 'message')
     ab = ('<div class="version-ab"><div class="carte teinte-bleu"><p><strong>Version A</strong> · objet</p><p>« Une idée pour votre prochain salon »</p></div>'
           '<div class="carte teinte-violet"><p><strong>Version B</strong> · objet</p><p>« Salon des artisans : on en parle ? »</p></div></div>'
-          + chiffres([('20 %', 'part testée'), ('50 / 50', 'partage'), ('48 h', 'puis gagnant'), ('réponses', 'critère')]))
+          + chiffres([('20 %', 'part testée'), ('50 / 50', 'partage'), ('48 h', 'puis gagnant'), ('Réponses', 'critère')]))
     seq = '<ol class="sequence">%s</ol>' % ''.join('<li><span class="jour">%s</span><strong>%s</strong>%s</li>' % (j, t, badge('vert', 'Validé', '✓')) for j, t in [('Jour 0', 'Premier message'), ('Jour +4', 'Relance'), ('Jour +11', 'Dernier mot')])
     e2 = etape(2, 'Quel message ?', 'message',
                '<div class="choix" role="radiogroup" aria-label="Message type"><label><span class="choix-tete"><input type="radio" name="mt" checked><strong>Organisateurs · v3</strong></span>%s</label>'
@@ -316,7 +316,7 @@ def _serveurs():
     haut = kpis(kpi('Serveur d’envoi', 'En ligne', 'serveur', 'vert', 'depuis 41 jours'), kpi('Adresses IP', '2', 'reseau', 'bleu', '1 en chauffe'), kpi('Test du matin', '4/4', 'test', 'vert', '07:05 · boîtes témoins'), kpi('Configuration', 'À jour', 'reglages', 'vert', 'version 14', 'configuration.html'))
     ips = tableau('Adresses IP', ['Adresse', 'Flux', 'Domaine', 'État', 'Volume du jour', ''], [
         ['<span class="mono">192.0.2.10</span>', 'Prospection', 'prospection-a.example', badge('vert', 'Prête', '✓'), '68', btn('Ouvrir', 'petit-discret', 'domaine.html')],
-        ['<span class="mono">192.0.2.11</span>', 'Lettre', 'prospection-c.example', badge('bleu', 'En chauffe', '▶'), '8', btn('Ouvrir', 'petit-discret', 'chauffe.html')]], secondaires=(2,))
+        ['<span class="mono">192.0.2.11</span>', 'Lettre', 'prospection-c.example', badge('bleu', 'En chauffe', '▶'), '8', btn('Ouvrir', 'petit-discret', 'chauffe.html')]], secondaires=(1, 2))
     temoins = bloc('Test du matin', chiffres([('07:05', 'heure'), ('4/4', 'témoins'), ('100 %', 'en réception')]) + mini_titre('7 derniers matins')
                    + points_serie([('Lun', '', 'coche'), ('Mar', '', 'coche'), ('Mer', 'ambre', 'alerte'), ('Jeu', '', 'coche'), ('Ven', '', 'coche'), ('Sam', '', 'coche'), ('Dim', '', 'coche')]), 'vert', 'test', mot='Réussi')
     flux = bloc('Flux séparés', lignes(ligne('Prospection', '192.0.2.10 · prospection-a/b', ic('envoi'), badge('vert', 'Isolé', '✓')), ligne('Lettre d’information', '192.0.2.11 · prospection-c', ic('message'), badge('vert', 'Isolé', '✓')),
@@ -376,7 +376,7 @@ def _chercher():
     res = tableau('Messages', ['Quand', 'Campagne', 'Boîte', 'Réponse du serveur', 'En clair'], [
         ['30 oct. 09:12', 'Organisateurs Rhône-Alpes · message 1', 'claire@prospection-a.example', '<span class="mono">550 5.1.1</span>', badge('rouge', 'Adresse inexistante', '■')],
         ['30 oct. 09:12', '—', '—', '—', badge('gris', 'Adresse mise en liste de suppression', '○')],
-        ['12 sept. 10:40', 'Clubs d’entreprises Savoie · message 1', 'sophie@prospection-a.example', '<span class="mono">250 2.0.0</span>', badge('vert', 'Accepté', '✓')]], secondaires=(2,))
+        ['12 sept. 10:40', 'Clubs d’entreprises Savoie · message 1', 'sophie@prospection-a.example', '<span class="mono">250 2.0.0</span>', badge('vert', 'Accepté', '✓')]], secondaires=(1, 2, 3))
     fiche = bloc('Yves Roche · Atelier Bois & Forme', '<p>Fiche CRM : <a href="contact.html">ouvrir</a> · peut-on lui écrire ? <strong>Non</strong> (adresse inexistante).</p>', 'rouge', 'personne', mot='Ne plus écrire')
     normal = form + fiche + bloc('3 messages pour cette adresse', res, icone='journal', pied=btn('Exporter', 'petit', icone='export', attrs='data-toast="Historique exporté (CSV)."'))
     P['chercher-envoi.html'] = page('chercher-envoi', 'Chercher un envoi', 'Une adresse → <strong>tous ses messages</strong> et la raison en clair.', normal, onglets_haut=ONG_SANTE('chercher-envoi.html'), menu='sante')

@@ -52,7 +52,7 @@ def _utilisateurs():
                   '<button type="button" class="btn btn-contour" data-ferme>Annuler</button><button type="button" class="btn btn-plein" data-ferme data-toast="Compte créé — l’invitation vient de partir par e-mail">Créer le compte</button>')
     fer = fenetre('fen-fermer', 'Fermer ce compte ?', '<p>Karim Saidi n’aura plus accès à cet espace de travail. Son appartenance est <strong>révoquée</strong>, pas effacée.</p>',
                   '<button type="button" class="btn btn-contour" data-ferme>Annuler</button><button type="button" class="btn btn-danger-plein" data-ferme data-toast="Compte fermé">Fermer le compte</button>')
-    normal = haut + tableau('Utilisateurs', ['Utilisateur', 'Email', 'Rôles', '2FA', 'Dernière connexion', 'Actions'], lig, secondaires=(1, 4))
+    normal = haut + tableau('Utilisateurs', ['Utilisateur', 'Email', 'Rôles', '2FA', 'Dernière connexion', 'Actions'], lig, secondaires=(1, 3, 4))
     P['utilisateurs.html'] = page('utilisateurs', 'Utilisateurs', 'Qui a accès à votre CRM, et <strong>avec quels droits</strong>.', normal,
                                   etat_vide('equipe', 'Aucun utilisateur', 'Aucun autre utilisateur pour l’instant.', btn('Inviter', 'plein', icone='ajout-personne', attrs='data-ouvre="fen-inviter"')),
                                   etat_erreur('La liste des membres de l’espace de travail n’a pas pu être lue.'),
@@ -174,7 +174,7 @@ def _moteurs_ia():
 def _relais():
     lig = [['<strong>relais-%s</strong>' % i, badge(t, ty, '●'), '<span class="mono">%s</span>' % z, n, badge('vert', 'healthy', '●') + '<span class="sous">01/11 10:30</span>', p, btn('Tester', 'petit', attrs='data-toast="Opérationnel"')]
            for i, ty, t, z, n, p in [('a', 'residential', 'bleu', 'fr', '120', '3'), ('b', 'datacenter', 'vert', 'eu', '40', '1')]]
-    normal = kpis(kpi('Fournisseurs', '2', 'reseau', 'bleu', ''), kpi('En bonne santé', '2', 'coche', 'vert', 'sur 2')) + tableau('Serveurs relais', ['Identifiant', 'Type', 'Zone', 'Points de sortie', 'État de santé', 'Poids', 'Actions'], lig, secondaires=(2, 5))
+    normal = kpis(kpi('Fournisseurs', '2', 'reseau', 'bleu', ''), kpi('En bonne santé', '2', 'coche', 'vert', 'sur 2')) + tableau('Serveurs relais', ['Identifiant', 'Type', 'Zone', 'Points de sortie', 'État de santé', 'Poids', 'Actions'], lig, secondaires=(2, 3, 5))
     P['serveurs-relais.html'] = page('serveurs-relais', 'Serveurs relais', 'Fournisseurs d’adresses réseau utilisés <strong>pour la collecte</strong>.', normal,
                                      etat_vide('domaine', 'Aucun fournisseur configuré', 'Aucun fournisseur de serveurs relais n’est configuré sur le serveur.', ''), etat_erreur('Les fournisseurs de proxies n’ont pas pu être lus.'),
                                      reprise=F + 'llm/ProxyProvidersPage.tsx')
