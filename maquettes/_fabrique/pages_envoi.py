@@ -221,7 +221,7 @@ def _reponses():
             ('Lina Costa', 'gris', 'gris', 'Absente', '○', 'Retour le 12 nov.', 'Hier 09:12'),
             ('Yves Roche', 'gris', 'rouge', 'STOP', '■', '« Ne m’écrivez plus. »', '31 oct.')]))
     fil = ('<div class="fil-message"><div class="bulle moi"><div class="qui"><span>Will · claire@prospection-a.example</span><span class="petit">28 oct. 09:12</span></div><p>Bonjour Paul, j’ai vu que la Boulangerie des Tilleuls organise des événements…</p></div>'
-           '<div class="bulle"><div class="qui"><span>Paul Morin</span><span class="petit">Hier 16:20</span></div><p style="font-size:18px">Bonjour, c’est intéressant. Pouvez-vous me rappeler jeudi matin ? Paul</p></div></div>')
+           '<div class="bulle"><div class="qui"><span>Paul Morin</span><span class="petit">Hier 16:20</span></div><p>Bonjour, c’est intéressant. Pouvez-vous me rappeler jeudi matin ? Paul</p></div></div>')
     rep = ('<div class="bloc teinte-bleu" style="margin-top:14px"><div class="bloc-tete">%s<h2>Répondre</h2><span class="mot">Même fil, même boîte</span></div>'
            '<div class="filtres" role="group" aria-label="Réponses rapides"><button type="button" class="puce" aria-pressed="false">Merci, je vous rappelle</button><button type="button" class="puce" aria-pressed="false">Proposer un rendez-vous</button><button type="button" class="puce" aria-pressed="false">Envoyer la plaquette</button></div>'
            '%s<div class="ligne-champs">%s</div><div class="bloc-pied">%s</div></div>' % (

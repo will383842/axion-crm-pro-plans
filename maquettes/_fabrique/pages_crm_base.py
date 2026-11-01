@@ -197,7 +197,7 @@ def _rattacher():
 def _propositions():
     def carte(qui, origine, nom, champ_, ancien, nouveau, note=''):
         return ('<section class="bloc teinte-terracotta"><div class="bloc-tete">%s<h2>%s</h2><span class="mot">À valider</span></div><p class="petit">%s · %s propose</p>'
-                '<p style="margin:10px 0;font-size:18px"><strong>%s</strong> : <span class="ancien">%s</span> → <strong>%s</strong></p>%s'
+                '<p style="margin:10px 0"><strong>%s</strong> : <span class="ancien">%s</span> → <strong>%s</strong></p>%s'
                 '<div class="bloc-pied">%s%s</div></section>' % (ic('boite-entree'), E(nom), qui, origine, E(champ_), E(ancien), E(nouveau),
                                                                  ('<div class="bandeau ambre" style="margin:0">%s</div>' % note) if note else '',
                                                                  btn('Accepter', 'contour', icone='coche', attrs='data-toast="C’est fait : la fiche a été mise à jour."'),
@@ -299,7 +299,7 @@ def _contacts():
     items = []
     for i, (n, t, v, pers, et) in enumerate(ORGS):
         pp = ' '.join('<label class="case" style="min-height:40px;padding:0"><input type="checkbox"%s> <a href="contact.html">%s</a></label>' % (' checked' if i == 0 else '', E(p)) for p in pers)
-        items.append('<li class="ligne" style="display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><input type="checkbox" aria-label="Choisir %s"%s><strong style="font-size:18px">%s</strong><span class="petit">%s · %s</span></div>'
+        items.append('<li class="ligne" style="display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><input type="checkbox" aria-label="Choisir %s"%s><strong style="font-size:16px">%s</strong><span class="petit">%s · %s</span></div>'
                      '<div style="display:flex;flex-wrap:wrap;gap:4px 18px">%s</div><div class="puces-etiq">%s</div></li>' % (E(n), ' checked' if i == 0 else '', E(n), E(t), E(v), pp, ''.join('<span class="puce-etiq">%s</span>' % E(e) for e in et)))
     haut = kpis(kpi('Clients', '86', 'coche', 'vert', ''), kpi('Prospects', '1 412', 'cible', 'bleu', ''), kpi('Opportunités', '37', 'etincelle', 'violet', ''), kpi('Dormants', '204', 'horloge', 'gris', ''))
     ong = '<nav class="onglets" aria-label="Types"><a href="contacts.html" aria-current="page">Tous <span class="nb">1 739</span></a><a href="#">Prospects <span class="nb">1 412</span></a><a href="#">Clients <span class="nb">86</span></a><a href="#">Presse &amp; médias <span class="nb">58</span></a><a href="#">Partenaires <span class="nb">41</span></a><a href="#">Investisseurs <span class="nb">6</span></a><a href="#">Conférences <span class="nb">19</span></a><a href="#">Newsletter <span class="nb">102</span></a><a href="#">Fournisseurs <span class="nb">15</span></a></nav>'

@@ -18,7 +18,7 @@ def _index():
     afaire = kpis(_carte_afaire('12', 'Doublons à vérifier', 'doublon', 'terracotta', 'doublons.html'),
                   _carte_afaire('7', 'Personnes à rattacher', 'balance', 'violet', 'personnes-a-rattacher.html'),
                   _carte_afaire('3', 'Événements à relancer', 'calendrier', 'vert', 'evenements.html#relances'))
-    base = kpis(kpi('Entreprises', '48 212', 'entreprise', 'bleu', '81 % de TPE', 'entreprises.html'),
+    base = kpis(kpi('Entreprises', '48 212', 'entreprise', 'sombre', '81 % de TPE', 'entreprises.html'),
                 kpi('Prospects joignables', '21 904', 'coche', 'vert', 'hors sites devinés non vérifiés', 'audiences.html'),
                 kpi('Fiches enrichies', '62 %', 'etincelle', 'violet', '', graph=jauge('Fiches enrichies', 62, 100, 'violet', '62 %')),
                 kpi('Qualité moyenne', '74', 'stats', 'ambre', '', unite='/ 100', graph=jauge('Qualité moyenne', 74, 100, 'ambre', '74 / 100')))
