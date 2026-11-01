@@ -1,5 +1,7 @@
 # 20 : PLAN CORRIGÉ UNIQUE : CRM Pro complet d'Axion-IA (01/11/2026)
 
+> **Mise à jour W0 du 01/11/2026 : le total et l'ordre de ce fichier sont remplacés par le § 12 (en fin de fichier).** Nouveau total : **≈ 685,5 j** (≈ 637,5 j du plan 29 + 48 j des 52 ajouts du plan 27). Ordre : **démo frontend d'abord** (plan 29, ADR-15), découpée en lots dans `plan/30-PLAN-FINAL-ET-LOTS-DE-CODE.md` et `plan/lots/`.
+
 **Document de référence.** Il remplace tous les totaux et tous les calendriers des fichiers 00 à 17. Si un autre fichier dit autre chose, c'est ce fichier qui fait foi, sauf décision contraire de Will.
 
 Rédigé par le chef de chantier, en lecture seule. **RIEN N'EST CODÉ.** Aucun e-mail envoyé, aucun serveur touché, aucun secret lu ni recopié.
@@ -18,15 +20,15 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 2. **Moteur d'envoi** : KumoMTA, sur un serveur séparé. Repli prévu : Postfix + rspamd.
 3. **Règle d'or** : toutes les fonctions sont livrées complètes. Seuls les **volumes** démarrent petit (20 messages par jour au début).
 4. **V0 (Axion seul)** : sécurité complète, CRM du quotidien, chaîne de campagne complète, envoi réel limité.
-5. **V1 (console mutualisée)** : un seul logiciel pour plusieurs clients ; CRM Pro = module de base ; envoi = option ; un moteur d'envoi séparé par client.
+5. **V1 (console mutualisée)** : un seul logiciel pour plusieurs clients ; CRM Pro = module de base ; envoi = option ; un moteur d'envoi séparé par client. **(Plan 29 : CRM Pro et Envoi sont deux produits facturés à part, avec un socle commun ; Envoi se branche sur un CRM par un adaptateur.)**
 6. **V2 (chez le client)** : installation sur le serveur du client, mises à jour par vagues, repli Postfix, 5 000 par jour.
-7. **Ordre** : sécurité et isolation d'abord, puis moteur d'envoi, puis campagnes, puis écrans, puis essai complet.
+7. **Ordre** : ~~sécurité et isolation d'abord, puis moteur d'envoi, puis campagnes, puis écrans~~ → **remplacé (plan 29, ADR-15)** : démo frontend des deux produits d'abord (avec la sécurité de l'existant en parallèle), puis serveur, puis branchement écran par écran, puis essai complet.
 8. **Semaine 1 (2 novembre)** : feu vert de Will, achats (domaines, serveurs), dossier CNIL, rotation des clés.
 9. **Banc d'essai prêt** : vers le **11 décembre 2026**.
 10. **Premier envoi interne** (Will + 4 boîtes témoins) : vers le **27 janvier 2027**.
 11. **Premier envoi réel limité** (20 organisateurs) : vers le **2-3 février 2027**.
 12. **Version console** (client pilote installé, isolé) : vers le **15 avril 2027**.
-13. **Charge** : V0 ≈ **323 j**, V1 ≈ **212 j**, V2 ≈ **115 j**, soit ≈ **650 j-agent** (≈ 747 avec relectures).
+13. **Charge** : ~~V0 ≈ 323 j, V1 ≈ 212 j, V2 ≈ 115 j, soit ≈ 650 j-agent~~ → **remplacé par le § 12 : V0 ≈ 352 j, V1 ≈ 217,5 j, V2 ≈ 116 j, soit ≈ 685,5 j-agent (≈ 788 avec relectures)**.
 14. **Condition des dates** : 6 routines Sonnet + 1 Opus jusqu'au premier envoi, puis 5 + 1. Avec 5 routines dès le début, le premier envoi glisse vers le **16-17 février**.
 15. **Will** intervient 10 fois, surtout la semaine du 2 novembre, puis 10 minutes par jour (train de fusion).
 
@@ -480,3 +482,91 @@ Verdicts d'un second agent (lecture seule, rien exécuté) : **risque de casse :
 **Avant de coder :** la copie locale du CRM doit être mise à jour (des fusions récentes manquent).
 
 **Effet sur le total :** ≈ + 15 à 20 j-agent en V0 (R0, ADR consoles, contrat d'API, tests de non-régression), non encore répartis lot par lot.
+
+---
+
+## 12. Mise à jour W0 (01/11/2026) : plans 27, 28 et 29 reportés, total unique par famille
+
+**Ce paragraphe prime sur les § 1, 2 et 3 pour les chiffres et sur le § 5 pour l'ordre.** Le découpage en lots de code (démo, sécurité de l'existant) est dans `plan/30-PLAN-FINAL-ET-LOTS-DE-CODE.md` et `plan/lots/`.
+
+### 12.1 Décisions de Will intégrées (non reposées)
+
+- **Plan 29, 6 questions : OUI aux 6.** Réponses aux campagnes dans Envoi, le CRM en reçoit un résumé (Q1) ; même dépôt et même serveur, frontière stricte socle / CRM / Envoi (Q2) ; CRM résilié et Envoi gardé = lecture seule des contacts jusqu'à l'import (Q3) ; turquoise pétrole `#0b7285` pour Envoi (Q4) ; sélecteur de produit en haut de la barre (Q5) ; pendant la démo, seuls les travaux sans écran avancent (Q6).
+- **Maquettes M2 validées par Will (« PARFAIT »)** : dossier `maquettes/` (73 pages, style du vrai CRM : Inter 14/12 px, marque `#0051bd`, barre `#04203a`). Elles font foi pour les écrans. **Arbitrage** : le menu d'Envoi des maquettes validées (10 entrées : Campagnes, Réponses, Boîtes d'envoi, Domaines, Serveurs et adresses IP, Chauffe, Santé des envois, Désinscriptions, Alertes d'envoi, Réglages d'envoi) **remplace** le menu à 4 entrées de l'ADR-14 (validé après lui).
+- **Ordre voulu** : frontend d'abord, en démo présentable à des clients (données factices), pour les deux produits ; puis le serveur ; puis le branchement. Autopilote demandé.
+- **Les 3 écarts du plan 27, par défaut (recommandation du plan, en attente d'un éventuel avis contraire de Will)** : **pas** de mesure des ouvertures (seules les réponses comptent) ; **pas** de réseau d'échange de faux messages pour la chauffe ; **pas** de BIMI.
+- Entité d'envoi : **SAS française** (rien d'estonien).
+
+### 12.2 Le pont de calcul
+
+| Étape | V0 | V1 | V2 | Total |
+|---|---|---|---|---|
+| Plan 20 (§ 3) | 323 | 212 | 115 | **650** |
+| Plan 28 : rapprochement (− 64 économisés, + 3 ajoutés) | − 41 | − 19,5 | − 0,5 | **589** |
+| Plan 29 : deux produits, démo d'abord (ADR-15 § 15.5) | + 45,5 | + 5,5 | − 2,5 | **637,5** |
+| Plan 27 : 52 ajouts (recalculés lot par lot) | + 24,5 | + 19,5 | + 4 | + 48 |
+| **NOUVEAU TOTAL** | **≈ 352** | **≈ 217,5** | **≈ 116** | **≈ 685,5 j** |
+
+- Avec relectures Opus (+ 15 %) : **≈ 788 j**. Fourchette ± 30 % (sans relectures) : **480 à 891 j**.
+- **Écart avec le chiffre de 638 j cité dans la consigne** : 638 j (plan 29) **n'incluait pas** les 48 j du plan 27 (le plan 27 l'écrit lui-même : « pas encore reportés dans le total »). Ils sont reportés ici, d'où **≈ 685,5 j**. Rien n'est compté deux fois : le X3 (webhooks sortants) vaut 0 dans le plan 27 et est absorbé par A2 dans le plan 29.
+- **Toujours hors total** (enveloppe du § 11) : R0 = **5,5 j** (relevé 21 fait, filet 22 à coder), contrat d'API du CRM existant (dans U0 serveur), ADR des consoles (fait : plan 24). R0 est quand même découpé en lot (plan 30).
+
+### 12.3 Total par famille (plan 29 § 7.1)
+
+Règle de rangement : **Socle** = R1, renommage des collectes, S1-S12, P1-P4, K1-K5, K8, K11, U0, U1 (+ U1ter, U1quater), U10, F0, B1, DM0, DM3, validations de la démo, BR, D0, J3 et les lots privés (S5, J2). **CRM Pro** = Q1, Q1b, Q2, Q4, K12. **Envoi** = E1-E10, P5, C1, C2, C4-C6, RP1-RP4, X1-X3, A0-A3, T1, U11, J5. **Lots à découper** répartis à la louche : C3 (40 % CRM / 60 % Envoi), J1 (50/50), Q3 (70/30), K6, K7, K10, J4, U14 (50/50), K9 (CRM), U2-U9 (45/55), U12 (40/60), U13 (35/65), écrans V1 avancés en démo (5 j CRM / 7 j Envoi).
+
+| Famille | V0 | V1 | V2 | **Total** | Part |
+|---|---|---|---|---|---|
+| **Socle** (vient avec chaque produit) | ≈ 105 | ≈ 41 | ≈ 11,5 | **≈ 157,5 j** | 23 % |
+| **CRM Pro** | ≈ 37 | ≈ 70 | ≈ 1,5 | **≈ 108,5 j** | 16 % |
+| **Envoi** | ≈ 210 | ≈ 106,5 | ≈ 103 | **≈ 419,5 j** | 61 % |
+| **Total** | **≈ 352** | **≈ 217,5** | **≈ 116** | **≈ 685,5 j** | |
+
+_(Les sous-totaux par phase et par famille sont arrondis à 0,5 j ; l'Envoi V2 contient X1 « plusieurs serveurs, 5 000/j », 80 j à lui seul.)_ Lecture : le CRM Pro est petit parce que **176 des 241 fonctions de référence existent déjà** (plan 27) et que le rapprochement (plan 28) a retiré ce qui était recompté ; l'Envoi n'existe pas du tout.
+
+### 12.4 Lots : valeurs après les trois plans (j)
+
+| Lot | Plan 20 | Plan 28 | Plan 29 | Plan 27 | **Nouveau** |
+|---|---|---|---|---|---|
+| S1 / S2 / S3 / S4 | 1 / 1,5 / 6 / 3 | − 0,5 / − 0,5 / − 1 / − 1 | | | **0,5 / 1 / 5 / 2** (S4 fait en démo) |
+| S6 / S7 / S8 / S9 | 3 / 14,5 / 1 / 9 | 0 / − 2 / − 0,5 / − 3,5 | | | **3 / 12,5 / 0,5 (vérif. dans R0) / 5,5** |
+| S5 + J2 (notes privées) | 8,5 | | | | **8,5** |
+| P1 / P2 / P3 / P4 / P5 | 6 / 4 / 5 / 2 / 3 | + 0,5 / 0 / 0 / − 1 / 0 | | | **6,5 / 4 / 5 / 1 / 3** |
+| E1 / E2 / E3 / E3b | 10,5 / 20,5 / 5 / 10 | 0 / 0 / − 0,5 / 0 | | 0 / + 1 / 0 / 0 | **10,5 / 21,5 / 4,5 / 10** |
+| E4 / E5 / E6 / E7 / E8 | 6 / 17 / 6 / 15,5 / 8,5 | − 2,5 / − 3 / − 0,5 / 0 / − 0,5 | | 0 / + 2 / 0 / 0 / + 1 | **3,5 / 16 / 5,5 / 15,5 / 9** |
+| C1 / C2 / C3 / C4 | 25,5 / 7 / 4,5 / 3 | − 4,5 / − 1 / − 2,5 / 0 | − 2 (adaptateur) | + 6 | **25 / 6 / 2 / 3** |
+| RP1 / RP2 / RP3 | 10 / 3,5 / 8 | − 1 / 0 / 0 | | 0 / 0 / + 1,5 | **9 / 3,5 / 9,5** |
+| U0 / U1 / U2-U9 / U10 / U11 / U12 | 5 / 6 / 22 / 2 / 12 / 12 | − 1 / + 1 / − 3 / 0 / − 2 / − 3 | − 4 (U2-U9) | + 5,75 (U2-U9) / + 0,75 / + 1,5 | **4 / 7 / 20,75 / 2 / 10,75 / 10,5** |
+| Q1 / Q1b | 10,5 / 10,5 | − 3,5 / − 3,5 | | + 1,5 / 0 | **8,5 / 7** |
+| J1 / J3 / D0 / T1 | 6 / 2 / 1 / 6 | − 1 / 0 / 0 / 0 | | + 0,5 (T1) | **5 / 2 / 1 / 6,5** |
+| Nouveaux V0 | — | renommage collectes 0,5 | U1quater 1,5 ; DM0 9 ; DM3 3 ; validations 4 ; BR 8 ; F0 3 ; A0 3 ; A1 5 ; B1 3 ; écrans V1 avancés 12 | R1 2 | **54** |
+| Q2 / Q3 / Q4 | 27,5 / 9 / — | − 5,5 / − 1,5 | − 5 (Q2) | + 2,5 / + 1 / + 4 | **19,5 / 8,5 / 4** |
+| C5 / C6 / RP4 / E9 | 15 / 7 / 15,5 / 16 | − 1,5 / − 0,5 / 0 / 0 | | + 5,5 / 0 / + 7 / + 2,5 | **19 / 6,5 / 22,5 / 18,5** |
+| J4 / K1 / K2 / K3 / K5 | 15,5 / 9,5 / 7 / 8 / 5 | 0 / − 3 / 0 / − 0,5 / − 0,5 | + 1 (J4) | 0 / + 2 / 0 / 0 / 0 | **16,5 / 8,5 / 7 / 7,5 / 4,5** |
+| K6 / K7 / K8 / K9 / K10 / K11 / K12 | 6 / 2 / 6 / 11 / 9 / 3 / 12 | 0 / 0 / − 1 / − 1,5 / − 0,5 / 0 / − 1 | + 1 / + 1 / 0 / − 1,5 / 0 / 0 / 0 | | **7 / 3 / 5 / 8 / 8,5 / 3 / 11** |
+| S11 / U13 | 8,5 / 19,5 | − 1 / − 1,5 | − 7 (U13) | | **7,5 / 11** |
+| Nouveaux V1 | — | | A2 10 ; A3 6 | | **16** |
+| V2 : K4 / E10 / X1 / X2 / X3 / S12 / U14 / J5 | 9 / 10 / 80 / 9 / 3 / 0,5 / 2,5 / 1 | X3 − 0,5 | X3 − 2,5 | (K1 + 2 ; C5 + 2 comptés en V2) | **9 / 10 / 80 / 9 / 0 / 0,5 / 2,5 / 1** |
+
+_(Les 4 j du plan 27 en V2 sont « connexion par Google ou Microsoft » (K1, 2 j) et « variantes de phrases » (C5, 2 j) : ils restent dans leurs lots mais seront livrés en V2.)_
+
+### 12.5 Ce qui est déjà fait
+
+| Fait | Lot | j | Preuve |
+|---|---|---|---|
+| Maquettes des deux produits, menu réel, style du vrai CRM, validées par Will | U1, U1ter, U1quater (et DM-a) | **8,5** | `maquettes/` (73 pages, contrôle 1 300 vues), « PARFAIT » de Will |
+| ADR d'architecture et des deux produits | part de conception de P1 | ≈ 2 | `plan/24`, `plan/29` |
+| Spécification du contrat d'envoi et du banc | part de conception de E1 | ≈ 1,5 | `plan/26` |
+| Brouillons des documents de conformité | part de J2 / J4 | ≈ 2 | `plan/25` |
+| Relevé de l'existant et spécification du filet | R0 (hors total) | ≈ 2 sur 5,5 | `plan/21`, `plan/22` |
+| **Total fait dans le total** | | **≈ 14 j** | **reste ≈ 671,5 j** |
+
+- **Rien n'est codé** pour ce chantier dans `axion-crm-pro`. L'existant du CRM (176 fonctions sur 241) est déjà déduit du total par le plan 28 (− 64 j).
+- **Démo** (DM0 à DM3, ≈ 80,5 j de plan 29, dont ≈ 18 j vraiment nouveaux) : découpée en 18 lots dans le plan 30.
+
+### 12.6 Ordre (remplace le § 5 jusqu'au premier envoi ; calendrier détaillé au plan 30)
+
+1. **Vague 0 (S1)** : renommage des collectes, socle de démo (faux serveur, jeu factice), coquille à deux produits. En parallèle, **sans écran** : R0, puis S1-S3, S5-S7, S9 (avec l'écriture dans la cloche).
+2. **Vagues 1 et 2 (S2-S5)** : 12 puis 3 lots d'écrans en parallèle (CRM Pro et Envoi).
+3. **Vague 3 (S6)** : démo réunie, parcours guidés, passe finale ; **démo publique ≈ S6-S7** (mise en ligne sur feu vert de Will).
+4. **S7 et après** : chaîne serveur (P1-P5, F0, B1, E1 → E8, A0, A1, C1 → C3, RP1 → RP3, J1, J3), **BR** au fil de l'eau ; premier envoi réel ≈ S18 si les domaines et le port 25 partent en S1.
