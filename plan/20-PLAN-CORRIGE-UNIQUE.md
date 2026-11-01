@@ -302,8 +302,8 @@ Une réponse courte suffit. **Recommandation en gras.** Les décisions déjà pr
 
 | # | Question | Recommandation | Conséquence | Bloque |
 |---|---|---|---|---|
-| 1 | Feu vert pour lancer le chantier le 2 novembre ? | **Oui** | sans feu vert, chaque semaine de retard décale toutes les dates | **BLOQUE LE PREMIER ENVOI** |
-| 2 | Entité expéditrice : A = SAS française, B = OÜ estonienne ? | **A** | même droit que les destinataires, CNIL seule autorité ; sans choix, aucun texte légal possible | **BLOQUE LE PREMIER ENVOI** |
+| 1 | **Date de lancement du chantier : c'est Will qui la choisit** (rien ne démarre sans son feu vert explicite). Toutes les dates du plan se décalent d'autant. | **Décision de Will** | chaque semaine de retard décale toutes les dates | **BLOQUE LE PREMIER ENVOI** |
+| 2 | ~~Entité expéditrice~~ **DÉCIDÉ : SAS française** (aucune société étrangère au plan) | — | les textes légaux sont écrits pour la SAS | — |
 _[Passage retiré du dépôt public : voir les notes privées.]_
 | 4 | Organisateurs collectés les 26-27/09 : leur envoyer d'abord une information sans offre, puis attendre 10 jours ouvrés ? | **Oui** | sinon ce lot (le premier ciblé) reste gelé | **BLOQUE LE PREMIER ENVOI** |
 | 5 | Re-vérifier l'historique complet du dépôt et faire tourner les clés par précaution ? | **Oui, maintenant** | une clé publiée est perdue, même effacée ensuite | **BLOQUE LE PREMIER ENVOI** |
@@ -372,7 +372,7 @@ Ce sont des **horloges** : on ne peut pas les accélérer. Lancées le 2 novembr
 | H2 | Ouvrir le compte **Hetzner « envoi »** (séparé du compte du CRM, autant que possible) **et** un VPS OVH ; demander par écrit à Hetzner si une fermeture toucherait l'autre compte | 1 mois + 1re facture avant la demande de port 25 | usage à déclarer honnêtement en S5 |
 | H3 | Choisir l'hébergeur des boîtes (fourre-tout sur sous-domaine, IMAP instantané) ; 2 boîtes à votre nom + 1 boîte technique avec alias | 1 à 2 jours | |
 | H4 | Compte du vérificateur d'adresses et son contrat de sous-traitance | 1 à 2 semaines | |
-| H5 | Choisir l'entité expéditrice (décision 2) | décision | conditionne tous les textes |
+| H5 | Entité expéditrice : **SAS française (décidé)** | — | les textes légaux sont écrits pour la SAS |
 _[Passage retiré du dépôt public : voir les notes privées.]_
 | H7 | **Sécurité** : rejouer Gitleaks sur l'historique complet, faire tourner les clés concernées, mesurer l'état réel du serveur (décisions 5 et 13) | 1 h | avant tout autre push sensible |
 | H8 | Créer 4 boîtes témoins : Gmail, Outlook.com, Yahoo, Microsoft 365 pro (une 5e chez Orange ou OVH conseillée) | 1 h | servent au test du matin et à T1 |
@@ -415,7 +415,7 @@ _[Passage retiré du dépôt public : voir les notes privées.]_
 15. Presse ouverte pour Axion seulement ; tout nouvel espace démarre tout fermé.
 _[Passage retiré du dépôt public : voir les notes privées.]_
 17. L'IP de production commitée est à retirer des fichiers, avec une garde CI.
-18. 42 décisions simples, dont **10 BLOQUENT LE PREMIER ENVOI** (feu vert, entité, CNIL, lot de septembre, clés, France, boîtes, serveurs, hébergeur des boîtes, garde Sirene).
+18. 41 décisions simples (l'entité est décidée : SAS française), dont **9 BLOQUENT LE PREMIER ENVOI** (date de lancement, CNIL, lot de septembre, clés, France, boîtes, serveurs, hébergeur des boîtes, garde Sirene).
 19. Semaine du 2 novembre : domaines, Hetzner + OVH, boîtes, vérificateur, entité, CNIL, rotation des clés, boîtes témoins, taille du vivier.
 20. Limites : rien n'est rejoué, ce fichier n'est pas encore relu par un second agent, estimations à ± 30 %, marge du calendrier presque nulle.
 

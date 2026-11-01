@@ -73,7 +73,7 @@ Rédigé par le responsable « module d'envoi » en lecture seule. Aucun e-mail 
 
 | Sujet | Axion expéditeur | Client expéditeur |
 |---|---|---|
-| Responsable de traitement | Axion (entité D-07 : SAS ou OÜ) | **Le client**. Axion est sous-traitant (art. 28) : un DPA est signé, et les sous-traitants ultérieurs d'Axion (hébergeur, vérificateur, boîtes) sont listés. |
+| Responsable de traitement | Axion (entité D-07 : SAS française) | **Le client**. Axion est sous-traitant (art. 28) : un DPA est signé, et les sous-traitants ultérieurs d'Axion (hébergeur, vérificateur, boîtes) sont listés. |
 | Bloc art. 14 (`{bloc_information}`) | Texte d'Axion | Texte **du client** : son identité, sa finalité, la source réelle de l'adresse, sa durée, ses droits, la CNIL. Le CRM refuse la validation tant que ce texte n'est pas rempli et validé par l'`owner` du client. |
 | Pied du message | Raison sociale et adresse d'Axion | Celles du client (LCEN art. 20, L.34-5 al. 4 : pas d'identité dissimulée) |
 | Désinscription | `go.<domaine Axion>/d/{jeton}` : « Ne plus recevoir de messages d'Axion-IA » | `go.<domaine du client>/d/{jeton}` : « Ne plus recevoir de messages de <Client> ». La page est à son nom, et l'opposition s'inscrit **dans son espace**. |
@@ -692,7 +692,7 @@ Les estimations incluent les tests. Ajouter environ 15 % pour les relectures Opu
 2. **Canal d'alerte** : console + e-mail à Will, Telegram éteint, comme proposé ?
 3. **Liste de protection de plateforme** (rebonds durs partagés entre locataires) : non par défaut, ou oui après validation ?
 4. **Modèle client** : instance dédiée par défaut tant que la RLS n'est pas prouvée (fichier 02, M0) ?
-5. **Entité expéditrice d'Axion** (D-07 : SAS ou OÜ) et **textes art. 14** (D-26), à fournir avant le lot E14.
+5. **Entité expéditrice d'Axion** (D-07 : SAS française) et **textes art. 14** (D-26), à fournir avant le lot E14.
 6. **Organisateurs en retard art. 14** : voie D-01.
 8. **Validation de 30 jours** pour le verdict de vérification (au lieu de 90 jours) : confirmée comme réglage par défaut ?
 
