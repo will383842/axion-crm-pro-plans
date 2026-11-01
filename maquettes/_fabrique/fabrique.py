@@ -116,7 +116,7 @@ def index_md():
           '## Écarts assumés (à valider par Will au test de 45 min)', '',
           '1. **Barre latérale à 18 entrées en 4 groupes repliables**, au lieu de 7 entrées avec onglets (07 § 2.1). Raison : la mission demande que boîtes, domaines, serveurs, chauffe, alertes et désinscriptions soient trouvables directement. Chaque groupe se replie (choix mémorisé). Si Will préfère 7 entrées, on garde les onglets déjà présents en haut des pages et on retire les entrées du menu.',
           '2. **Barre latérale claire** (blanche), et non bleu nuit (07 § 4.1) : Will veut le clair seulement ; la barre sombre ressemblait à un mode sombre partiel.',
-          '3. **« Montée en douceur »** dans le menu (lexique de 07), avec « chauffe » entre parenthèses dans l’index et la recherche.',
+          '3. **« Montée en douceur »** dans le menu (lexique de 07), avec « chauffe » entre parenthèses dans cet index.',
           '4. **Affaires** est maquetté maintenant, mais son codage reste en V1 (lot Q2), comme au plan 20.',
           '5. **Collectes de données** passent dans Réglages (07 § 2.1) : ce sont des outils pour alimenter la base, pas de la prospection.', '',
           '## Fabrication', '',
