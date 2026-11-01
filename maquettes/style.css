@@ -905,3 +905,16 @@ td a:not(.btn):hover { color: var(--marque-fonce); text-decoration: underline; }
 .kpi.teinte-sombre .kpi-lib, .kpi.teinte-sombre .kpi-meta { color: var(--nav-texte); }
 .kpi.teinte-sombre .kpi-tete svg.ic { background: rgb(255 255 255 / .10); color: var(--marque-clair); }
 a.kpi.teinte-sombre:hover { border-color: var(--marque-vif); }
+/* Quatre tuiles : 2 × 2 tant que la place manque pour 4 (jamais 3 + 1 orpheline) */
+@media (max-width: 1279px) { .kpis:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Tableaux en cartes : le libellé à gauche, le contenu groupé à droite (sans écarter les morceaux d'une même valeur) */
+@media (max-width: 767px) {
+  table.cartes td { justify-content: flex-end; column-gap: 0; }
+  table.cartes td::before { margin-right: auto; padding-right: 12px; }
+  table.cartes td > * + * { margin-left: 6px; }
+}
+@media (min-width: 768px) and (max-width: 1180px) {
+  table.cartes:not(:has(.col-sec)) td { justify-content: flex-end; column-gap: 0; }
+  table.cartes:not(:has(.col-sec)) td::before { margin-right: auto; padding-right: 12px; }
+  table.cartes:not(:has(.col-sec)) td > * + * { margin-left: 6px; }
+}

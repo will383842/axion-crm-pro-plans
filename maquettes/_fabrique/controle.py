@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Contrôle visuel automatique des maquettes (lot U1bis).
+"""Contrôle visuel automatique des maquettes (lots U1bis, M1, M2).
 
 Ouvre les pages dans Chromium (Playwright) à 1440, 1024, 768 et 360 px de large,
 dans chaque état (normal, vide, erreur, chargement), chaque onglet et chaque étape
@@ -7,9 +7,15 @@ d'assistant, puis vérifie :
   1. CHEVAUCHEMENT : deux éléments frères visibles dont les rectangles se recouvrent ;
   2. DÉBORDEMENT : page plus large que l'écran, élément qui sort de l'écran,
      contenu qui dépasse de sa boîte, ou défilement horizontal interne imprévu ;
-  3. CONTRASTE : texte sous 4,5:1 (3:1 pour le gros texte) sur son fond réel ;
-  4. TAILLE : texte sous 16 px hors pastilles et étiquettes (jamais sous 14 px) ;
-  5. BOUTON PLEIN : plus d'un bouton plein visible à la fois.
+  3. CONTRASTE : texte sous 4,5:1 (3:1 pour le gros texte) sur son fond réel,
+     et texte courant (p, td, dd, li, blockquote) sous 7:1 ;
+  4. TAILLE : texte sous 12 px (jamais), texte courant sous 14 px hors détails ;
+  5. BOUTON PLEIN : plus d'un bouton plein visible à la fois ; moins de 36 px
+     de haut (44 px au téléphone) ;
+  6. FIDÉLITÉ (lot M2) : toute taille de police hors de l'échelle du CRM réel
+     (12, 14, 16, 18, 20, 24 px) ; la liste des tailles de chaque page est imprimée ;
+  7. TACTILE (lot M2) : sous 768 px, bouton, champ, onglet ou lien de menu
+     de moins de 44 px de haut.
 Sort avec le code 1 s'il reste un problème.
 
 Usage :
@@ -28,6 +34,7 @@ CAPTURES = os.path.join(MAQ, 'captures')
 REPERES = ['index.html', 'medias.html', 'entreprises.html', 'etiquettes.html', 'campagnes.html', 'campagne-suivi.html', 'reponses.html', 'domaine.html']
 LARGEURS = [1440, 1024, 768, 360]
 ETATS = ['normal', 'vide', 'erreur', 'chargement']
+TAILLES = {}  # page -> tailles de police vues (contrôle de fidélité)
 
 JS = r"""
 () => {
@@ -114,14 +121,22 @@ JS = r"""
     for (let i = pile.length - 1; i >= 0; i--) f = melange(pile[i], f);
     return f;
   };
-  const PETIT_PERMIS = '.badge, .compteur, kbd, .touche, .mot, .repere-v1, .pastille, .nb, thead, .sequence .jour, .groupe-titre, .selecteur-etat legend, .groupe-pal, .mini-titre, .etiquette-paire, .tag-produit, .operateur';
+  // Échelle du CRM réel (text-xs, sm, base, lg, xl, 2xl) : rien d'autre.
+  const ECHELLE = [12, 14, 16, 18, 20, 24];
+  const tailles = new Set();
+  // Détails permis en 12 px (text-xs du CRM) quand ils sont dans un élément de texte courant.
+  const PETIT_PERMIS = '.badge, .compteur, kbd, .touche, .mot, .repere-v1, .pastille, .nb, thead, .sequence .jour, .groupe-titre, .selecteur-etat, .groupe-pal, .mini-titre, .etiquette-paire, .tag-produit, .operateur, small, .petit, .sous, .kpi-meta, .points, .etapes-com, .puce-etiq, .chiffres, .axe-x, .barres, .jauge-lib, .pagination, .aide, .legende, .frise, .mono, .code-dns, .note-reprise, .fil, .heure, .recap-ligne span, .ligne .quoi span, .kpi-lib, td::before, .alerte-cloche small';
+  const COURANT = 'p, td, dd, li, blockquote';
   for (const el of vis) {
     if (cache(el)) continue;
     const texte = Array.from(el.childNodes).some(n => n.nodeType === 3 && n.textContent.trim());
     if (!texte) continue;
     const cs = getComputedStyle(el);
     const taille = parseFloat(cs.fontSize), gras = parseInt(cs.fontWeight, 10) >= 700;
-    if (taille < 14 || (taille < 16 && !el.closest(PETIT_PERMIS))) pb.push(['taille', nom(el) + ' : ' + taille + ' px']);
+    tailles.add(taille);
+    if (!ECHELLE.includes(Math.round(taille * 100) / 100)) pb.push(['fidélité', nom(el) + ' : ' + taille + ' px hors échelle du CRM']);
+    const courant = el.matches(COURANT) && !el.closest(PETIT_PERMIS);
+    if (taille < 12 || (courant && taille < 14)) pb.push(['taille', nom(el) + ' : ' + taille + ' px']);
     const f = fond(el);
     if (!f) continue;
     const c = melange(rgba(cs.color), f);
@@ -129,13 +144,25 @@ JS = r"""
     const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
     const gros = taille >= 24 || (taille >= 18.66 && gras);
     if (ratio < (gros ? 3 : 4.5)) pb.push(['contraste', nom(el) + ' : ' + ratio.toFixed(2) + ':1']);
+    else if (courant && !gros && ratio < 7) pb.push(['contraste', nom(el) + ' : ' + ratio.toFixed(2) + ':1 (texte courant, 7:1 exigé)']);
   }
 
-  // 5. Un seul bouton plein visible
+  // 5. Un seul bouton plein visible ; 36 px (h-9 du CRM) sur ordinateur, 44 px au téléphone
+  const tel = W < 768;
   const pleins = Array.from(document.querySelectorAll('.btn-plein')).filter(b => vis.has(b));
   if (pleins.length > 1) pb.push(['bouton plein', pleins.length + ' boutons pleins visibles : ' + pleins.map(nom).join(' | ')]);
-  for (const b of pleins) { if (b.getBoundingClientRect().height < 47.5) pb.push(['bouton plein', nom(b) + ' : moins de 48 px de haut']); }
-  return pb;
+  for (const b of pleins) { if (b.getBoundingClientRect().height < (tel ? 43.5 : 35.5)) pb.push(['bouton plein', nom(b) + ' : trop bas']); }
+
+  // 7. Zones tactiles de 44 px, au téléphone seulement
+  if (tel) {
+    const TACT = '.btn, .bouton-icone, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, [role="tab"], .onglets a, .puce, .nav-lien, .choix-produit a, .selecteur-etat label, .entete .recherche, .groupe-titre, .espace';
+    for (const el of document.querySelectorAll(TACT)) {
+      if (!vis.has(el) || cache(el) || el.closest('.selecteur-etat input')) continue;
+      const r = el.getBoundingClientRect();
+      if (r.height < 43.5) pb.push(['tactile', nom(el) + ' : ' + Math.round(r.height) + ' px de haut']);
+    }
+  }
+  return {pb, tailles: Array.from(tailles)};
 }
 """
 
@@ -174,7 +201,9 @@ def lancer(pages, captures):
                             pg.locator(sel).nth(action[1]).click(timeout=3000)
                             pg.wait_for_timeout(40)
                         nb_vues += 1
-                        for sorte, detail in pg.evaluate(JS):
+                        res = pg.evaluate(JS)
+                        TAILLES.setdefault(fichier, set()).update(res['tailles'])
+                        for sorte, detail in res['pb']:
                             problemes.append((fichier, largeur, libelle, sorte, detail))
                     if captures and etat == 'normal':
                         pg.goto(url)
@@ -221,9 +250,13 @@ def main():
             continue
         vus.add(cle)
         print('%-24s %5d px  %-12s %-14s %s' % (fichier, largeur, vue, sorte, detail))
+    print('--- Tailles de police par page (échelle du CRM réel : 12, 14, 16, 18, 20, 24 px)')
+    for f in sorted(TAILLES):
+        t = sorted(TAILLES[f])
+        print('  %-28s %s' % (f, ', '.join('%g' % x for x in t)))
     print('---')
     print('%d pages, %d largeurs, %d vues contrôlées.' % (len(pages), len(LARGEURS), nb_vues))
-    for s in ['chevauchement', 'débordement', 'contraste', 'taille', 'bouton plein', 'erreur JS']:
+    for s in ['chevauchement', 'débordement', 'contraste', 'taille', 'fidélité', 'bouton plein', 'tactile', 'erreur JS']:
         print('  %-14s : %d' % (s, par_sorte.get(s, 0)))
     if captures:
         print('Captures : %s' % os.path.relpath(CAPTURES, os.path.dirname(MAQ)))
