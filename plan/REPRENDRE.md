@@ -1,5 +1,11 @@
 ﻿# REPRENDRE : CRM Pro complet (envoi, campagnes, console) : mis à jour le 30/10/2026
 
+## ÉTAT AU 01/11/2026 (lot W0) : à lire en premier
+- Plans 20 à 29 consolidés : total **≈ 685,5 j** (plan 20 § 12), par famille : socle 157,5 ; CRM Pro 108,5 ; Envoi 419,5. Will a dit OUI aux 6 questions du plan 29 et « PARFAIT » aux maquettes M2.
+- **Plan d'exécution : `plan/30-PLAN-FINAL-ET-LOTS-DE-CODE.md`** : démo frontend d'abord (19 lots DM0 à DM3), sécurité de l'existant en parallèle (R0, S1-S3, S5-S7, S9). Textes des routines prêts : `plan/lots/<id>.md` (+ `RELECTURE.md`).
+- PROCHAINE ÉTAPE : lancer DM0-COL, DM0-DEMO, R0 ; puis DM0-COQ ; puis la vague 1. Lot W1 à écrire : textes de la chaîne serveur après la démo (P1 → T1, BR).
+- ATTENDU DE WILL : `plan/30` § 6 (protection de `main`, S5 privé, tests de la démo, feu vert de publication, achats : jamais sans son feu vert).
+
 ## BLOC DU HAUT (relire avant d'agir)
 - OBJECTIF : plan « CRM Pro complet » d'Axion-IA : d'abord CRM Pro + envoi d'e-mails pour Axion, puis version pour la console des automatisations (CRM = module de base, envoi = option, moteur partagé séparé par client, 8 règles de préparation dès le début, fichier 10 § 8).
 - RIEN N'EST CODÉ. Will a demandé : aucun code tant qu'il ne donne pas son feu vert. Aucun e-mail envoyé, aucun serveur touché.
