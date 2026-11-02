@@ -53,12 +53,12 @@ Tout autre fichier est **interdit** pour ce lot, notamment ceux que d'autres lot
 ## Interdits propres à ce lot
 
 - Toucher `OngletsCampagnes.tsx` (DM0-COQ), `NouvelleCampagnePage.tsx` (DM2-ASS), `ResultatsPage.tsx` (DM2-PIL), `DestinatairesPage.tsx` (DM2-CNF).
-- Afficher une mesure d'ouverture ou de clic.
+- Afficher une mesure de clic, ou une ouverture présentée comme un chiffre exact (l'ouverture n'est permise que comme « estimation », pour les campagnes avec pixel activé).
 
 ## Tests à écrire d'abord (rouges avant le code)
 
 - `CampagnesPage.test.tsx` : Pause depuis la ligne en 2 clics + confirmation ; Changer la date « Demain 9:00 » ; Dupliquer crée « … (copie) » en brouillon ; Terminer est définitif et demande confirmation.
-- `CampagneSuiviPage.test.tsx` : onglet Destinataires filtrable par état ; Yves Roche « refusé : adresse inexistante » ; aucune colonne d'ouverture.
+- `CampagneSuiviPage.test.tsx` : onglet Destinataires filtrable par état ; Yves Roche « refusé : adresse inexistante » ; aucune colonne de clic ; la colonne et la tuile « Ouverture (estimation) » n'apparaissent que si la campagne a activé le pixel.
 - `dm2-cam.spec.ts` : parcours P2, P3, P7 et tâche T5 (pause depuis la liste, changer la date, retrouver Yves Roche) en ≤ 4 min.
 
 ## Critères de fin (tous vérifiables)
@@ -128,3 +128,8 @@ Tout autre fichier est **interdit** pour ce lot, notamment ceux que d'autres lot
 6. **Ne fusionnez pas vous-même.** **Ne déployez rien** (aucun serveur, aucune mise en ligne, aucun `workflow_dispatch` de déploiement). Aucun secret, aucun mot de passe, aucune IP réelle, aucun e-mail envoyé. N'écrivez aucun commentaire GitHub hors de votre PR.
 7. Si un fichier hors de votre liste doit absolument changer : **ne le modifiez pas** ; notez-le dans la PR, section « Hors périmètre, à faire par un autre lot ».
 8. En fin de routine, laissez un résumé de 10 lignes dans la PR : fait, non fait, risques.
+
+
+## Mise à jour du 02/11 (décision de Will)
+
+**Décision de Will du 02/11 (remplace toute mention contraire de ce lot) :** les ouvertures sont mesurées par un pixel **optionnel par campagne** (`suivre_ouvertures` faux par défaut), affichées comme « estimation » (jamais comme un chiffre exact), les ouvertures automatiques Apple/proxys sont exclues du taux, les réponses restent l'indicateur principal, jamais de pixel pour un contact opposé, mention art. 14 et brouillon CNIL privé. **Les CLICS ne sont pas mesurés** (aucune colonne, tuile ni filtre de clic).

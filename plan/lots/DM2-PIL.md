@@ -56,7 +56,7 @@ Tout autre fichier est **interdit** pour ce lot, notamment ceux que d'autres lot
 
 ## Tests à écrire d'abord (rouges avant le code)
 
-- `ResultatsPage.test.tsx` : onglets par boîte, domaine, liste ; aucune colonne d'ouverture ou de clic ; export.
+- `ResultatsPage.test.tsx` : onglets par boîte, domaine, liste ; aucune colonne ni tuile de CLIC ; l'ouverture n'apparaît que comme « estimation », seulement pour les campagnes qui ont activé le pixel ; export.
 - `SantePage.test.tsx` : le domaine ambre mène à `/envoi/domaines/<id>` (fiche 30 jours, écrite par DM2-INF : ici seulement le lien).
 - `ChercherEnvoiPage.test.tsx` : l'adresse d'Yves Roche donne « Refusé : adresse inexistante (550 5.1.1) » en français.
 - `dm2-pil.spec.ts` : parcours P4 et P10 en 2 clics ; Ctrl K « Chercher un envoi ».
@@ -128,3 +128,8 @@ Tout autre fichier est **interdit** pour ce lot, notamment ceux que d'autres lot
 6. **Ne fusionnez pas vous-même.** **Ne déployez rien** (aucun serveur, aucune mise en ligne, aucun `workflow_dispatch` de déploiement). Aucun secret, aucun mot de passe, aucune IP réelle, aucun e-mail envoyé. N'écrivez aucun commentaire GitHub hors de votre PR.
 7. Si un fichier hors de votre liste doit absolument changer : **ne le modifiez pas** ; notez-le dans la PR, section « Hors périmètre, à faire par un autre lot ».
 8. En fin de routine, laissez un résumé de 10 lignes dans la PR : fait, non fait, risques.
+
+
+## Mise à jour du 02/11 (décision de Will)
+
+**Décision de Will du 02/11 (remplace toute mention contraire de ce lot) :** les ouvertures sont mesurées par un pixel **optionnel par campagne** (`suivre_ouvertures` faux par défaut), affichées comme « estimation » (jamais comme un chiffre exact), les ouvertures automatiques Apple/proxys sont exclues du taux, les réponses restent l'indicateur principal, jamais de pixel pour un contact opposé, mention art. 14 et brouillon CNIL privé. **Les CLICS ne sont pas mesurés** (aucune colonne, tuile ni filtre de clic).
